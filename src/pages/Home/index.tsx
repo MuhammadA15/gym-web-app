@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../../components/ui/Button/button";
+import OutlinedButton from "../../components/ui/OutlinedButton/outlinedButton";
 import Space from "../../components/ui/Space/space";
 import { useInView } from "react-intersection-observer";
 import './styles.scss';
@@ -10,30 +10,30 @@ const HomePage = () => {
   const {ref: sectionRef3, inView: section3_inView} = useInView();
 
   return (
-    <div>
-      <h1>Welcome to the Gym App</h1>
-      <div>
-        <Button text="Login" link="/login" />
+    <div className="container">
+      <h1 className="text-4xl">Welcome to the Gym App</h1>
+      <div className="mt-3">
+        <OutlinedButton text={"Login"} />
       </div>
-      <div>
-        <Button text="Sign Up" link="/signup" />
+      <div className="mt-3">
+        <OutlinedButton text={"Sign Up"} />
       </div>
 
       <Space height={50} />
       
-      <section ref={sectionRef1} className={section1_inView ? 'show' : 'hidden'}>
+      <section ref={sectionRef1} className={section1_inView ? 'show' : 'hide'}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque incidunt explicabo tenetur! Repudiandae numquam minus molestiae provident totam vero quos laudantium nihil accusamus est. Repudiandae mollitia architecto dolorem voluptatum ea!
       </section>
       
       <Space height={50} />
 
-      <section ref={sectionRef2} className={section2_inView ? 'show' : 'hidden'}>
+      <section ref={sectionRef2} className={section2_inView ? 'show' : 'hide'}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero explicabo assumenda fuga saepe, earum ex, sunt doloremque esse quas, laudantium necessitatibus optio impedit quam harum. Iste ipsam dignissimos doloribus quod.
       </section>
 
       <Space height={50} />
 
-      <section ref={sectionRef3} className={section3_inView ? 'show' : 'hidden'}>
+      <section ref={sectionRef3} className={section3_inView ? 'show' : 'hide'}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero explicabo assumenda fuga saepe, earum ex, sunt doloremque esse quas, laudantium necessitatibus optio impedit quam harum. Iste ipsam dignissimos doloribus quod.
       </section>
     </div>

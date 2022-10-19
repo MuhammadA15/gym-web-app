@@ -1,5 +1,8 @@
 import React, { useRef } from "react";
 import {Link, Outlet} from 'react-router-dom';
+import OutlinedButton from "../OutlinedButton/outlinedButton";
+import FilledButton from "../FilledButton/filledButton";
+import Space from "../Space/space";
 import './styles.scss';
 
 const Navbar = () => {
@@ -20,10 +23,10 @@ const Navbar = () => {
 
   return (
     <>
-    <nav className="nav" ref={navRef}>
+    <nav className="nav bg-neutral-800" ref={navRef}>
       <div className="container">
         <h1 className="logo">
-          <Link to="/">Gym App</Link>
+          <Link to="/" className="text-xl">Gym App</Link>
         </h1>
         <div className="items-container">
           <ul className="nav-left">
@@ -38,10 +41,10 @@ const Navbar = () => {
           </ul>
           <ul className="nav-right">
             <li>
-              <Link to="/login" className="nav-item">Login</Link>
+              <Link to="/login" className="nav-item"><FilledButton text={'Login'}/></Link>
             </li>
             <li>
-              <Link to="/signup" className="nav-item">Sign Up</Link>
+              <Link to="/signup" className="nav-item"><OutlinedButton text={'Sign Up'}/></Link>
             </li>
           </ul>
         </div>
