@@ -11,7 +11,7 @@ const HomePage = () => {
 
   return (
     <div className="container">
-      <h1 className="text-4xl">Welcome to the Gym App</h1>
+      <h1 className="text-4xl">Welcome to the Fitness App</h1>
       <div className="mt-3">
         <OutlinedButton text={"Login"} />
       </div>

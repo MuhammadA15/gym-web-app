@@ -26,7 +26,7 @@ const Navbar = () => {
     <nav className="nav bg-neutral-800" ref={navRef}>
       <div className="container">
         <h1 className="logo">
-          <Link to="/" className="text-xl">Gym App</Link>
+          <Link to="/" className="text-xl">Fitness App</Link>
         </h1>
         <div className="items-container">
           <ul className="nav-left">

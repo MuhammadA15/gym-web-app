@@ -1,5 +1,5 @@
 import React from "react";
-import FilledButton from "components/ui/FilledButton/filledButton";
+import FilledButton from "../../components/ui/FilledButton/filledButton";
 
 const LoginPage = () => {
   return (
