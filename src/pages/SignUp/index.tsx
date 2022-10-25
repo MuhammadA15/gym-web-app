@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import FilledButton from '../../components/ui/FilledButton/filledButton'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import { signUp_InitVals, signUp_ValidationSchema } from './utils/utils_signupForm'
 import { Link, useNavigate } from 'react-router-dom'
+import { SIGNUP_ENDPOINT } from '../../utils/constants/apiEndpoints'
 
 const SignUpPage = () => {
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState('');
 
   const formik = useFormik({
     initialValues: signUp_InitVals,
@@ -18,21 +20,22 @@ const SignUpPage = () => {
         password: formik.values.password
       }
 
-      const res = await fetch('http://localhost:8080/users', {
+      await fetch(SIGNUP_ENDPOINT, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
       })
-      
-      if (res.status === 200) {
-        alert('You have signed up successfully!')
-        navigate('/login')
-      } else {
-        console.log(res.status)
-        alert('Something went wrong, please try again')
-      }
+        .then(res => res.json().then(data => ({status: res.status, body: data})))
+        .then(data => {
+          if (data.status === 200) {
+            alert(data.body.msg)
+            navigate('/login')
+          } else {
+            setErrorMsg(data.body.msg)
+          }
+        })
     },
   })
 
@@ -40,6 +43,9 @@ const SignUpPage = () => {
     <div>
       <div className="container flex justify-center">
         <div className="w-full max-w-xs">
+          { errorMsg &&
+            <p className='text-red-500 mb-3'>{errorMsg}</p>
+          }
           <form onSubmit={formik.handleSubmit}  className="bg-neutral-800 shadow-xl rounded px-8 pt-6 pb-8 mb-4">
             <div className='mb-6'>
               <p className='text-left opacity-50 mb-1'>Welcome to Fitness App!</p>
