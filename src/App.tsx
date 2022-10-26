@@ -4,7 +4,7 @@ import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import SignUpPage from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
-import { AuthProvider } from './utils/context/auth';
+import { AuthProvider } from './context/auth';
 import Navbar from './components/ui/Navbar/navbar';
 import './App.css';
 import RequireAuth from './components/auth/RequireAuth';

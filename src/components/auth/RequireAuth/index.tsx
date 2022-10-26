@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate, Outlet, useLocation } from 'react-router-dom'
-import { useAuth } from '../../../utils/context/auth'
+import { useAuth } from '../../../context/auth'
 
 const RequireAuth = () => {
   const auth = useAuth()

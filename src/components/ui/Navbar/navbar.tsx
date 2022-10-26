@@ -4,7 +4,7 @@ import OutlinedButton from "../OutlinedButton/outlinedButton";
 import FilledButton from "../FilledButton/filledButton";
 import Space from "../Space/space";
 import "./styles.scss";
-import { useAuth } from "../../../utils/context/auth";
+import { useAuth } from "../../../context/auth";
 
 const Navbar = () => {
   const auth = useAuth();

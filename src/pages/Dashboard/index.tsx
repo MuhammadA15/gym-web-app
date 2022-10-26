@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth } from '../../utils/context/auth'
+import { useAuth } from '../../context/auth'
 
 const Dashboard = () => {
   
