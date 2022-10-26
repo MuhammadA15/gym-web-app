@@ -37,11 +37,15 @@
   align-items: flex-end;
 }
 
-.nav a {
+.nav-item {
   color: #ffffff;
-  padding: 7px 15px;
+  padding: 5px 15px;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
+}
+
+.nav-item-btn {
+  padding: 7px 7px;
 }
 
 .nav.active {

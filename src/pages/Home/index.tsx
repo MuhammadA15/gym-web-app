@@ -1,5 +1,6 @@
 import React from "react";
 import OutlinedButton from "../../components/ui/OutlinedButton/outlinedButton";
+import FilledButton from "../../components/ui/FilledButton/filledButton";
 import Space from "../../components/ui/Space/space";
 import { useInView } from "react-intersection-observer";
 import './styles.scss';
@@ -13,7 +14,7 @@ const HomePage = () => {
     <div className="container">
       <h1 className="text-4xl">Welcome to the Fitness App</h1>
       <div className="mt-3">
-        <OutlinedButton text={"Login"} />
+        <FilledButton text={"Login"} />
       </div>
       <div className="mt-3">
         <OutlinedButton text={"Sign Up"} />
