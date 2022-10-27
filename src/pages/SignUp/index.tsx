@@ -42,7 +42,7 @@ const SignUpPage = () => {
   return (
     <div>
       <div className="container flex justify-center">
-        <div className="w-full max-w-xs">
+        <div className="w-full max-w-xs mt-10">
           { errorMsg &&
             <p className='text-red-500 mb-3'>{errorMsg}</p>
           }
