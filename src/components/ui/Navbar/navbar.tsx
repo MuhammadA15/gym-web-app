@@ -33,43 +33,45 @@ const Navbar = () => {
       <nav className="nav bg-neutral-800" ref={navRef}>
         <div className="container">
           <h1 className="logo">
-            { !auth?.user ?
+            {!auth?.user ? (
               <Link to="/" className="text-xl px-5">
                 Fitness App
-              </Link> :
+              </Link>
+            ) : (
               <Link to="/home" className="text-xl px-5">
                 Fitness App
               </Link>
-            }
+            )}
           </h1>
           <div className="items-container">
             <ul className="nav-left">
-              { !auth?.user ?
-              <> 
-              <li>
-                <Link to="/" className="nav-item">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <a href="#" className="nav-item">
-                  About
-                </a>
-              </li>
-              </> :
-              <>
-                <li>
-                <Link to="/home" className="nav-item">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <a href="#" className="nav-item">
-                  About
-                </a>
-              </li>
-              </>
-              }
+              {!auth?.user ? (
+                <>
+                  <li>
+                    <Link to="/" className="nav-item">
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <a href="#" className="nav-item">
+                      About
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/home" className="nav-item">
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <a href="#" className="nav-item">
+                      About
+                    </a>
+                  </li>
+                </>
+              )}
             </ul>
             <ul className="nav-right">
               {!auth?.user ? (
