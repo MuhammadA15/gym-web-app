@@ -33,22 +33,45 @@ const Navbar = () => {
       <nav className="nav bg-neutral-800" ref={navRef}>
         <div className="container">
           <h1 className="logo">
-            <Link to="/" className="text-xl px-5">
-              Fitness App
-            </Link>
+            {!auth?.user ? (
+              <Link to="/" className="text-xl px-5">
+                Fitness App
+              </Link>
+            ) : (
+              <Link to="/home" className="text-xl px-5">
+                Fitness App
+              </Link>
+            )}
           </h1>
           <div className="items-container">
             <ul className="nav-left">
-              <li>
-                <Link to="/" className="nav-item">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <a href="#" className="nav-item">
-                  About
-                </a>
-              </li>
+              {!auth?.user ? (
+                <>
+                  <li>
+                    <Link to="/" className="nav-item">
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <a href="#" className="nav-item">
+                      About
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link to="/home" className="nav-item">
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <a href="#" className="nav-item">
+                      About
+                    </a>
+                  </li>
+                </>
+              )}
             </ul>
             <ul className="nav-right">
               {!auth?.user ? (
@@ -67,7 +90,7 @@ const Navbar = () => {
               ) : (
                 <>
                   <li>
-                    <Link to="/dashboard" className="nav-item-btn">
+                    <Link to="/home" className="nav-item-btn">
                       <FilledButton text={"Dashboard"} />
                     </Link>
                   </li>
@@ -85,7 +108,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <div className="page-content" style={{ marginTop: "150px" }}>
+      <div className="page-content">
         <Outlet />
       </div>
     </>

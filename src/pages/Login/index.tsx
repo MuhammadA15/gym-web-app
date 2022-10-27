@@ -15,7 +15,7 @@ const LoginPage = () => {
   const location = useLocation();
   const [errorMsg, setErrorMsg] = useState('')
 
-  const redirectPath = location.state?.path || '/dashboard'
+  const redirectPath = location.state?.path || '/home'
 
   const formik = useFormik({
     initialValues: login_InitVals,
@@ -36,7 +36,8 @@ const LoginPage = () => {
         .then(res => res.json().then(data => ({status: res?.status, body: data})))
         .then(data => {
           if (data?.status === 200) {
-            auth?.login(data.body.msg)
+            // console.log("data", data.body.data);
+            auth?.login(data.body.data)
             navigate(redirectPath, { replace: true })
           } else {
             setErrorMsg(data?.body?.msg)
@@ -48,7 +49,7 @@ const LoginPage = () => {
   return (
     <div>
       <div className="container flex justify-center">
-        <div className="w-full max-w-xs">
+        <div className="w-full max-w-xs mt-10">
           { errorMsg &&
             <p className='text-red-500 mb-3'>{errorMsg}</p>
           }

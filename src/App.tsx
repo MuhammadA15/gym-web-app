@@ -1,9 +1,9 @@
 import React from 'react';
 import {Routes, Route} from 'react-router-dom';
-import HomePage from './pages/Home';
+import LandingPage from './pages/Landing';
 import LoginPage from './pages/Login';
 import SignUpPage from './pages/SignUp';
-import Dashboard from './pages/Dashboard';
+import HomePage from './pages/Home';
 import { AuthProvider } from './context/auth';
 import Navbar from './components/ui/Navbar/navbar';
 import './App.css';
@@ -13,22 +13,22 @@ import UserProfile from './pages/UserProfile';
 function App(): React.ReactElement {
   return (
     <div className="App">
-    <AuthProvider>
-      <Routes>
-        <Route path='/' element={<Navbar />} >
-          {/* Public Routes */}
-          <Route path='/' element={<HomePage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/signup' element={<SignUpPage />} />
+      <AuthProvider>
+        <Routes>
+          <Route path='/' element={<Navbar />} >
+            {/* Public Routes */}
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/signup' element={<SignUpPage />} />
 
-          {/* Auth User Routes */}
-          <Route element={<RequireAuth />} >
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/user-profile' element={<UserProfile />} />
+            {/* Auth User Routes */}
+            <Route element={<RequireAuth />} >
+              <Route path='/home' element={<HomePage />} />
+              <Route path='/user-profile' element={<UserProfile />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-    </AuthProvider>
+        </Routes>
+      </AuthProvider>
     </div>
   );
 }
