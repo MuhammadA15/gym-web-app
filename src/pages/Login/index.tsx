@@ -7,53 +7,54 @@ import { LOGIN_ENDPOINT } from "../../utils/constants/apiEndpoints";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 
-
 const LoginPage = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const auth = useAuth();
   const location = useLocation();
-  const [errorMsg, setErrorMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const redirectPath = location.state?.path || '/home'
+  const redirectPath = location.state?.path || "/home";
 
   const formik = useFormik({
     initialValues: login_InitVals,
     validationSchema: login_ValidationSchema,
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       const data = {
         username: formik.values.username,
-        password: formik.values.password
-      }
+        password: formik.values.password,
+      };
 
       await fetch(LOGIN_ENDPOINT, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       })
-        .then(res => res.json().then(data => ({status: res?.status, body: data})))
-        .then(data => {
+        .then((res) =>
+          res.json().then((data) => ({ status: res?.status, body: data }))
+        )
+        .then((data) => {
           if (data?.status === 200) {
             // console.log("data", data.body.data);
-            auth?.login(data.body.data)
-            navigate(redirectPath, { replace: true })
+            auth?.login(data.body.data);
+            navigate(redirectPath, { replace: true });
           } else {
-            setErrorMsg(data?.body?.msg)
+            setErrorMsg(data?.body?.msg);
           }
-        })
+        });
     },
-  })
+  });
 
   return (
     <div>
       <div className="container flex justify-center">
         <div className="w-full max-w-xs mt-10">
-          { errorMsg &&
-            <p className='text-red-500 mb-3'>{errorMsg}</p>
-          }
-          <form onSubmit={formik.handleSubmit} className="bg-neutral-800 shadow-xl rounded px-8 pt-6 pb-8 mb-4">
+          {errorMsg && <p className="text-red-500 mb-3">{errorMsg}</p>}
+          <form
+            onSubmit={formik.handleSubmit}
+            className="bg-neutral-800 shadow-xl rounded px-8 pt-6 pb-8 mb-4"
+          >
             <div className="mb-4">
               <label
                 className="block text-left text-sm font-bold mb-2"
@@ -69,9 +70,11 @@ const LoginPage = () => {
                 value={formik.values.username}
                 onChange={formik.handleChange}
               />
-              {formik.errors.username &&
-                <p className="text-left text-red-500">{formik.errors.username}</p>
-              }
+              {formik.errors.username && (
+                <p className="text-left text-red-500">
+                  {formik.errors.username}
+                </p>
+              )}
             </div>
             <div className="mb-9">
               <label
@@ -88,12 +91,14 @@ const LoginPage = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
               />
-              {formik.errors.password &&
-                <p className="text-left text-red-500">{formik.errors.password}</p>
-              }
+              {formik.errors.password && (
+                <p className="text-left text-red-500">
+                  {formik.errors.password}
+                </p>
+              )}
             </div>
             <div className="flex items-center justify-between">
-              <FilledButton text={'Log In'} />
+              <FilledButton text={"Log In"} />
               <a
                 className="inline-block align-baseline font-bold text-sm text-red-500 hover:text-red-800"
                 href="#"
