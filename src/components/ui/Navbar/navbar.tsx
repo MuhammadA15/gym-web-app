@@ -5,6 +5,7 @@ import FilledButton from "../FilledButton/filledButton";
 import Space from "../Space/space";
 import "./styles.scss";
 import { useAuth } from "../../../context/auth";
+import DetailsMenu from "../Menu/DetailsMenu";
 
 const Navbar = () => {
   const auth = useAuth();
@@ -32,21 +33,15 @@ const Navbar = () => {
     <>
       <nav className="nav bg-neutral-800" ref={navRef}>
         <div className="container">
-          <h1 className="logo">
-            {!auth?.user ? (
-              <Link to="/" className="text-xl px-5">
-                Fitness App
-              </Link>
-            ) : (
-              <Link to="/home" className="text-xl px-5">
-                Fitness App
-              </Link>
-            )}
-          </h1>
           <div className="items-container">
             <ul className="nav-left">
               {!auth?.user ? (
                 <>
+                  <li className="logo">
+                    <Link to="/" className="text-xl px-5">
+                      Fitness App
+                    </Link>
+                  </li>
                   <li>
                     <Link to="/" className="nav-item">
                       Home
@@ -60,6 +55,11 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
+                  <li className="logo">
+                    <Link to="/home" className="text-xl px-5">
+                      Fitness App
+                    </Link>
+                  </li>
                   <li>
                     <Link to="/home" className="nav-item">
                       Home
@@ -88,21 +88,7 @@ const Navbar = () => {
                   </li>{" "}
                 </>
               ) : (
-                <>
-                  <li>
-                    <Link to="/home" className="nav-item-btn">
-                      <FilledButton text={"Dashboard"} />
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/user-profile" className="nav-item-btn">
-                      <FilledButton text={"User Profile"} />
-                    </Link>
-                  </li>
-                  <li className="nav-item-btn">
-                    <FilledButton text={"Logout"} onClickFunc={logout} />
-                  </li>
-                </>
+                <DetailsMenu logout={logout} username={auth?.user?.username}/>
               )}
             </ul>
           </div>
