@@ -24,6 +24,7 @@ function App(): React.ReactElement {
             {/* Auth User Routes */}
             <Route element={<RequireAuth />} >
               <Route path='/home' element={<HomePage />} />
+              <Route path='/user-profile/:tabId' element={<UserProfile />} />
               <Route path='/user-profile' element={<UserProfile />} />
             </Route>
           </Route>

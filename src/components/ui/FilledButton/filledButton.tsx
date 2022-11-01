@@ -6,6 +6,7 @@ const FilledButton = ({
   px,
   textSize,
   textWeight,
+  width,
   onClickFunc,
 }: {
   text: string;
@@ -13,6 +14,7 @@ const FilledButton = ({
   px?: string;
   textSize?: string;
   textWeight?: string;
+  width?: string;
   onClickFunc?: () => void;
 }) => {
   return (
@@ -23,6 +25,7 @@ const FilledButton = ({
           hover:bg-red-700 
           text-white
           ${textSize ? textSize : ''} 
+          ${width ? width : ''}
           ${textWeight ? textWeight : 'font-bold'} 
           ${py ? py : 'py-2'} 
           ${px ? px : 'px-4'} 
