@@ -67,7 +67,7 @@ const Navbar = () => {
                   </li>
                   <li>
                     <a href="#" className="nav-item">
-                      About
+                      Explore
                     </a>
                   </li>
                 </>
