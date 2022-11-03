@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../../context/auth";
 // @ts-ignore
 import emptyPhoto from "../../assets/blank-profile-picture.png";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
@@ -7,16 +6,20 @@ import "./styles.scss";
 import { useNavigate, useParams } from "react-router-dom";
 
 const UserProfile = () => {
-  const auth = useAuth();
   const navigate = useNavigate();
-  const username = auth?.user?.username;
-  const email = auth?.user?.email;
+  const username = localStorage.getItem('username');
+  const email = localStorage.getItem('email');
   let pId = "";
 
   const { tabId = "personal" } = useParams();
   const [currentTab, setCurrentTab] = useState(tabId);
 
-  const menuItems = ["Personal", "Library", "Favorites", "Preferences"];
+  const menuItems = [
+    "Personal", 
+    "Library", 
+    "Favorites", 
+    "Preferences"
+  ];
 
   useEffect(() => {
     setCurrentTab(tabId);

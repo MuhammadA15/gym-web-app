@@ -1,17 +1,16 @@
-import React, { useEffect } from 'react'
-import { useNavigate, Outlet, useLocation } from 'react-router-dom'
-import { useAuth } from '../../../context/auth'
+import React, { useEffect } from 'react';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 
 const RequireAuth = () => {
-  const auth = useAuth()
-  const navigate = useNavigate()
-  const location = useLocation()
+  const userId = localStorage.getItem('id');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (!auth?.user) {
+    if (!userId) {
       navigate('/login', {state: {path: location.pathname}})
     }
-  }, [auth?.user])
+  }, [userId])
 
   return <Outlet />
 }

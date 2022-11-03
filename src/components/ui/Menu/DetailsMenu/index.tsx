@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import emptyPhoto from '../../../../assets/blank-profile-picture.png';
 import './styles.scss';
 
-const DetailsMenu = ({ logout, username }: { logout: () => void, username: string }) => {
+const DetailsMenu = ({ logout, username }: { logout: () => void, username: string | null }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const menuClick = () => {
