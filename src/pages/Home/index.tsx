@@ -1,10 +1,8 @@
 import React from "react";
-import { useAuth } from "../../context/auth";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
 import "./styles.scss";
 
 const HomePage = () => {
-  const auth = useAuth();
 
   return (
     <div className="-mt-7">

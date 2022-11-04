@@ -9,6 +9,8 @@ import DetailsMenu from "../Menu/DetailsMenu";
 
 const Navbar = () => {
   const auth = useAuth();
+  const username = localStorage.getItem('username');
+  const userId = localStorage.getItem('id');
   const navigate = useNavigate();
   const navRef = useRef<HTMLInputElement>(null);
 
@@ -35,7 +37,7 @@ const Navbar = () => {
         <div className="container">
           <div className="items-container">
             <ul className="nav-left">
-              {!auth?.user ? (
+              {!userId ? (
                 <>
                   <li className="logo">
                     <Link to="/" className="text-xl px-5">
@@ -66,15 +68,15 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <a href="#" className="nav-item">
-                      Explore
-                    </a>
+                    <Link to="/search" className="nav-item">
+                      Search Exercises
+                    </Link>
                   </li>
                 </>
               )}
             </ul>
             <ul className="nav-right">
-              {!auth?.user ? (
+              {!userId ? (
                 <>
                   <li>
                     <Link to="/login" className="nav-item-btn">
@@ -88,7 +90,7 @@ const Navbar = () => {
                   </li>{" "}
                 </>
               ) : (
-                <DetailsMenu logout={logout} username={auth?.user?.username}/>
+                <DetailsMenu logout={logout} username={username}/>
               )}
             </ul>
           </div>

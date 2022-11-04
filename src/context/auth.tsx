@@ -20,10 +20,16 @@ export const AuthProvider = ({children}: {children: any}) => {
 
   const login = (userInfo: userInterface) => {
     setUser(userInfo);
+    localStorage.setItem('username', userInfo.username);
+    localStorage.setItem('id', String(userInfo.id));
+    localStorage.setItem('email', userInfo.email);
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('username');
+    localStorage.removeItem('id');
+    localStorage.removeItem('email');
   };
 
   return (

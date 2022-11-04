@@ -9,6 +9,7 @@ import Navbar from './components/ui/Navbar/navbar';
 import './App.css';
 import RequireAuth from './components/auth/RequireAuth';
 import UserProfile from './pages/UserProfile';
+import SearchPage from './pages/Search';
 
 function App(): React.ReactElement {
   return (
@@ -24,6 +25,7 @@ function App(): React.ReactElement {
             {/* Auth User Routes */}
             <Route element={<RequireAuth />} >
               <Route path='/home' element={<HomePage />} />
+              <Route path='/search' element={<SearchPage />} />
               <Route path='/user-profile/:tabId' element={<UserProfile />} />
               <Route path='/user-profile' element={<UserProfile />} />
             </Route>
