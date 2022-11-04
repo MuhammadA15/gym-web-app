@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FETCH_ALL_EXERCISES_ENDPOINT } from "../../utils/constants/apiEndpoints";
+import {MdOutlineNavigateNext, MdOutlineNavigateBefore} from "react-icons/md";
 import './styles.scss'
 
 interface exerciseTypes {
@@ -57,7 +58,7 @@ const SearchPage = () => {
   }, [exerciseData])
 
   /**
-   * Set array index range based on page number
+   * Set exercise list index range based on page number
    */
   useEffect(() => {
     pagination();
@@ -67,21 +68,40 @@ const SearchPage = () => {
     if (exerciseData) {
       const newRange = [
         (page * 24) - 24, 
-        (page * 24) > exerciseData?.length ? exerciseData?.length : (page * 24)
+        (page * 24) > exerciseData?.length 
+          ? exerciseData?.length 
+          : (page * 24)
       ]
       setRange(newRange);
     }
   };
 
+  /**
+   * Update page numbers range for display
+   */
   useEffect(() => {
-    if (mount && page != Math.ceil((pageRange[0] + pageRange[1]) / 2)) {
-      setPageRange([
-        page - 4 < 0 ? 0 : page - 4, 
-        pageTotal && page + 3 > pageTotal ? pageTotal : page + 3
-      ])
+    if (mount) {
+      updatePageNumbers();
     }
     setMount(true);
   }, [page])
+
+  const updatePageNumbers = () => {
+    if (pageTotal && page != Math.ceil((pageRange[0] + pageRange[1]) / 2)) {
+      let lowerRange = page - 4
+      let upperRange = page + 3
+      if (page - 4 < 0) {
+        lowerRange = 0
+        upperRange = 7
+      }
+      if (page + 3 > pageTotal) {
+        lowerRange = pageTotal - 7
+        upperRange = pageTotal
+      }
+      
+      setPageRange([lowerRange, upperRange])
+    }
+  };
 
   return (
     <div className="grid grid-cols-5">
@@ -94,37 +114,67 @@ const SearchPage = () => {
         </div>
         <hr className="search-hr-border-t-1 border-g-300 mx-4 mt-6"/>
         <p className="text-left px-4 mt-1 text-gray-500">{exerciseData ? parseInt(exerciseData?.length.toString()).toLocaleString() : ""} results found</p>
-        <div className="grid grid-cols-4 gap-4 m-4 p-4 pt-16 mt-6 bg-neutral-800">
-          {exerciseData?.slice(range[0], range[1])?.map((exercise, index) => (
-            <div key={index} className="mb-10 flex flex-col items-center">
-              <img src={exercise?.gifUrl} className="h-40 w-40"/>
-              <p>{exercise?.name}</p>
-              <p>{exercise?.bodyPart}</p>
-              <p>{exercise?.target}</p>
-              <p>{exercise?.equipment}</p>
-            </div>
-          ))}
-        </div>
-        <div className="text-center mb-4">
-          {Array.from(Array(pageTotal).keys())?.slice(pageRange[0], pageRange[1])?.map(i => (
-            <>
+        <div className="bg-neutral-800">
+          <div className="grid grid-cols-4 gap-4 mx-4 mt-4 px-4 pt-4 pt-16 mt-6">
+            {exerciseData?.slice(range[0], range[1])?.map((exercise, index) => (
+              <div key={index} className="mb-10 flex flex-col items-center">
+                <img src={exercise?.gifUrl} className="h-40 w-40"/>
+                <p>{exercise?.name}</p>
+                <p>{exercise?.bodyPart}</p>
+                <p>{exercise?.target}</p>
+                <p>{exercise?.equipment}</p>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-center items-center pb-6 mb-4">
             <span 
               className={`
-                px-2.5
-                font-bold 
+                px-3.5
+                py-1
                 hover:rounded 
-                hover:bg-slate-500 
+                hover:bg-red-500 
+                hover:bg-opacity-25
                 hover:cursor-pointer
-                ${page === i + 1 ? 'rounded bg-slate-700' : ''}
-              `} 
-              key={i} 
-              onClick={() => setPage(i + 1)}
+                ${page === 1 ? 'span-disabled' : ''}
+              `}
+              onClick={() => setPage(page - 1)}
             >
-              {i +1}
-              
+              <MdOutlineNavigateBefore />
             </span>
-            </>
-          ))}
+            {Array.from(Array(pageTotal).keys())?.slice(pageRange[0], pageRange[1])?.map(i => (
+              <>
+              <span 
+                className={`
+                  px-3.5
+                  font-bold 
+                  rounded
+                  hover:cursor-pointer
+                  ${page === i + 1 ? 'bg-red-500 hover:bg-red-500' : ''}
+                  ${page !== i + 1 ? 'hover:bg-red-500 hover:bg-opacity-25' : ''}
+                `} 
+                key={i} 
+                onClick={() => setPage(i + 1)}
+              >
+                {i +1}
+                
+              </span>
+              </>
+            ))}
+            <span 
+              className={`
+                px-3.5 
+                py-1
+                hover:rounded 
+                hover:bg-red-500 
+                hover:bg-opacity-25
+                hover:cursor-pointer
+                ${page === pageTotal ? 'span-disabled' : ''}
+              `}
+              onClick={() => setPage(page + 1)}
+            >
+              <MdOutlineNavigateNext />
+            </span>
+          </div>
         </div>
       </div>
   </div>
