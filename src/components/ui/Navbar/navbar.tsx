@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import OutlinedButton from "../OutlinedButton/outlinedButton";
 import FilledButton from "../FilledButton/filledButton";
-import Space from "../Space/space";
 import "./styles.scss";
 import { useAuth } from "../../../context/auth";
 import DetailsMenu from "../Menu/DetailsMenu";

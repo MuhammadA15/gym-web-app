@@ -10,6 +10,7 @@ import './App.css';
 import RequireAuth from './components/auth/RequireAuth';
 import UserProfile from './pages/UserProfile';
 import SearchPage from './pages/Search';
+import ExerciseItem from './pages/ExerciseItem';
 
 function App(): React.ReactElement {
   return (
@@ -26,6 +27,7 @@ function App(): React.ReactElement {
             <Route element={<RequireAuth />} >
               <Route path='/home' element={<HomePage />} />
               <Route path='/search' element={<SearchPage />} />
+              <Route path='/exercise/:exerciseId' element={<ExerciseItem />} />
               <Route path='/user-profile/:tabId' element={<UserProfile />} />
               <Route path='/user-profile' element={<UserProfile />} />
             </Route>

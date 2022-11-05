@@ -20,7 +20,7 @@ const DetailsMenu = ({ logout, username }: { logout: () => void, username: strin
           type="button"
           onClick={menuClick}
         >
-          <img src={emptyPhoto} className="h-10 w-10 rounded-full" alt={'profile photo'}/>
+          <img src={emptyPhoto} className="h-10 w-10 rounded-full" alt={''}/>
         </button>
         <svg
           className="ml-1 w-4 h-4 hover:cursor-pointer"
@@ -49,7 +49,7 @@ const DetailsMenu = ({ logout, username }: { logout: () => void, username: strin
             aria-labelledby="dropdownDefault"
           >
             <li className="p-3 grid grid-cols-3 gap-2 items-center">
-              <img src={emptyPhoto} className="w-10 h-10 rounded-full" alt={'profile photo'}/>
+              <img src={emptyPhoto} className="w-10 h-10 rounded-full" alt={''}/>
               <div className="col-span-2">
                 Signed in as {" "}
                 <strong>{username}</strong>

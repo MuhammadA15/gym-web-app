@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FETCH_ALL_EXERCISES_ENDPOINT } from "../../utils/constants/apiEndpoints";
 import {MdOutlineNavigateNext, MdOutlineNavigateBefore} from "react-icons/md";
+import {HiChevronDoubleLeft, HiChevronDoubleRight} from "react-icons/hi";
 import './styles.scss'
+import ResultCard from "./ResultCard";
 
-interface exerciseTypes {
+export interface exerciseTypes {
   id: number,
   name: string,
   bodyPart: string,
@@ -13,6 +15,8 @@ interface exerciseTypes {
 }
 
 const SearchPage = () => {
+
+  const entriesPerPage = 18;
 
   const [exerciseData, setExerciseData] = useState<exerciseTypes[] | null>([]);
   const [page, setPage] = useState(1);
@@ -53,41 +57,34 @@ const SearchPage = () => {
    */
   useEffect(() => {
     if (exerciseData) {
-      setPageTotal(Math.ceil((exerciseData?.length) / 24));
+      setPageTotal(Math.ceil((exerciseData?.length) / entriesPerPage));
     }
   }, [exerciseData])
 
   /**
    * Set exercise list index range based on page number
    */
-  useEffect(() => {
-    pagination();
-  }, [page, exerciseData])
-
-  const pagination = () => {
+  const pagination = useCallback(() => {
     if (exerciseData) {
       const newRange = [
-        (page * 24) - 24, 
-        (page * 24) > exerciseData?.length 
+        (page * entriesPerPage) - entriesPerPage, 
+        (page * entriesPerPage) > exerciseData?.length 
           ? exerciseData?.length 
-          : (page * 24)
+          : (page * entriesPerPage)
       ]
       setRange(newRange);
     }
-  };
+  },[exerciseData, page]);
+
+  useEffect(() => {
+    pagination();
+  }, [page, exerciseData, pagination])
 
   /**
    * Update page numbers range for display
    */
-  useEffect(() => {
-    if (mount) {
-      updatePageNumbers();
-    }
-    setMount(true);
-  }, [page])
-
-  const updatePageNumbers = () => {
-    if (pageTotal && page != Math.ceil((pageRange[0] + pageRange[1]) / 2)) {
+  const updatePageNumbers = useCallback(() => {
+    if (pageTotal && page !== Math.ceil((pageRange[0] + pageRange[1]) / 2)) {
       let lowerRange = page - 4
       let upperRange = page + 3
       if (page - 4 < 0) {
@@ -101,11 +98,19 @@ const SearchPage = () => {
       
       setPageRange([lowerRange, upperRange])
     }
-  };
+  }, [pageTotal, page, pageRange]);
+
+  useEffect(() => {
+    if (mount) {
+      updatePageNumbers();
+    }
+    setMount(true);
+  }, [page, updatePageNumbers])
+
 
   return (
     <div className="grid grid-cols-5">
-      <div className="cols-span-1 bg-neutral-800 m-4">
+      <div className="cols-span-1 bg-neutral-800 m-4 rounded">
         <p></p>
       </div>
       <div className="col-span-4 mt-4">
@@ -114,23 +119,36 @@ const SearchPage = () => {
         </div>
         <hr className="search-hr-border-t-1 border-g-300 mx-4 mt-6"/>
         <p className="text-left px-4 mt-1 text-gray-500">{exerciseData ? parseInt(exerciseData?.length.toString()).toLocaleString() : ""} results found</p>
-        <div className="bg-neutral-800">
-          <div className="grid grid-cols-4 gap-4 mx-4 mt-4 px-4 pt-4 pt-16 mt-6">
+        <div className="">
+          <div className="grid grid-cols-3 gap-2 mx-4 mt-4 px-4 pt-7">
             {exerciseData?.slice(range[0], range[1])?.map((exercise, index) => (
-              <div key={index} className="mb-10 flex flex-col items-center">
-                <img src={exercise?.gifUrl} className="h-40 w-40"/>
-                <p>{exercise?.name}</p>
-                <p>{exercise?.bodyPart}</p>
-                <p>{exercise?.target}</p>
-                <p>{exercise?.equipment}</p>
-              </div>
+              <ResultCard exercise={exercise} index={index}/>
             ))}
           </div>
           <div className="flex justify-center items-center pb-6 mb-4">
             <span 
               className={`
+                text-sm
                 px-3.5
                 py-1
+                transition-all
+                duration-200
+                hover:rounded 
+                hover:bg-red-500 
+                hover:bg-opacity-25
+                hover:cursor-pointer
+                ${page === 1 ? 'span-disabled' : ''}
+              `}
+              onClick={() => setPage(1)}
+            >
+              <HiChevronDoubleLeft  />
+            </span>
+            <span 
+              className={`
+                px-3.5
+                py-1
+                transition-all
+                duration-200
                 hover:rounded 
                 hover:bg-red-500 
                 hover:bg-opacity-25
@@ -148,6 +166,8 @@ const SearchPage = () => {
                   px-3.5
                   font-bold 
                   rounded
+                  transition-all
+                  duration-200
                   hover:cursor-pointer
                   ${page === i + 1 ? 'bg-red-500 hover:bg-red-500' : ''}
                   ${page !== i + 1 ? 'hover:bg-red-500 hover:bg-opacity-25' : ''}
@@ -164,6 +184,8 @@ const SearchPage = () => {
               className={`
                 px-3.5 
                 py-1
+                transition-all
+                duration-200
                 hover:rounded 
                 hover:bg-red-500 
                 hover:bg-opacity-25
@@ -173,6 +195,23 @@ const SearchPage = () => {
               onClick={() => setPage(page + 1)}
             >
               <MdOutlineNavigateNext />
+            </span>
+            <span 
+              className={`
+                text-sm
+                px-3.5
+                py-1
+                transition-all
+                duration-200
+                hover:rounded 
+                hover:bg-red-500 
+                hover:bg-opacity-25
+                hover:cursor-pointer
+                ${page === pageTotal ? 'span-disabled' : ''}
+              `}
+              onClick={() => setPage(pageTotal ? pageTotal : page)}
+            >
+              <HiChevronDoubleRight  />
             </span>
           </div>
         </div>
