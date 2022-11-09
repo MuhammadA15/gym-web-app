@@ -12,3 +12,5 @@ export const SIGNUP_ENDPOINT = BASE_URL + '/auth/users';
 export const LOGIN_ENDPOINT = BASE_URL + '/auth/login';
 export const FETCH_ALL_EXERCISES_ENDPOINT = BASE_URL + '/exercises';
 export const FETCH_EXERCISE_BY_ID_ENDPOINT = BASE_URL + '/exercises/id';
+export const ADD_EXERCISE_FAVORITES_ENDPOINT = BASE_URL + '/exercises/id/add-favorite';
+export const GET_FAVORITES_ENDPOINT = BASE_URL + '/exercises/getFavorites';
