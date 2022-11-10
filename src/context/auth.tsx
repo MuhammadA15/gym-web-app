@@ -1,17 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-
-interface userInterface {
-  id: number,
-  email: string,
-  username: string,
-  password: string
-}
-
-interface AuthContextInterface {
-  user: userInterface | null;
-  login: (userInfo: userInterface) => void;
-  logout: () => void;
-}
+import { userInterface, AuthContextInterface } from "../types/userType";
 
 const AuthContext = createContext<AuthContextInterface | null>(null);
 

@@ -14,7 +14,7 @@ const Navbar = () => {
   const navRef = useRef<HTMLInputElement>(null);
 
   const fixNav = () => {
-    if (navRef.current) {
+    if (navRef.current && !userId) {
       if (window.scrollY > navRef.current.offsetHeight + 150) {
         navRef.current.classList.add("active");
       } else {

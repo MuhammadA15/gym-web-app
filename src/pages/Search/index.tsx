@@ -1,24 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FETCH_ALL_EXERCISES_ENDPOINT } from "../../utils/constants/apiEndpoints";
+import { FETCH_ALL_EXERCISES_ENDPOINT, GET_FAVORITES_ENDPOINT } from "../../utils/constants/apiEndpoints";
 import {MdOutlineNavigateNext, MdOutlineNavigateBefore} from "react-icons/md";
 import {HiChevronDoubleLeft, HiChevronDoubleRight} from "react-icons/hi";
 import './styles.scss'
 import ResultCard from "./ResultCard";
-
-export interface exerciseTypes {
-  id: number,
-  name: string,
-  bodyPart: string,
-  equipment : string,
-  gifUrl: string,
-  target: string
-}
+import { exerciseTypes } from "../../types/exerciseType";
 
 const SearchPage = () => {
 
   const entriesPerPage = 18;
+  const userId = localStorage.getItem('id');
 
   const [exerciseData, setExerciseData] = useState<exerciseTypes[] | null>([]);
+  const [favExercises, setFavExercises] = useState<number[] | null>([])
   const [page, setPage] = useState(1);
   const [range, setRange] = useState<number[]>([]);
   const [pageTotal, setPageTotal] = useState<number | null>(null);
@@ -28,10 +22,6 @@ const SearchPage = () => {
   /**
    * Fetch all exercises
    */
-  useEffect(() => {
-    fetchExercises();
-  }, []);
-
   const fetchExercises = async () => {
     await fetch(FETCH_ALL_EXERCISES_ENDPOINT, {
       method: "GET",
@@ -52,6 +42,49 @@ const SearchPage = () => {
       });
   };
 
+  useEffect(() => {
+    fetchExercises();
+  }, []);
+
+  /**
+   * Get Favorite Exercises
+   */
+  const fetchFavorites = async () => {
+    await fetch(GET_FAVORITES_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: userId
+    })
+      .then((res) =>
+        res.json().then((data) => ({ status: res?.status, body: data }))
+      )
+      .then((data) => {
+        if (data?.status === 200) {
+          console.log("data", data.body);
+          setFavExercises(data.body);
+        } else {
+          // setErrorMsg(data?.body?.msg);
+        }
+      });
+  };
+
+  useEffect(() => {
+    if (userId) {
+      fetchFavorites();
+    }
+  }, [userId]);
+
+  const checkFavExercise = (exerciseId: number) => {
+    if (favExercises) {
+      return favExercises.some(
+        favId => favId === exerciseId,
+      );
+    }
+    return false;
+  }
+
   /**
    * Determine total amount of pages
    */
@@ -59,7 +92,7 @@ const SearchPage = () => {
     if (exerciseData) {
       setPageTotal(Math.ceil((exerciseData?.length) / entriesPerPage));
     }
-  }, [exerciseData])
+  }, [exerciseData, entriesPerPage])
 
   /**
    * Set exercise list index range based on page number
@@ -105,12 +138,12 @@ const SearchPage = () => {
       updatePageNumbers();
     }
     setMount(true);
-  }, [page, updatePageNumbers])
+  }, [page])
 
 
   return (
     <div className="grid grid-cols-5">
-      <div className="cols-span-1 bg-neutral-800 m-4 rounded">
+      <div className="cols-span-1 bg-light-black m-4 rounded">
         <p></p>
       </div>
       <div className="col-span-4 mt-4">
@@ -122,15 +155,15 @@ const SearchPage = () => {
         <div className="">
           <div className="grid grid-cols-3 gap-2 mx-4 mt-4 px-4 pt-7">
             {exerciseData?.slice(range[0], range[1])?.map((exercise, index) => (
-              <ResultCard exercise={exercise} index={index}/>
+              <ResultCard exercise={exercise} index={index} favorited={checkFavExercise(exercise?.id)}/>
             ))}
           </div>
           <div className="flex justify-center items-center pb-6 mb-4">
             <span 
               className={`
                 text-sm
-                px-3.5
-                py-1
+                px-3
+                py-1.5
                 transition-all
                 duration-200
                 hover:rounded 
@@ -145,8 +178,8 @@ const SearchPage = () => {
             </span>
             <span 
               className={`
-                px-3.5
-                py-1
+                px-3
+                py-1.5
                 transition-all
                 duration-200
                 hover:rounded 
@@ -163,7 +196,8 @@ const SearchPage = () => {
               <>
               <span 
                 className={`
-                  px-3.5
+                  px-3
+                  py-0.5
                   font-bold 
                   rounded
                   transition-all
@@ -182,8 +216,8 @@ const SearchPage = () => {
             ))}
             <span 
               className={`
-                px-3.5 
-                py-1
+                px-3 
+                py-1.5
                 transition-all
                 duration-200
                 hover:rounded 
@@ -199,8 +233,8 @@ const SearchPage = () => {
             <span 
               className={`
                 text-sm
-                px-3.5
-                py-1
+                px-3
+                py-1.5
                 transition-all
                 duration-200
                 hover:rounded 
