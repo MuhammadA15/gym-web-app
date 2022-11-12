@@ -4,22 +4,18 @@ import emptyPhoto from "../../assets/blank-profile-picture.png";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
 import "./styles.scss";
 import { useNavigate, useParams } from "react-router-dom";
+import Favorites from "./Favorites";
 
 const UserProfile = () => {
   const navigate = useNavigate();
-  const username = localStorage.getItem('username');
-  const email = localStorage.getItem('email');
+  const username = localStorage.getItem("username");
+  const email = localStorage.getItem("email");
   let pId = "";
 
   const { tabId = "personal" } = useParams();
   const [currentTab, setCurrentTab] = useState(tabId);
 
-  const menuItems = [
-    "Personal", 
-    "Library", 
-    "Favorites", 
-    "Preferences"
-  ];
+  const menuItems = ["Personal", "Library", "Favorites", "Preferences"];
 
   useEffect(() => {
     setCurrentTab(tabId);
@@ -27,7 +23,7 @@ const UserProfile = () => {
 
   return (
     <div className="grid grid-cols-9 h-screen">
-      <div className="flex flex-col col-span-3 bg-light-black border-1 shadow-xl rounded-md m-4 p-7 h-full items-center">
+      <div className="flex flex-col col-span-3 border-1 shadow-xl rounded-md m-4 p-7 h-full items-center">
         <img
           src={emptyPhoto}
           alt={"profile"}
@@ -45,7 +41,9 @@ const UserProfile = () => {
                 key={index}
                 className={`
                   py-2
-                  ${currentTab === item.toLocaleLowerCase() ? "menu_active" : ""}
+                  ${
+                    currentTab === item.toLocaleLowerCase() ? "menu_active" : ""
+                  }
                 `}
               >
                 <p
@@ -54,7 +52,10 @@ const UserProfile = () => {
                   rounded
                   hover:cursor-pointer 
                   hover:bg-gray-400
-                  hover:bg-opacity-20 "
+                  hover:bg-opacity-10 
+                  transition-all
+                  duration-100
+                  "
                   onClick={() => {
                     if (index === 0) {
                       pId = "personal";
@@ -70,12 +71,21 @@ const UserProfile = () => {
                 >
                   {item}
                 </p>
-                
               </div>
             ))}
           </div>
           <hr className="user-profile-border-t-1 border-g-300" />
-          <p className="mt-10 ">{currentTab}</p>
+          <div className="mt-10">
+            {currentTab === "personal" ? (
+              "Personal"
+            ) : currentTab === "library" ? (
+              "Library"
+            ) : currentTab === "favorites" ? (
+              <Favorites />
+            ) : (
+              "Preferences"
+            )}
+          </div>
         </div>
       </div>
     </div>
