@@ -1,23 +1,27 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FETCH_ALL_EXERCISES_ENDPOINT, GET_FAVORITES_ENDPOINT } from "../../utils/constants/apiEndpoints";
-import {MdOutlineNavigateNext, MdOutlineNavigateBefore} from "react-icons/md";
-import {HiChevronDoubleLeft, HiChevronDoubleRight} from "react-icons/hi";
-import './styles.scss'
+import {
+  FETCH_ALL_EXERCISES_ENDPOINT,
+  GET_FAVORITES_ENDPOINT,
+} from "../../utils/constants/apiEndpoints";
+import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
+import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
+import "./styles.scss";
 import ResultCard from "./ResultCard";
 import { exerciseTypes } from "../../types/exerciseType";
 
 const SearchPage = () => {
-
   const entriesPerPage = 18;
-  const userId = localStorage.getItem('id');
+  const userId = localStorage.getItem("id");
 
   const [exerciseData, setExerciseData] = useState<exerciseTypes[] | null>([]);
-  const [favExercises, setFavExercises] = useState<number[] | null>([])
+  const [favExercises, setFavExercises] = useState<number[] | null>([]);
   const [page, setPage] = useState(1);
   const [range, setRange] = useState<number[]>([]);
   const [pageTotal, setPageTotal] = useState<number | null>(null);
-  const [pageRange, setPageRange] = useState<number[]>([0, 7])
+  const [pageRange, setPageRange] = useState<number[]>([0, 7]);
   const [mount, setMount] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [exerciseLoading, setExerciseLoading] = useState(true);
 
   /**
    * Fetch all exercises
@@ -34,8 +38,9 @@ const SearchPage = () => {
       )
       .then((data) => {
         if (data?.status === 200) {
-          console.log("data", data.body);
+          // console.log("data", data.body);
           setExerciseData(data.body);
+          setExerciseLoading(false);
         } else {
           // setErrorMsg(data?.body?.msg);
         }
@@ -55,15 +60,16 @@ const SearchPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: userId
+      body: userId,
     })
       .then((res) =>
         res.json().then((data) => ({ status: res?.status, body: data }))
       )
       .then((data) => {
         if (data?.status === 200) {
-          console.log("data", data.body);
+          // console.log("data", data.body);
           setFavExercises(data.body);
+          setLoading(false);
         } else {
           // setErrorMsg(data?.body?.msg);
         }
@@ -78,21 +84,19 @@ const SearchPage = () => {
 
   const checkFavExercise = (exerciseId: number) => {
     if (favExercises) {
-      return favExercises.some(
-        favId => favId === exerciseId,
-      );
+      return favExercises.some((favId) => favId === exerciseId);
     }
     return false;
-  }
+  };
 
   /**
    * Determine total amount of pages
    */
   useEffect(() => {
     if (exerciseData) {
-      setPageTotal(Math.ceil((exerciseData?.length) / entriesPerPage));
+      setPageTotal(Math.ceil(exerciseData?.length / entriesPerPage));
     }
-  }, [exerciseData, entriesPerPage])
+  }, [exerciseData, entriesPerPage]);
 
   /**
    * Set exercise list index range based on page number
@@ -100,36 +104,36 @@ const SearchPage = () => {
   const pagination = useCallback(() => {
     if (exerciseData) {
       const newRange = [
-        (page * entriesPerPage) - entriesPerPage, 
-        (page * entriesPerPage) > exerciseData?.length 
-          ? exerciseData?.length 
-          : (page * entriesPerPage)
-      ]
+        page * entriesPerPage - entriesPerPage,
+        page * entriesPerPage > exerciseData?.length
+          ? exerciseData?.length
+          : page * entriesPerPage,
+      ];
       setRange(newRange);
     }
-  },[exerciseData, page]);
+  }, [exerciseData, page]);
 
   useEffect(() => {
     pagination();
-  }, [page, exerciseData, pagination])
+  }, [page, exerciseData, pagination]);
 
   /**
    * Update page numbers range for display
    */
   const updatePageNumbers = useCallback(() => {
     if (pageTotal && page !== Math.ceil((pageRange[0] + pageRange[1]) / 2)) {
-      let lowerRange = page - 4
-      let upperRange = page + 3
+      let lowerRange = page - 4;
+      let upperRange = page + 3;
       if (page - 4 < 0) {
-        lowerRange = 0
-        upperRange = 7
+        lowerRange = 0;
+        upperRange = 7;
       }
       if (page + 3 > pageTotal) {
-        lowerRange = pageTotal - 7
-        upperRange = pageTotal
+        lowerRange = pageTotal - 7;
+        upperRange = pageTotal;
       }
-      
-      setPageRange([lowerRange, upperRange])
+
+      setPageRange([lowerRange, upperRange]);
     }
   }, [pageTotal, page, pageRange]);
 
@@ -138,8 +142,7 @@ const SearchPage = () => {
       updatePageNumbers();
     }
     setMount(true);
-  }, [page])
-
+  }, [page]);
 
   return (
     <div className="grid grid-cols-5">
@@ -148,18 +151,42 @@ const SearchPage = () => {
       </div>
       <div className="col-span-4 mt-4">
         <div className="text-left px-4">
-          <input className="shadow appearance-none border rounded w-1/2 py-2 px-2 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Search"/>
+          <input
+            className="shadow appearance-none border rounded w-1/2 py-2 px-2 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Search"
+          />
         </div>
-        <hr className="search-hr-border-t-1 border-g-300 mx-4 mt-6"/>
-        <p className="text-left px-4 mt-1 text-gray-500">{exerciseData ? parseInt(exerciseData?.length.toString()).toLocaleString() : ""} results found</p>
+        <hr className="search-hr-border-t-1 border-g-300 mx-4 mt-6" />
+        <p className="text-left px-4 mt-1 text-gray-500">
+          {exerciseData
+            ? parseInt(exerciseData?.length.toString()).toLocaleString()
+            : ""}{" "}
+          results found
+        </p>
         <div className="">
           <div className="grid grid-cols-3 gap-2 mx-4 mt-4 px-4 pt-7">
             {exerciseData?.slice(range[0], range[1])?.map((exercise, index) => (
-              <ResultCard exercise={exercise} index={index} favorited={checkFavExercise(exercise?.id)}/>
+              <ResultCard
+                exercise={exercise}
+                index={index}
+                favorited={checkFavExercise(exercise?.id)}
+                loading={loading}
+                exLoading={exerciseLoading}
+              />
             ))}
+            {(exerciseLoading || loading) &&
+              Array.from(Array(18).keys())?.map((i) => (
+                <ResultCard
+                  exercise={null}
+                  index={i}
+                  favorited={false}
+                  loading={loading}
+                  exLoading={exerciseLoading}
+                />
+              ))}
           </div>
           <div className="flex justify-center items-center pb-6 mb-4">
-            <span 
+            <span
               className={`
                 text-sm
                 px-3
@@ -170,13 +197,13 @@ const SearchPage = () => {
                 hover:bg-red-500 
                 hover:bg-opacity-25
                 hover:cursor-pointer
-                ${page === 1 ? 'span-disabled' : ''}
+                ${page === 1 ? "span-disabled" : ""}
               `}
               onClick={() => setPage(1)}
             >
-              <HiChevronDoubleLeft  />
+              <HiChevronDoubleLeft />
             </span>
-            <span 
+            <span
               className={`
                 px-3
                 py-1.5
@@ -186,16 +213,18 @@ const SearchPage = () => {
                 hover:bg-red-500 
                 hover:bg-opacity-25
                 hover:cursor-pointer
-                ${page === 1 ? 'span-disabled' : ''}
+                ${page === 1 ? "span-disabled" : ""}
               `}
               onClick={() => setPage(page - 1)}
             >
               <MdOutlineNavigateBefore />
             </span>
-            {Array.from(Array(pageTotal).keys())?.slice(pageRange[0], pageRange[1])?.map(i => (
-              <>
-              <span 
-                className={`
+            {Array.from(Array(pageTotal).keys())
+              ?.slice(pageRange[0], pageRange[1])
+              ?.map((i) => (
+                <>
+                  <span
+                    className={`
                   px-3
                   py-0.5
                   font-bold 
@@ -203,18 +232,19 @@ const SearchPage = () => {
                   transition-all
                   duration-200
                   hover:cursor-pointer
-                  ${page === i + 1 ? 'bg-red-500 hover:bg-red-500' : ''}
-                  ${page !== i + 1 ? 'hover:bg-red-500 hover:bg-opacity-25' : ''}
-                `} 
-                key={i} 
-                onClick={() => setPage(i + 1)}
-              >
-                {i +1}
-                
-              </span>
-              </>
-            ))}
-            <span 
+                  ${page === i + 1 ? "bg-red-500 hover:bg-red-500" : ""}
+                  ${
+                    page !== i + 1 ? "hover:bg-red-500 hover:bg-opacity-25" : ""
+                  }
+                `}
+                    key={i}
+                    onClick={() => setPage(i + 1)}
+                  >
+                    {i + 1}
+                  </span>
+                </>
+              ))}
+            <span
               className={`
                 px-3 
                 py-1.5
@@ -224,13 +254,13 @@ const SearchPage = () => {
                 hover:bg-red-500 
                 hover:bg-opacity-25
                 hover:cursor-pointer
-                ${page === pageTotal ? 'span-disabled' : ''}
+                ${page === pageTotal ? "span-disabled" : ""}
               `}
               onClick={() => setPage(page + 1)}
             >
               <MdOutlineNavigateNext />
             </span>
-            <span 
+            <span
               className={`
                 text-sm
                 px-3
@@ -241,16 +271,16 @@ const SearchPage = () => {
                 hover:bg-red-500 
                 hover:bg-opacity-25
                 hover:cursor-pointer
-                ${page === pageTotal ? 'span-disabled' : ''}
+                ${page === pageTotal ? "span-disabled" : ""}
               `}
               onClick={() => setPage(pageTotal ? pageTotal : page)}
             >
-              <HiChevronDoubleRight  />
+              <HiChevronDoubleRight />
             </span>
           </div>
         </div>
       </div>
-  </div>
+    </div>
   );
 };
 

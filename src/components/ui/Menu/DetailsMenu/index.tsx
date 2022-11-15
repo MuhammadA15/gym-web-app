@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 // @ts-ignore
 import emptyPhoto from '../../../../assets/blank-profile-picture.png';
+import { useOutsideClickAlerter } from "../../../../hooks/OutsideClickAlerter";
 import './styles.scss';
 
 const DetailsMenu = ({ logout, username }: { logout: () => void, username: string | null }) => {
+  const wrapperRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  useOutsideClickAlerter(wrapperRef, setIsOpen);
 
   const menuClick = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div>
+    <div ref={isOpen ? wrapperRef : null}>
       <div className="flex items-center">
         <button
           id="dropdownDefault"

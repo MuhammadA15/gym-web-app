@@ -12,6 +12,7 @@ const LoginPage = () => {
   const auth = useAuth();
   const location = useLocation();
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const redirectPath = location.state?.path || "/home";
 
@@ -19,6 +20,8 @@ const LoginPage = () => {
     initialValues: login_InitVals,
     validationSchema: login_ValidationSchema,
     onSubmit: async (values) => {
+      setLoading(true);
+
       const data = {
         username: formik.values.username,
         password: formik.values.password,
@@ -41,6 +44,7 @@ const LoginPage = () => {
             navigate(redirectPath, { replace: true });
           } else {
             setErrorMsg(data?.body?.msg);
+            setLoading(false);
           }
         });
     },
@@ -98,9 +102,9 @@ const LoginPage = () => {
               )}
             </div>
             <div className="flex items-center justify-between">
-              <FilledButton text={"Log In"} />
+              <FilledButton text={"Log In"} loading={loading}/>
               <a
-                className="inline-block align-baseline font-bold text-sm text-red-500 hover:text-red-800"
+                className={`${loading ? 'hidden' : ''} inline-block align-baseline font-bold text-sm text-red-500 hover:text-red-800`}
                 href="#"
               >
                 Forgot Password?

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { BsFillStarFill, BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { exerciseTypes } from "../../../types/exerciseType";
@@ -9,6 +9,8 @@ import {
   REMOVE_EXERCISE_FAVORITES_ENDPOINT,
 } from "../../../utils/constants/apiEndpoints";
 import EntryMenu from "./EntryMenu";
+import FavoritesEntryCard from "./FavoritesEntryCard";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const Favorites = () => {
   const userId = localStorage.getItem("id");
@@ -18,6 +20,7 @@ const Favorites = () => {
   const [favExercises, setFavExercises] = useState<exerciseTypes[]>([]);
   const [favCount, setFavCount] = useState<Map<number, number>>(new Map());
   const [isOpenList, setIsOpenList] = useState<Map<number, boolean>>(new Map());
+  const [loading, setLoading] = useState(true);
 
   /**
    * Get Favorite Exercises IDs
@@ -120,6 +123,7 @@ const Favorites = () => {
   useEffect(() => {
     if (favExercises) {
       mapFavCount();
+      setLoading(false);
     }
   }, [favExercises, mapFavCount]);
 
@@ -168,60 +172,35 @@ const Favorites = () => {
   };
 
   return (
-    <div>
-      {favExercises
-        ?.sort((a, b) => a?.name.localeCompare(b?.name))
-        ?.map((exercise, index) => (
-          <div
-            key={index}
-            className="border-1 rounded mb-6 flex flex-row shadow-xl"
-          >
-            <img
-              src={exercise?.gifUrl}
-              className="h-fit max-h-48 rounded-l border-r-1"
+    <div>      
+        {!loading && favExercises
+          ?.sort((a, b) => a?.name.localeCompare(b?.name))
+          ?.map((exercise, index) => (
+            <FavoritesEntryCard
+              index={index}
+              exercise={exercise}
+              isOpenList={isOpenList}
+              favCount={favCount}
+              loading={loading}
+              openDetailsMenu={openDetailsMenu}
+              setIsOpenList={setIsOpenList}
+              removeFavorite={removeFavorite}
             />
-            <div className="flex flex-col mx-4 pt-4 px-4">
-              <div className="flex flex-row items-center">
-                <p
-                  className="font-bold text-capital text-left hover:cursor-pointer hover:underline"
-                  onClick={() => navigate(`/exercise/${exercise?.id}`)}
-                >
-                  {exercise?.name}
-                </p>
-                <p className="bg-orange-400 rounded-full px-3 py-0.5 ml-3 mr-1 my-1 text-capital text-sm">
-                  {exercise?.bodyPart}
-                </p>
-                <p className="bg-green-400 rounded-full px-3 py-0.5 mx-1 my-1 text-capital text-sm">
-                  {exercise?.target}
-                </p>
-                <div
-                  className="ml-auto -mr-5 hover:bg-gray-400 hover:bg-opacity-10 hover:cursor-pointer hover:rounded py-1.5 px-1.5"
-                  onClick={() => openDetailsMenu(exercise?.id)}
-                >
-                  <BsThreeDotsVertical />
-                  <EntryMenu
-                    isOpen={isOpenList?.get(exercise?.id)}
-                    removeFavorite={removeFavorite}
-                    exerciseId={String(exercise?.id)}
-                  />
-                </div>
-              </div>
-              <p className="text-gray-500 text-capital text-left mb-2">
-                {exercise?.equipment}
-              </p>
-              <p className="text-left">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Ratione totam consectetur quam veritatis voluptatem dolorem vero
-                magni consequatur eius, laudantium quod suscipit perferendis.
-                Dolore, voluptas facere eaque placeat at praesentium.
-              </p>
-              <div className="mt-auto mb-2 flex flex-row items-center">
-                <BsFillStarFill className="text-sm" color="#eac54f" />
-                <p className="mx-2">{favCount?.get(exercise?.id)}</p>
-              </div>
-            </div>
-          </div>
-        ))}
+          ))
+        }
+        {loading && Array.from(Array(8).keys())?.map((i) => (
+            <FavoritesEntryCard 
+              index={i}
+              exercise={null}
+              isOpenList={isOpenList}
+              favCount={null}
+              loading={loading}
+              openDetailsMenu={openDetailsMenu}
+              setIsOpenList={setIsOpenList}
+              removeFavorite={removeFavorite}
+            /> 
+          ))
+        }
     </div>
   );
 };

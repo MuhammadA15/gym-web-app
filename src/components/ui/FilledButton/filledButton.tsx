@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles.scss";
 
 const FilledButton = ({
   text,
@@ -7,6 +8,7 @@ const FilledButton = ({
   textSize,
   textWeight,
   width,
+  loading,
   onClickFunc,
 }: {
   text: string;
@@ -15,6 +17,7 @@ const FilledButton = ({
   textSize?: string;
   textWeight?: string;
   width?: string;
+  loading?: boolean;
   onClickFunc?: () => void;
 }) => {
   return (
@@ -24,16 +27,19 @@ const FilledButton = ({
           bg-red-500 
           hover:bg-red-700 
           text-white
+          transition-all
+          duration-500
           ${textSize ? textSize : ''} 
           ${width ? width : ''}
           ${textWeight ? textWeight : 'font-bold'} 
-          ${py ? py : 'py-2'} 
-          ${px ? px : 'px-4'} 
+          ${py ? py : 'py-1.5'} 
+          ${px ? px : 'px-4'}
+          ${loading ? 'w-full' : ''}
           rounded
         `}
         onClick={onClickFunc}
       >
-        {text}
+        {loading ? <div className="loading my-0.5 mx-auto"></div> : text}
       </button>
     </>
   );
