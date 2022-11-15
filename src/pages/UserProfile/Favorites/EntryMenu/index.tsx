@@ -1,15 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { GoPlus } from "react-icons/go";
 import { MdRemove, MdPlaylistAdd } from "react-icons/md";
 
 const EntryMenu = ({
   isOpen,
   exerciseId,
+  isOpenList,
+  setIsOpenList,
   removeFavorite,
 }: {
   isOpen: boolean | undefined;
   exerciseId: string;
+  isOpenList: Map<number, boolean>;
+  setIsOpenList: React.Dispatch<React.SetStateAction<Map<number, boolean>>>
   removeFavorite: (exerciseId: string) => void;
 }) => {
 

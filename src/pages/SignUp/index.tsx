@@ -9,11 +9,14 @@ import { SIGNUP_ENDPOINT } from '../../utils/constants/apiEndpoints'
 const SignUpPage = () => {
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: signUp_InitVals,
     validationSchema: signUp_ValidationSchema(),
     onSubmit: async values => {
+      setLoading(true);
+      
       const data = {
         username: formik.values.username,
         email: formik.values.email,
@@ -34,6 +37,7 @@ const SignUpPage = () => {
             navigate('/login')
           } else {
             setErrorMsg(data.body.msg)
+            setLoading(false);
           }
         })
     },
@@ -109,7 +113,7 @@ const SignUpPage = () => {
               }
             </div>
             <div className="block items-center">
-              <FilledButton text={'Sign Up'} />
+              <FilledButton text={'Sign Up'} loading={loading}/>
               <div className='mt-4'>
                 Already Have An Account? {' '}
                 <Link

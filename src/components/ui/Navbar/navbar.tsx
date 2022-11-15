@@ -14,7 +14,7 @@ const Navbar = () => {
   const navRef = useRef<HTMLInputElement>(null);
 
   const fixNav = () => {
-    if (navRef.current && !userId) {
+    if (navRef.current) {
       if (window.scrollY > navRef.current.offsetHeight + 150) {
         navRef.current.classList.add("active");
       } else {
@@ -32,7 +32,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="nav bg-neutral-800" ref={navRef}>
+      <nav className={`nav bg-neutral-800 ${!userId ? 'fixed' : ''}`} ref={navRef}>
         <div className="container">
           <div className="items-container">
             <ul className="nav-left">

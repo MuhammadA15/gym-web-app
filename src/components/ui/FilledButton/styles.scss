@@ -1,0 +1,19 @@
+.loading {
+	width: 1rem;
+	height: 1rem;
+	background-color: transparent;
+	border-radius: 1rem;
+	border-left: 0.1rem solid #fff;
+	position: relative;
+	transform: rotate(0deg);
+	animation: spinning 1s linear infinite;
+}
+
+@keyframes spinning {
+	0% {
+		transform: rotate(0deg);
+	}
+	0% {
+		transform: rotate(-360deg);
+	}
+}

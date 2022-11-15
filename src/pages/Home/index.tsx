@@ -4,7 +4,7 @@ import "./styles.scss";
 
 const HomePage = () => {
   return (
-    <div className="-mt-7">
+    <div className="">
       <div className="grid grid-cols-9 gap-0">
         <div className="col-span-2 p-7 pl-10 text-left border-r-1 h-full">
           <div className="left-grid-heading mb-5 items-center">
