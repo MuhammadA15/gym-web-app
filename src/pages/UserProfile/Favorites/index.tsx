@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { BsFillStarFill, BsThreeDotsVertical } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
 import { exerciseTypes } from "../../../types/exerciseType";
+import { IFavExerciseType } from "../../../types/favoriteExerciseType";
 import {
   GET_FAVORITES_ENDPOINT,
   FETCH_EXERCISE_BY_ID_ENDPOINT,
   GET_FAVORITES_COUNT_ENDPOINT,
   REMOVE_EXERCISE_FAVORITES_ENDPOINT,
 } from "../../../utils/constants/apiEndpoints";
-import EntryMenu from "./EntryMenu";
 import FavoritesEntryCard from "./FavoritesEntryCard";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 
 const Favorites = () => {
-  const userId = localStorage.getItem("id");
-  const navigate = useNavigate();
 
-  const [favExerciseIDs, setFavExerciseIDs] = useState<number[] | null>([]);
+  const userId = localStorage.getItem("id");
+
+  const [favExerciseIDs, setFavExerciseIDs] = useState<IFavExerciseType[] | null>([]);
   const [favExercises, setFavExercises] = useState<exerciseTypes[]>([]);
   const [favCount, setFavCount] = useState<Map<number, number>>(new Map());
   const [isOpenList, setIsOpenList] = useState<Map<number, boolean>>(new Map());
@@ -78,8 +75,8 @@ const Favorites = () => {
   };
 
   const getExercisesbyId = useCallback(() => {
-    favExerciseIDs?.forEach((id) => {
-      fetchExercise(String(id));
+    favExerciseIDs?.forEach((data) => {
+      fetchExercise(String(data?.exerciseId));
     });
   }, [favExerciseIDs]);
 

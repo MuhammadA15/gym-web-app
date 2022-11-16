@@ -1,8 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
 import "./styles.scss";
 
 const HomePage = () => {
+
+  const navigate = useNavigate();
+
+  const navigateToCreateExerciseFrom = () => {
+    navigate('/create-exercise');
+  }
+
+
   return (
     <div className="">
       <div className="grid grid-cols-9 gap-0">
@@ -81,6 +90,7 @@ const HomePage = () => {
                 <FilledButton
                   text={"Create new exercise"}
                   textWeight={"font-normal"}
+                  onClickFunc={navigateToCreateExerciseFrom}
                   py={"py-1"}
                 />
               </div>
