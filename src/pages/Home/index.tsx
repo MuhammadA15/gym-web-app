@@ -1,16 +1,15 @@
 import React from "react";
+import { AiFillEye, AiFillLock } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
 import "./styles.scss";
 
 const HomePage = () => {
-
   const navigate = useNavigate();
 
   const navigateToCreateExerciseFrom = () => {
-    navigate('/create-exercise');
-  }
-
+    navigate("/create-exercise");
+  };
 
   return (
     <div className="">
@@ -46,19 +45,20 @@ const HomePage = () => {
           <p className="text-md mb-4">Start building your profile</p>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <div className="border-1 shadow-2xl rounded px-4 pt-4 pb-4 mb-4 w-100 h-full">
-                <p className="text-md mb-2">Add a new exercise</p>
-                <p className="text-md text-gray-400 leading-0 mb-7">
+              <div className="border-1 shadow-2xl rounded px-6 py-6 mb-4 w-100 h-full">
+                <p className="text-md mb-1">Add a new exercise</p>
+                <p className="text-md text-gray-500 leading-0 mb-7">
                   An exercise can be anything from a weight lifting exercise to
                   a simple stretch
                 </p>
+                <label htmlFor="exercise-name py-1">Exercise Name</label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-7"
+                  className="shadow appearance-none border rounded w-full my-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-7"
                   id="exercise-name"
                   type="text"
                   placeholder="name for your exercise..."
                 />
-                <div className="flex mb-5 items-center">
+                <div className="flex mb-4 items-center">
                   <input
                     className="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                     type="radio"
@@ -67,12 +67,12 @@ const HomePage = () => {
                     value="true"
                   />
                   <div className="pl-4 text-sm">
-                    <label htmlFor="publish">
-                      Publish exercise so that anyone can view it
+                    <label htmlFor="public" className="flex items-center">
+                      <AiFillEye size={25} className="mr-2" /> Publish exercise
                     </label>
                   </div>
                 </div>
-                <div className="flex">
+                <div className="flex items-center mb-2">
                   <input
                     className="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300"
                     type="radio"
@@ -81,8 +81,9 @@ const HomePage = () => {
                     value="false"
                   />
                   <div className="pl-4 text-sm">
-                    <label htmlFor="private">
-                      Keep exercise private to your library
+                    <label htmlFor="private" className="flex items-center">
+                      <AiFillLock size={25} className="mr-2" /> Keep exercise
+                      private to your library
                     </label>
                   </div>
                 </div>
@@ -96,23 +97,27 @@ const HomePage = () => {
               </div>
             </div>
             <div>
-              <div className="border-1 shadow-2xl rounded px-4 pt-4 pb-3 mb-4 w-100 h-full">
-                <p className="text-md mb-2">Create a new workout</p>
-                <p className="text-md text-gray-400 leading-0 mb-7">
+              <div className="border-1 shadow-2xl rounded px-6 pt-6 pb-3 mb-4 w-100 h-full">
+                <p className="text-md mb-1">Create a new workout</p>
+                <p className="text-md text-gray-500 leading-0 mb-5">
                   Create a new workout routine to save to your library and
                   access at any time. Start by providing a brief description and
                   the name of the workout routine
                 </p>
+                <label htmlFor="routine-name" className="mb-2">
+                  Routine Name
+                </label>
                 <input
-                  className="mb-4 text-sm shadow appearance-none border rounded w-full py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="mb-4 text-sm shadow appearance-none border rounded w-full my-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   id="routine-name"
                   type="text"
                   placeholder="name of workout..."
                 />
+                <label htmlFor="routine-description">Description</label>
                 <textarea
                   name="routine-descripton"
                   placeholder="provide a brief description of your workout routine..."
-                  className="mb-5 text-sm appearance-none border rounded w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="mb-5 text-sm appearance-none border rounded w-full my-1 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 ></textarea>
                 <FilledButton
                   text={"Create workout routine"}
