@@ -5,8 +5,12 @@ import FilledButton from "../../components/ui/FilledButton/filledButton";
 import { yesNoOptions } from "../../utils/utils";
 import { AiFillLock, AiFillEye } from "react-icons/ai";
 import "./styles.scss";
+import { CREATE_EXERCISE_ENDPOINT } from "../../utils/constants/apiEndpoints";
+import { useNavigate } from "react-router-dom";
 
 const CreateExercisePage = () => {
+  const navigate = useNavigate();
+  const userId = localStorage.getItem("id");
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
@@ -45,8 +49,47 @@ const CreateExercisePage = () => {
       description: Yup.string(),
       gifUrl: Yup.string(),
     }),
-    onSubmit: async (values) => {},
+    onSubmit: async (values) => {
+      setLoading(true);
+
+      const data = {
+        name: formik.values.name,
+        bodyPart: formik.values.bodyPart,
+        equipment: formik.values.equipmentNeeded === "No" ? "Body Weight" : formik.values.equipment,
+        target: formik.values.target,
+        gifUrl: formik.values.gifUrl,
+        description: formik.values.description,
+        publish: formik.values.publish === "true" ? 1 : 0,
+        author: userId
+      };
+
+      console.log(data);
+
+      createExercise(data);
+    },
   });
+
+  const createExercise = async (data: any) => {
+    await fetch(CREATE_EXERCISE_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) =>
+        res.json().then((data) => ({ status: res.status, body: data }))
+      )
+      .then((data) => {
+        if (data.status === 200) {
+          alert(data.body.msg);
+          navigate("/search");
+        } else {
+          alert(data.body.msg);
+          setLoading(false);
+        }
+      });
+  };
 
   return (
     <div className="container flex justify-center">

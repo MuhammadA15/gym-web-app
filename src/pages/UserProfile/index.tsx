@@ -5,6 +5,7 @@ import FilledButton from "../../components/ui/FilledButton/filledButton";
 import "./styles.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import Favorites from "./Favorites";
+import Library from "./Library";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -79,7 +80,7 @@ const UserProfile = () => {
             {currentTab === "personal" ? (
               "Personal"
             ) : currentTab === "library" ? (
-              "Library"
+              <Library />
             ) : currentTab === "favorites" ? (
               <Favorites />
             ) : (
