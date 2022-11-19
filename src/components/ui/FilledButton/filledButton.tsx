@@ -26,9 +26,12 @@ const FilledButton = ({
         className={`
           bg-red-500 
           hover:bg-red-700 
+          hover:border-red-700
           text-white
           transition-all
-          duration-500
+          duration-300
+          border
+          border-red-500
           ${textSize ? textSize : ''} 
           ${width ? width : ''}
           ${textWeight ? textWeight : 'font-bold'} 

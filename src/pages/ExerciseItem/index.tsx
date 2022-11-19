@@ -9,13 +9,14 @@ import {
 } from "../../utils/constants/apiEndpoints";
 import { BsStar, BsFillStarFill } from "react-icons/bs";
 import { exerciseTypes } from "../../types/exerciseType";
+import { IFavExerciseType } from "../../types/favoriteExerciseType";
 
 const ExerciseItem = () => {
   const userId = localStorage.getItem("id");
   const { exerciseId = "" } = useParams();
 
   const [exerciseData, setExerciseData] = useState<exerciseTypes | null>();
-  const [favExercises, setFavExercises] = useState<number[] | null>([]);
+  const [favExercises, setFavExercises] = useState<IFavExerciseType[] | null>([]);
   const [isFav, setIsFav] = useState(false);
   const [favCount, setFavCount] = useState(0);
 
@@ -85,7 +86,7 @@ const ExerciseItem = () => {
    */
   const checkFavExercise = (exerciseId: number) => {
     if (favExercises) {
-      return favExercises.some((favId) => favId === exerciseId);
+      return favExercises.some((data) => data?.exerciseId === exerciseId);
     }
     return false;
   };
@@ -185,7 +186,7 @@ const ExerciseItem = () => {
   };
 
   return (
-    <div className="grid grid-cols-4 bg-black rounded h-screen -mt-5">
+    <div className="grid grid-cols-4 bg-black rounded h-screen">
       <div className="col-span-1 ml-16 mt-16 flex flex-col items-center">
         <img src={exerciseData?.gifUrl} className="h-80" />
       </div>

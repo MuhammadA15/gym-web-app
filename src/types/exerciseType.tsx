@@ -5,4 +5,6 @@ export interface exerciseTypes {
   equipment: string;
   gifUrl: string;
   target: string;
+  publish: number;
+  author?: number
 }

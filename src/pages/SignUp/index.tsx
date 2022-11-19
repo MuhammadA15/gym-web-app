@@ -44,7 +44,7 @@ const SignUpPage = () => {
   })
 
   return (
-    <div>
+    <div className='mt-24'>
       <div className="container flex justify-center">
         <div className="w-full max-w-xs mt-10">
           { errorMsg &&

@@ -51,7 +51,7 @@ const LoginPage = () => {
   });
 
   return (
-    <div>
+    <div className="mt-24">
       <div className="container flex justify-center">
         <div className="w-full max-w-xs mt-10">
           {errorMsg && <p className="text-red-500 mb-3">{errorMsg}</p>}

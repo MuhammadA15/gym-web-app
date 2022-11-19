@@ -95,7 +95,7 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <div className="page-content">
+      <div>
         <Outlet />
       </div>
     </>

@@ -8,13 +8,14 @@ import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import "./styles.scss";
 import ResultCard from "./ResultCard";
 import { exerciseTypes } from "../../types/exerciseType";
+import { IFavExerciseType } from "../../types/favoriteExerciseType";
 
 const SearchPage = () => {
   const entriesPerPage = 18;
   const userId = localStorage.getItem("id");
 
   const [exerciseData, setExerciseData] = useState<exerciseTypes[] | null>([]);
-  const [favExercises, setFavExercises] = useState<number[] | null>([]);
+  const [favExercises, setFavExercises] = useState<IFavExerciseType[] | null>([]);
   const [page, setPage] = useState(1);
   const [range, setRange] = useState<number[]>([]);
   const [pageTotal, setPageTotal] = useState<number | null>(null);
@@ -68,7 +69,7 @@ const SearchPage = () => {
       .then((data) => {
         if (data?.status === 200) {
           // console.log("data", data.body);
-          setFavExercises(data.body);
+          setFavExercises(data?.body);
           setLoading(false);
         } else {
           // setErrorMsg(data?.body?.msg);
@@ -84,7 +85,7 @@ const SearchPage = () => {
 
   const checkFavExercise = (exerciseId: number) => {
     if (favExercises) {
-      return favExercises.some((favId) => favId === exerciseId);
+      return favExercises.some((data) => data?.exerciseId === exerciseId);
     }
     return false;
   };
