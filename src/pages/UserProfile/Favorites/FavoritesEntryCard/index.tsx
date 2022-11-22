@@ -5,6 +5,7 @@ import { exerciseTypes } from "../../../../types/exerciseType";
 import EntryMenu from "../EntryMenu";
 import { BsFillStarFill, BsThreeDotsVertical } from "react-icons/bs";
 import { useMultiMenuOutsideClickAlerter } from "../hooks/MultiMenuOutsideClickAlerter";
+import AddExerciseModal from "../Modal";
 
 const FavoritesEntryCard = ({
   index,
@@ -12,24 +13,34 @@ const FavoritesEntryCard = ({
   isOpenList,
   favCount,
   loading,
+  modalIsOpen,
+  setEId,
   openDetailsMenu,
   setIsOpenList,
   removeFavorite,
+  setModalIsOpen,
 }: {
   index: number;
   exercise: exerciseTypes | null;
   isOpenList: Map<number, boolean>;
   favCount: Map<number, number> | null;
   loading: boolean;
+  modalIsOpen: boolean;
   openDetailsMenu: (exerciseId: number) => void;
   removeFavorite: (exerciseId: string) => void;
   setIsOpenList: React.Dispatch<React.SetStateAction<Map<number, boolean>>>;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setEId: React.Dispatch<React.SetStateAction<string>>;
 }) => {
-
   const navigate = useNavigate();
 
   const wrapperRef = useRef(null);
-  useMultiMenuOutsideClickAlerter(wrapperRef, isOpenList, Number(exercise?.id), setIsOpenList);
+  useMultiMenuOutsideClickAlerter(
+    wrapperRef,
+    isOpenList,
+    Number(exercise?.id),
+    setIsOpenList
+  );
 
   return (
     <SkeletonTheme baseColor="#4d4f5038" highlightColor="none">
@@ -89,6 +100,8 @@ const FavoritesEntryCard = ({
                   setIsOpenList={setIsOpenList}
                   removeFavorite={removeFavorite}
                   exerciseId={String(exercise?.id)}
+                  setModalIsOpen={setModalIsOpen}
+                  setEId={setEId}
                 />
               </div>
             )}

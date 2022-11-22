@@ -63,7 +63,7 @@ const CreateExercisePage = () => {
         author: userId
       };
 
-      console.log(data);
+      // console.log(data);
 
       createExercise(data);
     },
@@ -252,7 +252,7 @@ const CreateExercisePage = () => {
             <p className="text-gray-500 text-sm text-left">
               Select whether you would like to publish your exercise for the
               public to see or if you would like to keep your exercise private
-              to you. This can be changed later through the library.
+              to you. This can be changed at anytime through the user's library.
             </p>
           </div>
           <div className="mb-4 mt-4">

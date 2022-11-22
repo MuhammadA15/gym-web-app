@@ -1,14 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import { AiFillEye, AiFillLock } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
+import { CREATE_ROUTINE_ENDPOINT } from "../../utils/constants/apiEndpoints";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import "./styles.scss";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const userId = localStorage.getItem("id");
+
+  const [loading, setLoading] = useState(false);
 
   const navigateToCreateExerciseFrom = () => {
     navigate("/create-exercise");
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      routineName: "",
+    },
+    validationSchema: Yup.object({
+      routineName: Yup.string().required("Routine name is required"),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+
+      const data = {
+        routineName: formik.values.routineName,
+        userid: userId,
+      };
+
+      console.log(data);
+
+      createRoutine(data);
+    },
+  });
+
+  const createRoutine = async (data: any) => {
+    await fetch(CREATE_ROUTINE_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) =>
+        res.json().then((data) => ({ status: res.status, body: data }))
+      )
+      .then((data) => {
+        if (data.status === 200) {
+          alert(data.body.msg);
+          setLoading(false);
+          // navigate("/search");
+        } else {
+          alert(data.body.msg);
+          setLoading(false);
+        }
+      });
   };
 
   return (
@@ -104,26 +154,39 @@ const HomePage = () => {
                   access at any time. Start by providing a brief description and
                   the name of the workout routine
                 </p>
-                <label htmlFor="routine-name" className="mb-2">
-                  Routine Name
-                </label>
-                <input
-                  className="mb-4 text-sm shadow appearance-none border rounded w-full my-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  id="routine-name"
-                  type="text"
-                  placeholder="name of workout..."
-                />
-                <label htmlFor="routine-description">Description</label>
-                <textarea
-                  name="routine-descripton"
-                  placeholder="provide a brief description of your workout routine..."
-                  className="mb-5 text-sm appearance-none border rounded w-full my-1 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                ></textarea>
-                <FilledButton
-                  text={"Create workout routine"}
-                  py={"py-1"}
-                  textWeight={"font-normal"}
-                />
+                <form onSubmit={formik.handleSubmit}>
+                  <div className="mb-4">
+                    <label htmlFor="routine-name" className="mb-2">
+                      Routine Name
+                    </label>
+                    <input
+                      className="text-sm shadow appearance-none border rounded w-full my-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      id="routineName"
+                      type="text"
+                      placeholder="name of workout..."
+                      value={formik.values.routineName}
+                      onChange={formik.handleChange}
+                    />
+                    {formik.errors.routineName && (
+                      <p className="text-left text-red-500">
+                        {formik.errors.routineName}
+                      </p>
+                    )}
+                  </div>
+
+                  <label htmlFor="routine-description">Description</label>
+                  <textarea
+                    name="routine-descripton"
+                    placeholder="provide a brief description of your workout routine..."
+                    className="mb-5 text-sm appearance-none border rounded w-full my-1 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  ></textarea>
+                  <FilledButton
+                    text={"Create workout routine"}
+                    py={"py-1"}
+                    textWeight={"font-normal"}
+                    loading={loading}
+                  />
+                </form>
               </div>
             </div>
           </div>
