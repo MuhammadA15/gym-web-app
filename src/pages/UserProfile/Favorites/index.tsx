@@ -14,7 +14,9 @@ import "./styles.scss";
 const Favorites = () => {
   const userId = localStorage.getItem("id");
 
-  const [favExerciseIDs, setFavExerciseIDs] = useState<IFavExerciseType[] | null>([]);
+  const [favExerciseIDs, setFavExerciseIDs] = useState<
+    IFavExerciseType[] | null
+  >([]);
   const [favExercises, setFavExercises] = useState<exerciseTypes[]>([]);
   const [favCount, setFavCount] = useState<Map<number, number>>(new Map());
   const [isOpenList, setIsOpenList] = useState<Map<number, boolean>>(new Map());
@@ -173,19 +175,19 @@ const Favorites = () => {
 
   return (
     <div>
-      {modalIsOpen && (
-        <>
-          <div className="page-mask"></div>
-          <div className="fixed inset-x-1/2 inset-y-1/3">
-            <AddExerciseModal
-              modalIsOpen={modalIsOpen}
-              userid={userId}
-              eId={eId}
-              setModalIsOpen={setModalIsOpen}
-            />
-          </div>
-        </>
-      )}
+      <div
+        className={`${
+          modalIsOpen ? "page-mask" : ""
+        } transition-all duration-300`}
+      ></div>
+      <div className={`${!modalIsOpen ? "modal" : "box-shadow show"} transition-all duration-500`}>
+        <AddExerciseModal
+          modalIsOpen={modalIsOpen}
+          userid={userId}
+          eId={eId}
+          setModalIsOpen={setModalIsOpen}
+        />
+      </div>
       {!loading &&
         favExercises
           ?.sort((a, b) => a?.name.localeCompare(b?.name))
