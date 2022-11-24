@@ -12,6 +12,7 @@ import UserProfile from './pages/UserProfile';
 import SearchPage from './pages/Search';
 import ExerciseItem from './pages/ExerciseItem';
 import CreateExercisePage from './pages/createExercise';
+import RoutinePage from './pages/Routine';
 
 function App(): React.ReactElement {
   return (
@@ -32,6 +33,7 @@ function App(): React.ReactElement {
               <Route path='/user-profile/:tabId' element={<UserProfile />} />
               <Route path='/user-profile' element={<UserProfile />} />
               <Route path='/create-exercise' element={<CreateExercisePage />} />
+              <Route path='/routine/:routineId' element={<RoutinePage />} />
             </Route>
           </Route>
         </Routes>

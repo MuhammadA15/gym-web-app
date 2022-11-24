@@ -1,59 +1,68 @@
-import React, { useState } from 'react'
-import FilledButton from '../../components/ui/FilledButton/filledButton'
-import {useFormik} from 'formik'
-import * as Yup from 'yup'
-import { signUp_InitVals, signUp_ValidationSchema } from './utils/utils_signupForm'
-import { Link, useNavigate } from 'react-router-dom'
-import { SIGNUP_ENDPOINT } from '../../utils/constants/apiEndpoints'
+import React, { useState } from "react";
+import FilledButton from "../../components/ui/FilledButton/filledButton";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import {
+  signUp_InitVals,
+  signUp_ValidationSchema,
+} from "./utils/utils_signupForm";
+import { Link, useNavigate } from "react-router-dom";
+import { SIGNUP_ENDPOINT } from "../../utils/constants/apiEndpoints";
+import { signUpRequest } from "../../services/authService";
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: signUp_InitVals,
     validationSchema: signUp_ValidationSchema(),
-    onSubmit: async values => {
+    onSubmit: async (values) => {
       setLoading(true);
-      
+
       const data = {
         username: formik.values.username,
         email: formik.values.email,
-        password: formik.values.password
-      }
+        password: formik.values.password,
+      };
 
-      await fetch(SIGNUP_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-        .then(res => res.json().then(data => ({status: res.status, body: data})))
-        .then(data => {
-          if (data.status === 200) {
-            alert(data.body.msg)
-            navigate('/login')
-          } else {
-            setErrorMsg(data.body.msg)
-            setLoading(false);
-          }
-        })
+      makeSignUpCall(data);
     },
-  })
+  });
+
+  const makeSignUpCall = async (data: {
+    username: string;
+    email: string;
+    password: string;
+  }) => {
+    signUpRequest(data).then((data) => {
+      if (data.status === 200) {
+        alert(data.body.msg);
+        navigate("/login");
+      } else {
+        setErrorMsg(data.body.msg);
+        setLoading(false);
+      }
+    });
+  };
 
   return (
-    <div className='mt-24'>
+    <div className="mt-24">
       <div className="container flex justify-center">
         <div className="w-full max-w-xs mt-10">
-          { errorMsg &&
-            <p className='text-red-500 mb-3'>{errorMsg}</p>
-          }
-          <form onSubmit={formik.handleSubmit}  className="bg-neutral-800 shadow-xl rounded px-8 pt-6 pb-8 mb-4">
-            <div className='mb-6'>
-              <p className='text-left opacity-50 mb-1'>Welcome to Fitness App!</p>
-              <p className='text-left opacity-50'>Let's begin your fitness journey</p>
+          {errorMsg && <p className="text-red-500 mb-3">{errorMsg}</p>}
+          <form
+            onSubmit={formik.handleSubmit}
+            className="bg-neutral-800 shadow-xl rounded px-8 pt-6 pb-8 mb-4"
+          >
+            <div className="mb-6">
+              <p className="text-left opacity-50 mb-1">
+                Welcome to Fitness App!
+              </p>
+              <p className="text-left opacity-50">
+                Let's begin your fitness journey
+              </p>
             </div>
             <div className="mb-4">
               <label
@@ -70,9 +79,9 @@ const SignUpPage = () => {
                 value={formik.values.email}
                 onChange={formik.handleChange}
               />
-              {formik.errors.email &&
-                <p className='text-left text-red-500'>{formik.errors.email}</p>
-              }
+              {formik.errors.email && (
+                <p className="text-left text-red-500">{formik.errors.email}</p>
+              )}
             </div>
             <div className="mb-4">
               <label
@@ -89,9 +98,11 @@ const SignUpPage = () => {
                 value={formik.values.username}
                 onChange={formik.handleChange}
               />
-              {formik.errors.username &&
-                <p className='text-left text-red-500'>{formik.errors.username}</p>
-              }
+              {formik.errors.username && (
+                <p className="text-left text-red-500">
+                  {formik.errors.username}
+                </p>
+              )}
             </div>
             <div className="mb-9">
               <label
@@ -108,14 +119,16 @@ const SignUpPage = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
               />
-              {formik.errors.password &&
-                <p className='text-left text-red-500'>{formik.errors.password}</p>
-              }
+              {formik.errors.password && (
+                <p className="text-left text-red-500">
+                  {formik.errors.password}
+                </p>
+              )}
             </div>
             <div className="block items-center">
-              <FilledButton text={'Sign Up'} loading={loading}/>
-              <div className='mt-4'>
-                Already Have An Account? {' '}
+              <FilledButton text={"Sign Up"} loading={loading} />
+              <div className="mt-4">
+                Already Have An Account?{" "}
                 <Link
                   className="inline-block align-baseline font-bold text-sm text-red-500 hover:text-red-800"
                   to="/login"
@@ -131,7 +144,7 @@ const SignUpPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpPage
+export default SignUpPage;

@@ -22,7 +22,7 @@ const LandingPage = () => {
 
       <Space height={50} />
 
-      <section ref={sectionRef1} className={section1_inView ? "show" : "hide"}>
+      <section ref={sectionRef1} className={section1_inView ? "show-section" : "hide"}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque incidunt
         explicabo tenetur! Repudiandae numquam minus molestiae provident totam
         vero quos laudantium nihil accusamus est. Repudiandae mollitia
@@ -31,7 +31,7 @@ const LandingPage = () => {
 
       <Space height={50} />
 
-      <section ref={sectionRef2} className={section2_inView ? "show" : "hide"}>
+      <section ref={sectionRef2} className={section2_inView ? "show-section" : "hide"}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero explicabo
         assumenda fuga saepe, earum ex, sunt doloremque esse quas, laudantium
         necessitatibus optio impedit quam harum. Iste ipsam dignissimos
@@ -40,7 +40,7 @@ const LandingPage = () => {
 
       <Space height={50} />
 
-      <section ref={sectionRef3} className={section3_inView ? "show" : "hide"}>
+      <section ref={sectionRef3} className={section3_inView ? "show-section" : "hide"}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero explicabo
         assumenda fuga saepe, earum ex, sunt doloremque esse quas, laudantium
         necessitatibus optio impedit quam harum. Iste ipsam dignissimos

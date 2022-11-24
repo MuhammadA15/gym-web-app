@@ -5,8 +5,8 @@ import FilledButton from "../../components/ui/FilledButton/filledButton";
 import { yesNoOptions } from "../../utils/utils";
 import { AiFillLock, AiFillEye } from "react-icons/ai";
 import "./styles.scss";
-import { CREATE_EXERCISE_ENDPOINT } from "../../utils/constants/apiEndpoints";
 import { useNavigate } from "react-router-dom";
+import { createExercise } from "../../services/exerciseService";
 
 const CreateExercisePage = () => {
   const navigate = useNavigate();
@@ -55,40 +55,35 @@ const CreateExercisePage = () => {
       const data = {
         name: formik.values.name,
         bodyPart: formik.values.bodyPart,
-        equipment: formik.values.equipmentNeeded === "No" ? "Body Weight" : formik.values.equipment,
+        equipment:
+          formik.values.equipmentNeeded === "No"
+            ? "Body Weight"
+            : formik.values.equipment,
         target: formik.values.target,
         gifUrl: formik.values.gifUrl,
         description: formik.values.description,
         publish: formik.values.publish === "true" ? 1 : 0,
-        author: userId
+        author: userId,
       };
 
-      console.log(data);
-
-      createExercise(data);
+      makeCreateExerciseCall(data);
     },
   });
 
-  const createExercise = async (data: any) => {
-    await fetch(CREATE_EXERCISE_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res.status, body: data }))
-      )
-      .then((data) => {
-        if (data.status === 200) {
-          alert(data.body.msg);
-          navigate("/search");
-        } else {
-          alert(data.body.msg);
-          setLoading(false);
-        }
-      });
+  /**
+   * Make create exercise api call
+   * @param data 
+   */
+  const makeCreateExerciseCall = async (data: any) => {
+    createExercise(data).then((data) => {
+      if (data.status === 200) {
+        alert(data.body.msg);
+        navigate("/search");
+      } else {
+        alert(data.body.msg);
+        setLoading(false);
+      }
+    });
   };
 
   return (
@@ -252,7 +247,7 @@ const CreateExercisePage = () => {
             <p className="text-gray-500 text-sm text-left">
               Select whether you would like to publish your exercise for the
               public to see or if you would like to keep your exercise private
-              to you. This can be changed later through the library.
+              to you. This can be changed at anytime through the user's library.
             </p>
           </div>
           <div className="mb-4 mt-4">
