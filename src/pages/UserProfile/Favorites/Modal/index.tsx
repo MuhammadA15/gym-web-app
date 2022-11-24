@@ -6,6 +6,7 @@ import {
   ADD_EXERCISE_TO_ROUTINE_ENDPOINT,
   FETCH_ROUTINES_ENDPOINT,
   FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID,
+  REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID,
 } from "../../../../utils/constants/apiEndpoints";
 import "./styles.scss";
 
@@ -139,7 +140,7 @@ const AddExerciseModal = ({
       )
       .then((data) => {
         if (data.status === 200) {
-          alert(data.body.msg);
+          // alert(data.body.msg);
           setExerciseInRoutineMap(
             new Map(exerciseInRoutineMap?.set(String(id), true))
           );
@@ -147,6 +148,36 @@ const AddExerciseModal = ({
           // console.log()
         }
         setLoading(false);
+      });
+  };
+
+  /**
+   * Remove routine exercise by routine id and exercise id
+   * @param id
+   */
+   const removeExerciseFromRoutine = async (id: string) => {
+    await fetch(
+      REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID.replace("id", id).replace(
+        "eid",
+        eId
+      ),
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((res) =>
+        res.json().then((data) => ({ status: res.status, body: data }))
+      )
+      .then((data) => {
+        if (data.status === 200) {
+          // alert(data.body.msg);
+          setExerciseInRoutineMap(new Map(exerciseInRoutineMap?.set(id, false)));
+        } else {
+          // console.log
+        }
       });
   };
 
@@ -170,7 +201,7 @@ const AddExerciseModal = ({
                   type={"checkbox"}
                   onClick={() => {
                     exerciseInRoutineMap.get(String(routine?.id))
-                      ? alert("Exercise is already saved to this routine!")
+                      ? removeExerciseFromRoutine(String(routine?.id))
                       : saveExerciseToRoutine(routine?.id);
                   }}
                   checked={exerciseInRoutineMap.get(String(routine?.id))}

@@ -6,6 +6,7 @@ import { login_ValidationSchema } from "./utils/utils_loginForm";
 import { LOGIN_ENDPOINT } from "../../utils/constants/apiEndpoints";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
+import { loginRequest } from "../../services/authService";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -27,28 +28,21 @@ const LoginPage = () => {
         password: formik.values.password,
       };
 
-      await fetch(LOGIN_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) =>
-          res.json().then((data) => ({ status: res?.status, body: data }))
-        )
-        .then((data) => {
-          if (data?.status === 200) {
-            // console.log("data", data.body.data);
-            auth?.login(data.body.data);
-            navigate(redirectPath, { replace: true });
-          } else {
-            setErrorMsg(data?.body?.msg);
-            setLoading(false);
-          }
-        });
+      makeLoginCall(data);
     },
   });
+
+  const makeLoginCall = async (data: {username: string, password: string}) => {
+    loginRequest(data).then((data) => {
+      if (data?.status === 200) {
+        auth?.login(data.body.data);
+        navigate(redirectPath, { replace: true });
+      } else {
+        setErrorMsg(data?.body?.msg);
+        setLoading(false);
+      }
+    });
+  };
 
   return (
     <div className="mt-24">
@@ -102,9 +96,11 @@ const LoginPage = () => {
               )}
             </div>
             <div className="flex items-center justify-between">
-              <FilledButton text={"Log In"} loading={loading}/>
+              <FilledButton text={"Log In"} loading={loading} />
               <a
-                className={`${loading ? 'hidden' : ''} inline-block align-baseline font-bold text-sm text-red-500 hover:text-red-800`}
+                className={`${
+                  loading ? "hidden" : ""
+                } inline-block align-baseline font-bold text-sm text-red-500 hover:text-red-800`}
                 href="#"
               >
                 Forgot Password?

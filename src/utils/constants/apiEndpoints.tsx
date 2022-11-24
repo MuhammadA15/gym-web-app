@@ -23,3 +23,4 @@ export const FETCH_ROUTINES_ENDPOINT = BASE_URL + '/routines';
 export const FETCH_ROUTINES_BY_ID_ENDPOINT = BASE_URL + '/routines/id';
 export const ADD_EXERCISE_TO_ROUTINE_ENDPOINT = BASE_URL + '/routines/add';
 export const FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID = BASE_URL + '/routines/id/exercises/eid';
+export const REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID = BASE_URL + '/routines/id/exercises/eid';

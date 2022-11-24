@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  FETCH_EXERCISE_BY_ID_ENDPOINT,
-  ADD_EXERCISE_FAVORITES_ENDPOINT,
-  GET_FAVORITES_ENDPOINT,
-  GET_FAVORITES_COUNT_ENDPOINT,
-  REMOVE_EXERCISE_FAVORITES_ENDPOINT,
-} from "../../utils/constants/apiEndpoints";
 import { BsStar, BsFillStarFill } from "react-icons/bs";
 import { exerciseTypes } from "../../types/exerciseType";
 import { IFavExerciseType } from "../../types/favoriteExerciseType";
+import {
+  addFavorite,
+  fetchExercise,
+  fetchFavCount,
+  fetchFavorites,
+  removeFavorite,
+} from "../../services/exerciseService";
 
 const ExerciseItem = () => {
-  const userId = localStorage.getItem("id");
+  const userId = localStorage.getItem("id") || "";
   const { exerciseId = "" } = useParams();
 
   const [exerciseData, setExerciseData] = useState<exerciseTypes | null>();
@@ -23,66 +23,45 @@ const ExerciseItem = () => {
   /**
    * Fetch exercise data
    */
-  const fetchExercise = async () => {
-    await fetch(FETCH_EXERCISE_BY_ID_ENDPOINT?.replace("id", exerciseId), {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          console.log("data", data.body);
-          setExerciseData(data.body);
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
+  const makeFetchExerciseCall = async () => {
+    fetchExercise(exerciseId).then((data) => {
+      if (data?.status === 200) {
+        setExerciseData(data.body);
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
   };
 
   useEffect(() => {
     if (exerciseId) {
-      fetchExercise();
+      makeFetchExerciseCall();
     }
   }, [exerciseId]);
 
   /**
    * Get Favorite Exercises
    */
-  const fetchFavorites = async () => {
-    await fetch(GET_FAVORITES_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: userId,
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          console.log("data", data.body);
-          setFavExercises(data.body);
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
+  const makeFetchFavoritesCall = async (userId: string) => {
+    fetchFavorites(userId).then((data) => {
+      if (data?.status === 200) {
+        setFavExercises(data.body);
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
   };
 
   useEffect(() => {
     if (userId) {
-      fetchFavorites();
+      makeFetchFavoritesCall(userId);
     }
   }, [userId]);
 
   /**
    * Check if exercise is favorite
-   * @param exerciseId 
-   * @returns 
+   * @param exerciseId
+   * @returns
    */
   const checkFavExercise = (exerciseId: number) => {
     if (favExercises) {
@@ -99,90 +78,56 @@ const ExerciseItem = () => {
 
   /**
    * Get favorite count
-   * @param exerciseId 
+   * @param exerciseId
    */
-  const fetchFavCount = async (exerciseId: string) => {
-    await fetch(GET_FAVORITES_COUNT_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(exerciseId),
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          setFavCount(data.body);
-        } else {
-          // console.log(err)
-        }
-      });
+  const makeFetchFavCountCall = async (exerciseId: string) => {
+    fetchFavCount(exerciseId).then((data) => {
+      if (data?.status === 200) {
+        setFavCount(data.body);
+      } else {
+        // console.log(err)
+      }
+    });
   };
 
   useEffect(() => {
     if (exerciseId) {
-      fetchFavCount(exerciseId);
+      makeFetchFavCountCall(exerciseId);
     }
   }, [exerciseId]);
 
   /**
    * Add exercise to favorites
    */
-  const addFavorite = async () => {
-    const data = { userId, exerciseId };
-
-    await fetch(ADD_EXERCISE_FAVORITES_ENDPOINT?.replace("id", exerciseId), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          setIsFav(true);
-          setFavCount(prev => {
-            const nextState = prev + 1
-            return nextState;
-          })
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
+  const makeAddFavoriteCall = async (userId: string, exerciseId: string) => {
+    addFavorite(userId, exerciseId).then((data) => {
+      if (data?.status === 200) {
+        setIsFav(true);
+        setFavCount((prev) => {
+          const nextState = prev + 1;
+          return nextState;
+        });
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
   };
 
   /**
    * Remove exercise from favorites
    */
-  const removeFavorite = async () => {
-    const data = { userId, exerciseId };
-
-    await fetch(REMOVE_EXERCISE_FAVORITES_ENDPOINT?.replace("id", exerciseId), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          setIsFav(false);
-          setFavCount(prev => {
-            const nextState = prev - 1
-            return nextState;
-          })
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
+  const makeRemoveFavoriteCall = async (userId: string, exerciseId: string) => {
+    removeFavorite(userId, exerciseId).then((data) => {
+      if (data?.status === 200) {
+        setIsFav(false);
+        setFavCount((prev) => {
+          const nextState = prev - 1;
+          return nextState;
+        });
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
   };
 
   return (
@@ -201,13 +146,13 @@ const ExerciseItem = () => {
           <p className="bg-green-400 rounded-full px-3 py-0.5 mx-1 my-1 text-capital">
             {exerciseData?.target}
           </p>
-          <div
-            className="ml-auto flex flex-row items-center mr-3"
-          >
-            <p 
-              className="mr-2 hover:cursor-pointer" 
+          <div className="ml-auto flex flex-row items-center mr-3">
+            <p
+              className="mr-2 hover:cursor-pointer"
               onClick={() => {
-                isFav ? removeFavorite() : addFavorite();
+                isFav
+                  ? makeRemoveFavoriteCall(userId, exerciseId)
+                  : makeAddFavoriteCall(userId, exerciseId);
               }}
             >
               {isFav ? (
