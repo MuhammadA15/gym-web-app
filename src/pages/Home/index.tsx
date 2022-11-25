@@ -2,20 +2,16 @@ import React, { useState } from "react";
 import { AiFillEye, AiFillLock } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
-import { CREATE_ROUTINE_ENDPOINT } from "../../utils/constants/apiEndpoints";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./styles.scss";
+import { createRoutine } from "../../services/routineService";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("id");
 
   const [loading, setLoading] = useState(false);
-
-  const navigateToCreateExerciseFrom = () => {
-    navigate("/create-exercise");
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -32,33 +28,24 @@ const HomePage = () => {
         userid: userId,
       };
 
-      console.log(data);
-
-      createRoutine(data);
+      makeCreateRoutineCall(data);
     },
   });
 
-  const createRoutine = async (data: any) => {
-    await fetch(CREATE_ROUTINE_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res.status, body: data }))
-      )
-      .then((data) => {
-        if (data.status === 200) {
-          alert(data.body.msg);
-          setLoading(false);
-          // navigate("/search");
-        } else {
-          alert(data.body.msg);
-          setLoading(false);
-        }
-      });
+  const makeCreateRoutineCall = async (data: any) => {
+    createRoutine(data).then((data) => {
+      if (data.status === 200) {
+        alert(data.body.msg);
+        setLoading(false);
+      } else {
+        alert(data.body.msg);
+        setLoading(false);
+      }
+    });
+  };
+
+  const navigateToCreateExerciseFrom = () => {
+    navigate("/create-exercise");
   };
 
   return (

@@ -1,10 +1,12 @@
-import { LOGIN_ENDPOINT } from "../utils/constants/apiEndpoints";
-import { SIGNUP_ENDPOINT } from "../utils/constants/apiEndpoints";
+import {
+  LOGIN_ENDPOINT,
+  SIGNUP_ENDPOINT,
+} from "../utils/constants/apiEndpoints";
 
 /**
  * Login api call
- * @param data 
- * @returns 
+ * @param data
+ * @returns
  */
 export const loginRequest = async (data: {
   username: string;
@@ -23,8 +25,8 @@ export const loginRequest = async (data: {
 
 /**
  * Sign up account api call
- * @param data 
- * @returns 
+ * @param data
+ * @returns
  */
 export const signUpRequest = async (data: {
   username: string;

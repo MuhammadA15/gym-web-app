@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  FETCH_ALL_EXERCISES_ENDPOINT,
-  GET_FAVORITES_ENDPOINT,
-} from "../../utils/constants/apiEndpoints";
 import { MdOutlineNavigateNext, MdOutlineNavigateBefore } from "react-icons/md";
 import { HiChevronDoubleLeft, HiChevronDoubleRight } from "react-icons/hi";
 import "./styles.scss";
 import ResultCard from "./ResultCard";
 import { exerciseTypes } from "../../types/exerciseType";
 import { IFavExerciseType } from "../../types/favoriteExerciseType";
+import {
+  fetchAllExercises,
+  fetchFavorites,
+} from "../../services/exerciseService";
 
 const SearchPage = () => {
   const entriesPerPage = 18;
@@ -27,59 +27,40 @@ const SearchPage = () => {
   /**
    * Fetch all exercises
    */
-  const fetchExercises = async () => {
-    await fetch(FETCH_ALL_EXERCISES_ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          // console.log("data", data.body);
-          setExerciseData(data.body);
-          setExerciseLoading(false);
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
+  const makeFetchAllExercisesCall = async () => {
+    fetchAllExercises().then((data) => {
+      if (data?.status === 200) {
+        // console.log("data", data.body);
+        setExerciseData(data.body);
+        setExerciseLoading(false);
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
   };
 
   useEffect(() => {
-    fetchExercises();
+    makeFetchAllExercisesCall();
   }, []);
 
   /**
    * Get Favorite Exercises
    */
-  const fetchFavorites = async () => {
-    await fetch(GET_FAVORITES_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: userId,
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          // console.log("data", data.body);
-          setFavExercises(data?.body);
-          setLoading(false);
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
+  const makeFetchFavoritesCall = async (userId: string) => {
+    fetchFavorites(userId).then((data) => {
+      if (data?.status === 200) {
+        // console.log("data", data.body);
+        setFavExercises(data?.body);
+        setLoading(false);
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
   };
 
   useEffect(() => {
     if (userId) {
-      fetchFavorites();
+      makeFetchFavoritesCall(userId);
     }
   }, [userId]);
 
