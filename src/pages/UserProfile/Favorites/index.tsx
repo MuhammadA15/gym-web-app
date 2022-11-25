@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
+import {
+  fetchExercise,
+  fetchFavCount,
+  fetchFavorites,
+  removeFavorite,
+} from "../../../services/exerciseService";
 import { exerciseTypes } from "../../../types/exerciseType";
 import { IFavExerciseType } from "../../../types/favoriteExerciseType";
-import {
-  GET_FAVORITES_ENDPOINT,
-  FETCH_EXERCISE_BY_ID_ENDPOINT,
-  GET_FAVORITES_COUNT_ENDPOINT,
-  REMOVE_EXERCISE_FAVORITES_ENDPOINT,
-} from "../../../utils/constants/apiEndpoints";
 import FavoritesEntryCard from "./FavoritesEntryCard";
 import AddExerciseModal from "./Modal";
 import "./styles.scss";
@@ -14,9 +14,7 @@ import "./styles.scss";
 const Favorites = () => {
   const userId = localStorage.getItem("id");
 
-  const [favExerciseIDs, setFavExerciseIDs] = useState<
-    IFavExerciseType[] | null
-  >([]);
+  const [favExerciseIDs, setFavExerciseIDs] = useState<IFavExerciseType[] | null>([]);
   const [favExercises, setFavExercises] = useState<exerciseTypes[]>([]);
   const [favCount, setFavCount] = useState<Map<number, number>>(new Map());
   const [isOpenList, setIsOpenList] = useState<Map<number, boolean>>(new Map());
@@ -27,61 +25,40 @@ const Favorites = () => {
   /**
    * Get Favorite Exercises IDs
    */
+  const makeFetchFavoritesCall = async (userid: string) => {
+    fetchFavorites(userid).then((data) => {
+      if (data?.status === 200) {
+        setFavExerciseIDs(data.body);
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
+  };
+
   useEffect(() => {
     if (userId) {
-      fetchFavorites();
+      makeFetchFavoritesCall(userId);
     }
   }, [userId]);
-
-  const fetchFavorites = async () => {
-    await fetch(GET_FAVORITES_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: userId,
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          // console.log("data", data.body);
-          setFavExerciseIDs(data.body);
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
-  };
 
   /**
    * Fetch favorite exercises by Id
    * @param exerciseId
    */
-  const fetchExercise = async (exerciseId: string) => {
-    await fetch(FETCH_EXERCISE_BY_ID_ENDPOINT?.replace("id", exerciseId), {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          // console.log("data", data.body);
-          setFavExercises((favExercisesArr) => [...favExercisesArr, data.body]);
-          setIsOpenList(new Map(isOpenList?.set(data?.body?.id, false)));
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
+  const makeFetchExerciseCall = async (exerciseId: string) => {
+    fetchExercise(exerciseId).then((data) => {
+      if (data?.status === 200) {
+        setFavExercises((favExercisesArr) => [...favExercisesArr, data.body]);
+        setIsOpenList(new Map(isOpenList?.set(data?.body?.id, false)));
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
   };
 
   const getExercisesbyId = useCallback(() => {
     favExerciseIDs?.forEach((data) => {
-      fetchExercise(String(data?.exerciseId));
+      makeFetchExerciseCall(String(data?.exerciseId));
     });
   }, [favExerciseIDs]);
 
@@ -95,30 +72,19 @@ const Favorites = () => {
    * Get favorite count and map to exercise
    * @param exerciseId
    */
-  const fetchFavCount = async (exercise: exerciseTypes) => {
-    await fetch(GET_FAVORITES_COUNT_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(exercise?.id),
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          // console.log(data.body)
-          setFavCount(new Map(favCount?.set(exercise?.id, data.body)));
-        } else {
-          // console.log(err)
-        }
-      });
+  const makeFetchFavCountCall = async (exerciseId: number) => {
+    fetchFavCount(String(exerciseId)).then((data) => {
+      if (data?.status === 200) {
+        setFavCount(new Map(favCount?.set(exerciseId, data.body)));
+      } else {
+        // console.log(err)
+      }
+    });
   };
 
   const mapFavCount = useCallback(() => {
     favExercises?.forEach((exercise) => {
-      fetchFavCount(exercise);
+      makeFetchFavCountCall(exercise.id);
     });
   }, [favExercises]);
 
@@ -147,30 +113,18 @@ const Favorites = () => {
   /**
    * Remove exercise from favorites
    */
-  const removeFavorite = async (exerciseId: string) => {
-    const data = { userId, exerciseId };
-
-    await fetch(REMOVE_EXERCISE_FAVORITES_ENDPOINT?.replace("id", exerciseId), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res?.status, body: data }))
-      )
-      .then((data) => {
-        if (data?.status === 200) {
-          setFavExercises(
-            favExercises.filter((exercise) => {
-              return exercise?.id !== Number(exerciseId);
-            })
-          );
-        } else {
-          // setErrorMsg(data?.body?.msg);
-        }
-      });
+  const makeRemoveFavoriteCall = async (userid: string, exerciseId: string) => {
+    removeFavorite(userid, exerciseId).then((data) => {
+      if (data?.status === 200) {
+        setFavExercises(
+          favExercises.filter((exercise) => {
+            return exercise?.id !== Number(exerciseId);
+          })
+        );
+      } else {
+        // setErrorMsg(data?.body?.msg);
+      }
+    });
   };
 
   return (
@@ -180,7 +134,11 @@ const Favorites = () => {
           modalIsOpen ? "page-mask" : ""
         } transition-all duration-300`}
       ></div>
-      <div className={`${!modalIsOpen ? "modal" : "box-shadow show"} transition-all duration-500`}>
+      <div
+        className={`${
+          !modalIsOpen ? "modal" : "box-shadow show"
+        } transition-all duration-500`}
+      >
         <AddExerciseModal
           modalIsOpen={modalIsOpen}
           userid={userId}
@@ -200,9 +158,8 @@ const Favorites = () => {
               loading={loading}
               openDetailsMenu={openDetailsMenu}
               setIsOpenList={setIsOpenList}
-              removeFavorite={removeFavorite}
+              removeFavorite={makeRemoveFavoriteCall}
               setModalIsOpen={setModalIsOpen}
-              modalIsOpen={modalIsOpen}
               setEId={setEId}
             />
           ))}
@@ -216,9 +173,8 @@ const Favorites = () => {
             loading={loading}
             openDetailsMenu={openDetailsMenu}
             setIsOpenList={setIsOpenList}
-            removeFavorite={removeFavorite}
+            removeFavorite={makeRemoveFavoriteCall}
             setModalIsOpen={setModalIsOpen}
-            modalIsOpen={modalIsOpen}
             setEId={setEId}
           />
         ))}

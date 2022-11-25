@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
 import { yesNoOptions } from "../../utils/utils";
 import { AiFillLock, AiFillEye } from "react-icons/ai";
 import "./styles.scss";
 import { useNavigate } from "react-router-dom";
 import { createExercise } from "../../services/exerciseService";
+import {
+  createExerciseForm_InitVals,
+  createExerciseForm_ValidationSchema,
+} from "./utils/utils_exerciseForm";
 
 const CreateExercisePage = () => {
   const navigate = useNavigate();
@@ -14,41 +17,8 @@ const CreateExercisePage = () => {
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      bodyPart: "",
-      equipment: "",
-      equipmentNeeded: "No",
-      target: "",
-      gifUrl: "",
-      description: "",
-      publish: "false",
-    },
-    validationSchema: Yup.object({
-      publish: Yup.string().test(
-        "publish",
-        "You must provide a description or a GIF url in order to publish an exercise",
-        (value, ctx) => {
-          console.log(ctx.parent.description);
-          return (
-            (value === "true" &&
-              (ctx.parent.description !== undefined ||
-                ctx.parent.gifUrl !== undefined)) ||
-            value === "false"
-          );
-        }
-      ),
-      name: Yup.string().required("Exercise name is required"),
-      bodyPart: Yup.string().required("Body part is required"),
-      equipment: Yup.string().when("equipmentNeeded", {
-        is: (equipmentNeeded: string) => equipmentNeeded === "Yes",
-        then: Yup.string().required("Equipment description is required"),
-        otherwise: Yup.string(),
-      }),
-      target: Yup.string().required("Target muscle is required"),
-      description: Yup.string(),
-      gifUrl: Yup.string(),
-    }),
+    initialValues: createExerciseForm_InitVals,
+    validationSchema: createExerciseForm_ValidationSchema,
     onSubmit: async (values) => {
       setLoading(true);
 
@@ -72,7 +42,7 @@ const CreateExercisePage = () => {
 
   /**
    * Make create exercise api call
-   * @param data 
+   * @param data
    */
   const makeCreateExerciseCall = async (data: any) => {
     createExercise(data).then((data) => {

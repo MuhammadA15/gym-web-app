@@ -5,7 +5,6 @@ import { exerciseTypes } from "../../../../types/exerciseType";
 import EntryMenu from "../EntryMenu";
 import { BsFillStarFill, BsThreeDotsVertical } from "react-icons/bs";
 import { useMultiMenuOutsideClickAlerter } from "../hooks/MultiMenuOutsideClickAlerter";
-import AddExerciseModal from "../Modal";
 
 const FavoritesEntryCard = ({
   index,
@@ -13,7 +12,6 @@ const FavoritesEntryCard = ({
   isOpenList,
   favCount,
   loading,
-  modalIsOpen,
   setEId,
   openDetailsMenu,
   setIsOpenList,
@@ -25,16 +23,15 @@ const FavoritesEntryCard = ({
   isOpenList: Map<number, boolean>;
   favCount: Map<number, number> | null;
   loading: boolean;
-  modalIsOpen: boolean;
   openDetailsMenu: (exerciseId: number) => void;
-  removeFavorite: (exerciseId: string) => void;
+  removeFavorite: (userid: string, exerciseId: string) => void;
   setIsOpenList: React.Dispatch<React.SetStateAction<Map<number, boolean>>>;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setEId: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const navigate = useNavigate();
-
   const wrapperRef = useRef(null);
+  
   useMultiMenuOutsideClickAlerter(
     wrapperRef,
     isOpenList,
@@ -96,8 +93,6 @@ const FavoritesEntryCard = ({
                 <BsThreeDotsVertical />
                 <EntryMenu
                   isOpen={isOpenList?.get(exercise?.id)}
-                  isOpenList={isOpenList}
-                  setIsOpenList={setIsOpenList}
                   removeFavorite={removeFavorite}
                   exerciseId={String(exercise?.id)}
                   setModalIsOpen={setModalIsOpen}

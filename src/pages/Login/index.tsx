@@ -3,7 +3,6 @@ import FilledButton from "../../components/ui/FilledButton/filledButton";
 import { useFormik } from "formik";
 import { login_InitVals } from "./utils/utils_loginForm";
 import { login_ValidationSchema } from "./utils/utils_loginForm";
-import { LOGIN_ENDPOINT } from "../../utils/constants/apiEndpoints";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { loginRequest } from "../../services/authService";

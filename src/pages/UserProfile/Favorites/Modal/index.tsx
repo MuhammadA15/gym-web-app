@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import FilledButton from "../../../../components/ui/FilledButton/filledButton";
 import { useOutsideClickAlerter } from "../../../../hooks/OutsideClickAlerter";
-import { IRoutineType } from "../../../../types/routineType";
 import {
-  ADD_EXERCISE_TO_ROUTINE_ENDPOINT,
-  FETCH_ROUTINES_ENDPOINT,
-  FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID,
-  REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID,
-} from "../../../../utils/constants/apiEndpoints";
+  fetchRoutineExercise,
+  fetchUserRoutines,
+  removeExerciseFromRoutine,
+  saveExerciseToRoutine,
+} from "../../../../services/routineService";
+import { IRoutineType } from "../../../../types/routineType";
 import "./styles.scss";
 
 const AddExerciseModal = ({
@@ -30,68 +30,45 @@ const AddExerciseModal = ({
 
   /**
    * Fetch routines
-   * @param id
+   * @param userid
    */
-  const fetchRoutines = async (id: string | null) => {
-    await fetch(FETCH_ROUTINES_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: id,
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res.status, body: data }))
-      )
-      .then((data) => {
-        if (data.status === 200) {
-          setRoutineData(data.body);
-        } else {
-          // console.log()
-        }
-      });
+  const makeFetchUserRoutinesCall = async (userid: string) => {
+    fetchUserRoutines(userid).then((data) => {
+      if (data.status === 200) {
+        setRoutineData(data.body);
+      } else {
+        // console.log()
+      }
+    });
   };
 
   useEffect(() => {
-    if (modalIsOpen) {
+    if (modalIsOpen && userid) {
       setLoading(true);
 
       // Reset map state for subsequent modal openings
       setExerciseInRoutineMap(new Map());
 
-      fetchRoutines(userid);
+      makeFetchUserRoutinesCall(userid);
     }
   }, [modalIsOpen, eId]);
 
   /**
    * Fetch routine exercise by routine id and exercise id
-   * @param id
+   * @param routineid
    */
-  const fetchRoutineExercise = async (id: string) => {
-    await fetch(
-      FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID.replace("id", id).replace(
-        "eid",
-        eId
-      ),
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  const makeFetchRoutineExerciseCall = async (routineid: string) => {
+    fetchRoutineExercise(routineid, eId).then((data) => {
+      if (data.status === 200) {
+        setExerciseInRoutineMap(
+          new Map(exerciseInRoutineMap?.set(routineid, true))
+        );
+      } else {
+        setExerciseInRoutineMap(
+          new Map(exerciseInRoutineMap?.set(routineid, false))
+        );
       }
-    )
-      .then((res) =>
-        res.json().then((data) => ({ status: res.status, body: data }))
-      )
-      .then((data) => {
-        if (data.status === 200) {
-          setExerciseInRoutineMap(new Map(exerciseInRoutineMap?.set(id, true)));
-        } else {
-          setExerciseInRoutineMap(
-            new Map(exerciseInRoutineMap?.set(id, false))
-          );
-        }
-      });
+    });
   };
 
   /**
@@ -99,7 +76,7 @@ const AddExerciseModal = ({
    */
   const checkRoutineForExercise = () => {
     routineData?.forEach((routine) =>
-      fetchRoutineExercise(String(routine?.id))
+      makeFetchRoutineExerciseCall(String(routine?.id))
     );
   };
 
@@ -111,74 +88,43 @@ const AddExerciseModal = ({
   }, [routineData]);
 
   /**
-   * Close modal window
-   */
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
-  /**
    * Save exercise to routine
    */
-  const saveExerciseToRoutine = async (id: number) => {
+  const makeSaveExerciseToRoutineCall = async (routineid: number) => {
     setLoading(true);
-
-    const data = {
-      exerciseid: eId,
-      routineid: id,
-    };
-
-    await fetch(ADD_EXERCISE_TO_ROUTINE_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((res) =>
-        res.json().then((data) => ({ status: res.status, body: data }))
-      )
-      .then((data) => {
-        if (data.status === 200) {
-          // alert(data.body.msg);
-          setExerciseInRoutineMap(
-            new Map(exerciseInRoutineMap?.set(String(id), true))
-          );
-        } else {
-          // console.log()
-        }
-        setLoading(false);
-      });
+    saveExerciseToRoutine(routineid, eId).then((data) => {
+      if (data.status === 200) {
+        setExerciseInRoutineMap(
+          new Map(exerciseInRoutineMap?.set(String(routineid), true))
+        );
+      } else {
+        // console.log()
+      }
+      setLoading(false);
+    });
   };
 
   /**
    * Remove routine exercise by routine id and exercise id
-   * @param id
+   * @param routineid
    */
-   const removeExerciseFromRoutine = async (id: string) => {
-    await fetch(
-      REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID.replace("id", id).replace(
-        "eid",
-        eId
-      ),
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
+  const makeRemoveExerciseFromRoutineCall = async (routineid: string) => {
+    removeExerciseFromRoutine(routineid, eId).then((data) => {
+      if (data.status === 200) {
+        setExerciseInRoutineMap(
+          new Map(exerciseInRoutineMap?.set(routineid, false))
+        );
+      } else {
+        // console.log
       }
-    )
-      .then((res) =>
-        res.json().then((data) => ({ status: res.status, body: data }))
-      )
-      .then((data) => {
-        if (data.status === 200) {
-          // alert(data.body.msg);
-          setExerciseInRoutineMap(new Map(exerciseInRoutineMap?.set(id, false)));
-        } else {
-          // console.log
-        }
-      });
+    });
+  };
+
+  /**
+   * Close modal window
+   */
+  const closeModal = () => {
+    setModalIsOpen(false);
   };
 
   return (
@@ -201,8 +147,8 @@ const AddExerciseModal = ({
                   type={"checkbox"}
                   onClick={() => {
                     exerciseInRoutineMap.get(String(routine?.id))
-                      ? removeExerciseFromRoutine(String(routine?.id))
-                      : saveExerciseToRoutine(routine?.id);
+                      ? makeRemoveExerciseFromRoutineCall(String(routine?.id))
+                      : makeSaveExerciseToRoutineCall(routine?.id);
                   }}
                   checked={exerciseInRoutineMap.get(String(routine?.id))}
                 />

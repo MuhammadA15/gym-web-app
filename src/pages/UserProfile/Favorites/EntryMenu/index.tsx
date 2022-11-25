@@ -1,28 +1,22 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { MdRemove, MdPlaylistAdd } from "react-icons/md";
-import { IRoutineType } from "../../../../types/routineType";
-import { FETCH_ROUTINES_ENDPOINT } from "../../../../utils/constants/apiEndpoints";
 
 const EntryMenu = ({
   isOpen,
   exerciseId,
-  isOpenList,
-  setIsOpenList,
   setModalIsOpen,
   setEId,
   removeFavorite,
 }: {
   isOpen: boolean | undefined;
   exerciseId: string;
-  isOpenList: Map<number, boolean>;
   setEId: React.Dispatch<React.SetStateAction<string>>;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsOpenList: React.Dispatch<React.SetStateAction<Map<number, boolean>>>;
-  removeFavorite: (exerciseId: string) => void;
+  removeFavorite: (userid: string, exerciseId: string) => void;
 }) => {
 
   //console.log(exerciseId);
+  const userId = localStorage.getItem("id") || "";
 
   const openModal = (exerciseId: string) => {
     setModalIsOpen(true);
@@ -51,7 +45,7 @@ const EntryMenu = ({
             <li>
               <div
                 className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={() => removeFavorite(exerciseId)}
+                onClick={() => removeFavorite(userId, exerciseId)}
               >
                 <MdRemove className="font-bold text-2xl" color="black" />
                 <p className="ml-2">Remove From Favorites</p>
