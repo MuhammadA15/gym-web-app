@@ -5,6 +5,9 @@ import FilledButton from "../FilledButton/filledButton";
 import "./styles.scss";
 import { useAuth } from "../../../context/auth";
 import DetailsMenu from "../Menu/DetailsMenu";
+import {AiFillHome, AiOutlineSearch} from "react-icons/ai";
+import {SiGoogleanalytics} from "react-icons/si";
+
 
 const Navbar = () => {
   const auth = useAuth();
@@ -62,18 +65,18 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home" className="nav-item">
-                      Home
+                    <Link to="/home" className="nav-item flex items-center">
+                      <AiFillHome className="mr-2"/> Home
                     </Link>
                   </li>
                   <li>
-                    <Link to="#" className="nav-item">
-                      Analytics
+                    <Link to="#" className="nav-item flex items-center">
+                      <SiGoogleanalytics className="mr-2"/> Analytics
                     </Link>
                   </li>
                   <li>
-                    <Link to="/search" className="nav-item">
-                      Search Exercises
+                    <Link to="/search" className="nav-item flex items-center">
+                      <AiOutlineSearch className="mr-2" size={22}/>Search Exercises
                     </Link>
                   </li>
                 </>
