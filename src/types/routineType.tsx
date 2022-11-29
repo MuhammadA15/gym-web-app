@@ -1,6 +1,6 @@
 export interface IRoutineType {
-    routineName: string,
-    id: number,
-    userid: number,
-    lastUsedDateTime: Date
+  routineName: string;
+  id: number;
+  userid: number;
+  lastUsedDateTime: Date;
 }

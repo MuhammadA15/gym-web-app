@@ -67,6 +67,11 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
+                    <Link to="#" className="nav-item">
+                      Analytics
+                    </Link>
+                  </li>
+                  <li>
                     <Link to="/search" className="nav-item">
                       Search Exercises
                     </Link>
