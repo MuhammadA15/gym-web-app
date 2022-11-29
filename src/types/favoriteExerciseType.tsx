@@ -1,3 +1,3 @@
 export interface IFavExerciseType {
-    exerciseId: number
+  exerciseId: number;
 }
