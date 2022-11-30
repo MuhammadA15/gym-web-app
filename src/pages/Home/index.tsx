@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { AiFillEye, AiFillLock } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
@@ -6,12 +6,24 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./styles.scss";
 import { createRoutine } from "../../services/routineService";
+import {
+  fetchExercise,
+  getRecommendations,
+} from "../../services/exerciseService";
+import { IRecommendationExerciseIdType } from "../../types/recommendationExerciseIdType";
+import { exerciseTypes } from "../../types/exerciseType";
+import RecommendationCard from "./recommendationCard";
+import LoadingIcon from "../../components/ui/LoadingIcon/loadingIcon";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const userId = localStorage.getItem("id");
 
   const [loading, setLoading] = useState(false);
+  const [recommendationsLoading, setRecommendationsLoading] = useState(false);
+  const [recommendationIds, setRecommendationIds] = useState<IRecommendationExerciseIdType[]>([]);
+  const [recommendations, setRecommendations] = useState<exerciseTypes[]>([]);
+  const navRef = useRef<HTMLInputElement>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -32,6 +44,10 @@ const HomePage = () => {
     },
   });
 
+  /**
+   * Make create routine call
+   * @param data 
+   */
   const makeCreateRoutineCall = async (data: any) => {
     createRoutine(data).then((data) => {
       if (data.status === 200) {
@@ -44,14 +60,80 @@ const HomePage = () => {
     });
   };
 
+  /**
+   * Make exercise recommendations call
+   * @param userid
+   */
+  const makeRecommendationsCall = async (userid: string) => {
+    getRecommendations(userid).then((data) => {
+      if (data.status === 200) {
+        setRecommendationIds(data.body);
+      } else {
+        console.log("Error");
+      }
+      setRecommendationsLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    if (userId) {
+      setRecommendationsLoading(true);
+      makeRecommendationsCall(userId);
+    }
+  }, [userId]);
+
+  /**
+   * Make fetch exercise by id call
+   * @param exerciseid 
+   */
+  const makeFetchExerciseByIdCall = async (exerciseid: string) => {
+    fetchExercise(exerciseid).then((data) => {
+      if (data.status === 200) {
+        setRecommendations((recommendationsArr) => [
+          ...recommendationsArr,
+          data.body,
+        ]);
+      } else {
+        console.log("Error fetching recommendations");
+      }
+    });
+  };
+
+  useEffect(() => {
+    if (recommendationIds) {
+      recommendationIds.forEach((obj) => {
+        makeFetchExerciseByIdCall(String(obj.id));
+      });
+    }
+  }, [recommendationIds]);
+
+  /**
+   * Navigate to create exercise form
+   */
   const navigateToCreateExerciseFrom = () => {
     navigate("/create-exercise");
   };
 
+  /**
+   * Fix side component on scroll. WIP
+   */
+  const fixNav = () => {
+    if (navRef.current) {
+      // console.log(window.scrollY, navRef.current.offsetHeight)
+      if (window.scrollY > 50) {
+        navRef.current.classList.add("test");
+      } else {
+        navRef.current.classList.remove("test");
+      }
+    }
+  };
+
+  window.addEventListener("scroll", fixNav);
+
   return (
     <div className="">
       <div className="grid grid-cols-9 gap-0">
-        <div className="col-span-2 p-7 pl-10 text-left border-r-1 h-full">
+        <div className="col-span-2 p-7 pl-10 text-left border-r-1 h-full" ref={navRef}>
           <div className="left-grid-heading mb-5 items-center">
             <p className="font-bold leading-10">Recent workouts</p>
             <div>
@@ -70,7 +152,7 @@ const HomePage = () => {
             tenetur enim expedita.
           </p>
         </div>
-        <div className="col-span-5 text-left p-10">
+        <div className="col-span-7 text-left p-10">
           <p className="text-3xl mb-2">The home for all things fitness</p>
           <p className="text-gray-500 mb-10">
             Welcome to your personal dashboard, where you can find an
@@ -78,9 +160,19 @@ const HomePage = () => {
             you on your fitness journey
           </p>
           <p className="text-lg mb-4">Recommended for you</p>
-          <div className=" border-1 shadow-xl rounded px-8 pt-6 pb-8 mb-10 w-100"></div>
-          <p className="text-md mb-4">Start building your profile</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="border-1 shadow-xl rounded py-6 px-4 mb-10 w-100 grid grid-cols-4 gap-3">
+            {recommendationsLoading ? (
+              <div className="col-span-4 mx-auto my-auto">
+                <LoadingIcon />
+              </div>
+            ) : (
+              recommendations?.map((exercise) => (
+                <RecommendationCard exercise={exercise} />
+              ))
+            )}
+          </div>
+          <p className="text-lg mb-4">Start building your profile</p>
+          <div className="grid grid-cols-2 gap-20">
             <div>
               <div className="border-1 shadow-2xl rounded px-6 py-6 mb-4 w-100 h-full">
                 <p className="text-md mb-1">Add a new exercise</p>
@@ -177,14 +269,6 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="col-span-2 p-7 text-left">
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum iste
-            nemo beatae incidunt omnis iure, rem doloribus cum ad! Quos sapiente
-            non repellendus aspernatur sed dignissimos consectetur ut totam!
-            Adipisci?
-          </p>
         </div>
       </div>
     </div>

@@ -1,22 +1,22 @@
 .left-grid-heading {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .border-r-1 {
-    border-right: 1px solid rgb(59, 59, 59);
+  border-right: 1px solid rgb(59, 59, 59);
 }
 
 .bg-color-default {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 .border-1 {
-    border: 1px solid rgb(59, 59, 59);
+  border: 1px solid rgb(59, 59, 59);
 }
 
 textarea {
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
-    box-sizing: border-box;         /* Opera/IE 8+ */
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box; /* Opera/IE 8+ */
 }

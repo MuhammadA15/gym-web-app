@@ -4,6 +4,7 @@ import {
   FETCH_ALL_EXERCISES_ENDPOINT,
   FETCH_EXERCISE_BY_ID_ENDPOINT,
   FETCH_EXERCISE_BY_USERID_ENDPOINT,
+  GET_EXERCISE_RECOMMENDATIONS_ENDPOINT,
   GET_FAVORITES_COUNT_ENDPOINT,
   GET_FAVORITES_ENDPOINT,
   REMOVE_EXERCISE_FAVORITES_ENDPOINT,
@@ -147,6 +148,26 @@ export const removeFavorite = async (userId: string, exerciseId: string) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
+    }
+  ).then((res) =>
+    res.json().then((data) => ({ status: res?.status, body: data }))
+  );
+};
+
+/**
+ * Get Exercise Recommendations api call
+ * @param userId 
+ * @returns 
+ */
+export const getRecommendations = async (userId: string) => {
+  return await fetch(
+    GET_EXERCISE_RECOMMENDATIONS_ENDPOINT,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: userId,
     }
   ).then((res) =>
     res.json().then((data) => ({ status: res?.status, body: data }))
