@@ -133,7 +133,7 @@ const AddExerciseModal = ({
       ref={wrapperRef}
     >
       <div className="pb-3">
-        <p className="text-left text-lg pt-4 px-6 pr-10 mb-6">
+        <p className="text-left text-md pt-4 px-6 pr-10 mb-6">
           Select workout to save to...
         </p>
         {loading ? (
@@ -143,7 +143,7 @@ const AddExerciseModal = ({
             {routineData?.map((routine) => (
               <div className="flex flex-row items-center mb-4">
                 <input
-                  className="w-5 h-5 rounded-lg transition-all duration-500 outline hover:cursor-pointer"
+                  className="w-4 h-4 rounded-lg transition-all duration-500 hover:cursor-pointer"
                   type={"checkbox"}
                   onClick={() => {
                     exerciseInRoutineMap.get(String(routine?.id))
@@ -152,13 +152,13 @@ const AddExerciseModal = ({
                   }}
                   checked={exerciseInRoutineMap.get(String(routine?.id))}
                 />
-                <p className="text-left text-lg ml-5">{routine?.routineName}</p>
+                <p className="text-left text-md ml-5">{routine?.routineName}</p>
               </div>
             ))}
           </div>
         )}
         <div className="text-right mr-4">
-          <FilledButton text={"Close"} onClickFunc={closeModal} py={"py-1"} />
+          <FilledButton text={"Close"} onClickFunc={closeModal} py={"py-1"} textSize={"text-sm"} />
         </div>
       </div>
     </div>

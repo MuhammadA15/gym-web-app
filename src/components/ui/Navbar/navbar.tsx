@@ -42,7 +42,7 @@ const Navbar = () => {
               {!userId ? (
                 <>
                   <li className="logo">
-                    <Link to="/" className="text-xl px-5">
+                    <Link to="/" className="text-lg px-5">
                       Fitness App
                     </Link>
                   </li>
@@ -60,22 +60,22 @@ const Navbar = () => {
               ) : (
                 <>
                   <li className="logo">
-                    <Link to="/home" className="text-xl px-5">
+                    <Link to="/home" className="text-lg px-5">
                       Fitness App
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home" className="nav-item flex items-center">
+                    <Link to="/home" className="nav-item flex items-center text-sm">
                       <AiFillHome className="mr-2"/> Home
                     </Link>
                   </li>
                   <li>
-                    <Link to="#" className="nav-item flex items-center">
+                    <Link to="#" className="nav-item flex items-center text-sm">
                       <SiGoogleanalytics className="mr-2"/> Analytics
                     </Link>
                   </li>
                   <li>
-                    <Link to="/search" className="nav-item flex items-center">
+                    <Link to="/search" className="nav-item flex items-center text-sm">
                       <AiOutlineSearch className="mr-2" size={22}/>Search Exercises
                     </Link>
                   </li>

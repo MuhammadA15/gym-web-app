@@ -15,7 +15,7 @@ export const createExerciseForm_ValidationSchema = () =>
   Yup.object({
     publish: Yup.string().test(
       "publish",
-      "You must provide a description or a GIF url in order to publish an exercise",
+      "You must provide a description or a GIF Url in order to publish an exercise",
       (value, ctx) => {
         console.log(ctx.parent.description);
         return (

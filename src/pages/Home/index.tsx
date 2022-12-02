@@ -21,9 +21,10 @@ const HomePage = () => {
 
   const [loading, setLoading] = useState(false);
   const [recommendationsLoading, setRecommendationsLoading] = useState(false);
-  const [recommendationIds, setRecommendationIds] = useState<IRecommendationExerciseIdType[]>([]);
+  const [recommendationIds, setRecommendationIds] = useState<
+    IRecommendationExerciseIdType[]
+  >([]);
   const [recommendations, setRecommendations] = useState<exerciseTypes[]>([]);
-  const navRef = useRef<HTMLInputElement>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -46,7 +47,7 @@ const HomePage = () => {
 
   /**
    * Make create routine call
-   * @param data 
+   * @param data
    */
   const makeCreateRoutineCall = async (data: any) => {
     createRoutine(data).then((data) => {
@@ -84,7 +85,7 @@ const HomePage = () => {
 
   /**
    * Make fetch exercise by id call
-   * @param exerciseid 
+   * @param exerciseid
    */
   const makeFetchExerciseByIdCall = async (exerciseid: string) => {
     fetchExercise(exerciseid).then((data) => {
@@ -114,53 +115,40 @@ const HomePage = () => {
     navigate("/create-exercise");
   };
 
-  /**
-   * Fix side component on scroll. WIP
-   */
-  const fixNav = () => {
-    if (navRef.current) {
-      // console.log(window.scrollY, navRef.current.offsetHeight)
-      if (window.scrollY > 50) {
-        navRef.current.classList.add("test");
-      } else {
-        navRef.current.classList.remove("test");
-      }
-    }
-  };
-
-  window.addEventListener("scroll", fixNav);
-
   return (
     <div className="">
       <div className="grid grid-cols-9 gap-0">
-        <div className="col-span-2 p-7 pl-10 text-left border-r-1 h-full" ref={navRef}>
-          <div className="left-grid-heading mb-5 items-center">
-            <p className="font-bold leading-10">Recent workouts</p>
-            <div>
-              <FilledButton
-                text={"+ Add New"}
-                py={"py-1"}
-                textSize={"text-sm"}
-                textWeight={"font-normal"}
-              />
+        <div className="col-span-2 text-left border-r-1 h-full">
+          <div className="home-side px-7 pb-7 pt-5 pl-10">
+            <div className="left-grid-heading mb-5 items-center">
+              <p className="font-bold leading-10 text-sm">Recent workouts</p>
+              <div className="ml-auto">
+                <FilledButton
+                  text={"+ Add New"}
+                  py={"py-0.5"}
+                  px={"px-1.5"}
+                  textSize={"text-xs"}
+                  textWeight={"font-normal"}
+                />
+              </div>
             </div>
+            <p className="text-sm">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
+              adipisci error neque, unde in recusandae quasi, quisquam obcaecati
+              nostrum eius nam dolores blanditiis possimus minus eveniet dolor
+              tenetur enim expedita.
+            </p>
           </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis
-            adipisci error neque, unde in recusandae quasi, quisquam obcaecati
-            nostrum eius nam dolores blanditiis possimus minus eveniet dolor
-            tenetur enim expedita.
-          </p>
         </div>
         <div className="col-span-7 text-left p-10">
           <p className="text-3xl mb-2">The home for all things fitness</p>
-          <p className="text-gray-500 mb-10">
+          <p className="text-gray-500 mb-10 text-sm">
             Welcome to your personal dashboard, where you can find an
             introduction to the tools and services myFit has to offer to help
             you on your fitness journey
           </p>
-          <p className="text-lg mb-4">Recommended for you</p>
-          <div className="border-1 shadow-xl rounded py-6 px-4 mb-10 w-100 grid grid-cols-4 gap-3">
+          <p className="text-md mb-4">Recommended for you</p>
+          <div className="border-1 shadow-2xl rounded py-6 px-4 mb-10 w-100 grid grid-cols-4 gap-3">
             {recommendationsLoading ? (
               <div className="col-span-4 mx-auto my-auto">
                 <LoadingIcon />
@@ -171,18 +159,18 @@ const HomePage = () => {
               ))
             )}
           </div>
-          <p className="text-lg mb-4">Start building your profile</p>
+          <p className="text-sm mb-4">Start building your profile</p>
           <div className="grid grid-cols-2 gap-20">
             <div>
               <div className="border-1 shadow-2xl rounded px-6 py-6 mb-4 w-100 h-full">
-                <p className="text-md mb-1">Add a new exercise</p>
-                <p className="text-md text-gray-500 leading-0 mb-7">
+                <p className="text-sm mb-1">Add a new exercise</p>
+                <p className="text-sm text-gray-500 leading-0 mb-5">
                   An exercise can be anything from a weight lifting exercise to
                   a simple stretch
                 </p>
-                <label htmlFor="exercise-name py-1">Exercise Name</label>
+                <label htmlFor="exercise-name" className="text-sm">Exercise Name</label>
                 <input
-                  className="shadow appearance-none border rounded w-full my-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-7"
+                  className="text-sm shadow appearance-none border rounded w-full my-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-7"
                   id="exercise-name"
                   type="text"
                   placeholder="name for your exercise..."
@@ -220,22 +208,23 @@ const HomePage = () => {
                 <FilledButton
                   text={"Create new exercise"}
                   textWeight={"font-normal"}
+                  textSize={"text-sm"}
                   onClickFunc={navigateToCreateExerciseFrom}
-                  py={"py-1"}
+                  py={"py-0.5"}
                 />
               </div>
             </div>
             <div>
               <div className="border-1 shadow-2xl rounded px-6 pt-6 pb-3 mb-4 w-100 h-full">
-                <p className="text-md mb-1">Create a new workout</p>
-                <p className="text-md text-gray-500 leading-0 mb-5">
+                <p className="text-sm mb-1">Create a new workout</p>
+                <p className="text-sm text-gray-500 leading-0 mb-5">
                   Create a new workout routine to save to your library and
                   access at any time. Start by providing a brief description and
                   the name of the workout routine
                 </p>
                 <form onSubmit={formik.handleSubmit}>
                   <div className="mb-4">
-                    <label htmlFor="routine-name" className="mb-2">
+                    <label htmlFor="routine-name" className="mb-2 text-sm">
                       Routine Name
                     </label>
                     <input
@@ -247,13 +236,13 @@ const HomePage = () => {
                       onChange={formik.handleChange}
                     />
                     {formik.errors.routineName && (
-                      <p className="text-left text-red-500">
+                      <p className="text-left text-red-500 text-sm">
                         {formik.errors.routineName}
                       </p>
                     )}
                   </div>
 
-                  <label htmlFor="routine-description">Description</label>
+                  <label htmlFor="routine-description" className="text-sm">Description</label>
                   <textarea
                     name="routine-descripton"
                     placeholder="provide a brief description of your workout routine..."
@@ -261,7 +250,8 @@ const HomePage = () => {
                   ></textarea>
                   <FilledButton
                     text={"Create workout routine"}
-                    py={"py-1"}
+                    textSize={"text-sm"}
+                    py={"py-0.5"}
                     textWeight={"font-normal"}
                     loading={loading}
                   />

@@ -58,7 +58,7 @@ const CreateExercisePage = () => {
 
   return (
     <div className="container flex justify-center">
-      <div className="w-full max-w-2xl mt-10">
+      <div className="w-full max-w-2xl mt-4">
         <div className="text-left mt-6">
           <p className="text-2xl">Create a new exercise</p>
           <p className="text-gray-500 text-sm mt-0.5">
@@ -74,7 +74,7 @@ const CreateExercisePage = () => {
               Exercise Name
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="name"
               type="text"
               placeholder="Exercise Name"
@@ -82,7 +82,7 @@ const CreateExercisePage = () => {
               onChange={formik.handleChange}
             />
             {formik.errors.name && (
-              <p className="text-left text-red-500">{formik.errors.name}</p>
+              <p className="text-left text-red-500 text-sm mt-1">{formik.errors.name}</p>
             )}
           </div>
           <div className="mb-5">
@@ -96,25 +96,25 @@ const CreateExercisePage = () => {
               </span>
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="description"
               type="text"
-              placeholder="description"
+              placeholder="Description"
               value={formik.values.description}
               onChange={formik.handleChange}
             />
             {formik.errors.description && (
-              <p className="text-left text-red-500">
+              <p className="text-left text-red-500 text-sm mt-1">
                 {formik.errors.description}
               </p>
             )}
           </div>
           <div className="mb-5">
-            <label className="block text-left text-sm  mb-2" htmlFor="bodyPart">
+            <label className="block text-left text-sm mb-2" htmlFor="bodyPart">
               Body Part
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="bodyPart"
               type="text"
               placeholder="Body Part"
@@ -122,15 +122,15 @@ const CreateExercisePage = () => {
               onChange={formik.handleChange}
             />
             {formik.errors.bodyPart && (
-              <p className="text-left text-red-500">{formik.errors.bodyPart}</p>
+              <p className="text-left text-red-500 text-sm mt-1">{formik.errors.bodyPart}</p>
             )}
           </div>
           <div className="mb-5">
-            <label className="block text-left text-sm  mb-2" htmlFor="target">
+            <label className="block text-left text-sm mb-2" htmlFor="target">
               Target Muscle
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="target"
               type="text"
               placeholder="Target Muscle"
@@ -138,7 +138,7 @@ const CreateExercisePage = () => {
               onChange={formik.handleChange}
             />
             {formik.errors.target && (
-              <p className="text-left text-red-500">{formik.errors.target}</p>
+              <p className="text-left text-red-500 text-sm mt-1">{formik.errors.target}</p>
             )}
           </div>
           <div className="mb-5">
@@ -149,7 +149,7 @@ const CreateExercisePage = () => {
               Equipment Needed?
             </label>
             <select
-              className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-sm shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="equipmentNeeded"
               placeholder="Equipment Needed?"
               value={formik.values.equipmentNeeded}
@@ -162,7 +162,7 @@ const CreateExercisePage = () => {
               ))}
             </select>
             {formik.errors.equipmentNeeded && (
-              <p className="text-left text-red-500">
+              <p className="text-left text-red-500 text-sm mt-1">
                 {formik.errors.equipmentNeeded}
               </p>
             )}
@@ -170,13 +170,13 @@ const CreateExercisePage = () => {
           {formik.values.equipmentNeeded === "Yes" && (
             <div className="mb-5">
               <label
-                className="block text-left text-sm  mb-2"
+                className="block text-left text-sm mb-2"
                 htmlFor="equipment"
               >
                 Please provide what equipment is needed to perform the exercise
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="equipment"
                 type="text"
                 placeholder="Equipment"
@@ -184,7 +184,7 @@ const CreateExercisePage = () => {
                 onChange={formik.handleChange}
               />
               {formik.errors.equipment && (
-                <p className="text-left text-red-500">
+                <p className="text-left text-red-500 text-sm mt-1">
                   {formik.errors.equipment}
                 </p>
               )}
@@ -198,7 +198,7 @@ const CreateExercisePage = () => {
               </span>
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="text-sm shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="gifUrl"
               type="text"
               placeholder="GIF Url"
@@ -206,7 +206,7 @@ const CreateExercisePage = () => {
               onChange={formik.handleChange}
             />
             {formik.errors.description && (
-              <p className="text-left text-red-500">
+              <p className="text-left text-red-500 text-sm mt-1">
                 {formik.errors.description}
               </p>
             )}
@@ -255,14 +255,14 @@ const CreateExercisePage = () => {
               </div>
             </div>
             {formik.errors.publish && (
-              <p className="text-left text-red-500 mt-2">
+              <p className="text-left text-red-500 mt-3 text-sm">
                 {formik.errors.publish}
               </p>
             )}
           </div>
           <hr className="border-top-1 mb-6" />
           <div className="flex items-center justify-between">
-            <FilledButton text={"Create Exercise"} loading={loading} />
+            <FilledButton text={"Create Exercise"} textSize={"text-sm"} loading={loading} />
           </div>
         </form>
       </div>

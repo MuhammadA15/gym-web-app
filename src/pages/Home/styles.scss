@@ -20,3 +20,12 @@ textarea {
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
   box-sizing: border-box; /* Opera/IE 8+ */
 }
+
+.home-side {
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  z-index: 30;
+  min-height: 50vh;
+  max-height: 100vh;
+}

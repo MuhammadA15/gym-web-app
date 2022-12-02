@@ -36,8 +36,8 @@ const EntryMenu = ({
           >
             <li>
               <div onClick={() => openModal(exerciseId)} className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                <MdPlaylistAdd className="font-bold text-2xl" color="" />
-                <p className="ml-2">
+                <MdPlaylistAdd className="font-bold text-xl" color="" />
+                <p className="ml-2 text-sm">
                   Add To Workout
                 </p>
               </div>
@@ -47,8 +47,8 @@ const EntryMenu = ({
                 className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => removeFavorite(userId, exerciseId)}
               >
-                <MdRemove className="font-bold text-2xl" color="black" />
-                <p className="ml-2">Remove From Favorites</p>
+                <MdRemove className="font-bold text-xl" color="black" />
+                <p className="ml-2 text-sm">Remove From Favorites</p>
               </div>
             </li>
           </ul>
