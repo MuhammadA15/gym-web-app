@@ -28,11 +28,11 @@ const UserProfile = () => {
         <img
           src={emptyPhoto}
           alt={"profile"}
-          className="w-36 h-36 mb-2 rounded-full"
+          className="w-32 h-32 mb-2 rounded-full"
         />
-        <p className="text-lg font-bold">{username}</p>
-        <p className="text-lg text-gray-500 mb-5">{email}</p>
-        <FilledButton text="Edit Profile" py={"py-1"} width={"w-3/4"} />
+        <p className="text-md font-bold">{username}</p>
+        <p className="text-md text-gray-500 mb-5">{email}</p>
+        <FilledButton text="Edit Profile" py={"py-1"} width={"w-3/4"} textSize={"text-sm"}/>
       </div>
       <div className="col-span-6 m-4 h-full">
         <div>
@@ -51,6 +51,7 @@ const UserProfile = () => {
                   className="
                   py-0.5
                   rounded
+                  text-sm
                   hover:cursor-pointer 
                   hover:bg-gray-400
                   hover:bg-opacity-10 

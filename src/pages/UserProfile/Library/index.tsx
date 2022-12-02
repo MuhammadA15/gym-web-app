@@ -44,14 +44,14 @@ const Library = () => {
 
   return (
     <div>
-      <p className="mb-2 text-lg font-bold">Your Exercises</p>
+      <p className="mb-2 text-md font-bold">Your Exercises</p>
       {exerciseData?.map((exercise) => (
-        <p>{exercise?.name}</p>
+        <p className="text-sm">{exercise?.name}</p>
       ))}
-      <p className="mt-16 mb-2 text-lg font-bold">Your Routines</p>
+      <p className="mt-16 mb-2 text-md font-bold">Your Routines</p>
       {routineData?.map((routine) => (
         <p
-          className="hover:cursor-pointer hover:underline"
+          className="hover:cursor-pointer hover:underline text-sm"
           onClick={() => navigateToRoutine(routine?.id)}
         >
           {routine?.routineName}

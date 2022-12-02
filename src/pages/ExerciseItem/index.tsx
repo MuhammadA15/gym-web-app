@@ -10,13 +10,19 @@ import {
   fetchFavorites,
   removeFavorite,
 } from "../../services/exerciseService";
+import {
+  bodyPartColorMapper,
+  IbodyPartColorMapperTypes,
+} from "../../utils/utils";
 
 const ExerciseItem = () => {
   const userId = localStorage.getItem("id") || "";
   const { exerciseId = "" } = useParams();
 
   const [exerciseData, setExerciseData] = useState<exerciseTypes | null>();
-  const [favExercises, setFavExercises] = useState<IFavExerciseType[] | null>([]);
+  const [favExercises, setFavExercises] = useState<IFavExerciseType[] | null>(
+    []
+  );
   const [isFav, setIsFav] = useState(false);
   const [favCount, setFavCount] = useState(0);
 
@@ -133,17 +139,27 @@ const ExerciseItem = () => {
   return (
     <div className="grid grid-cols-4 bg-black rounded h-screen">
       <div className="col-span-1 ml-16 mt-16 flex flex-col items-center">
-        <img src={exerciseData?.gifUrl} className="h-80" />
+        <img src={exerciseData?.gifUrl} className="max-h-60" />
       </div>
       <div className="col-span-3 m-12 mt-16 flex flex-col border-1 rounded w-3/4 items-start h-52 p-4">
         <div className="flex flex-row items-center w-full">
-          <p className="text-lg font-bold text-capital mr-3">
+          <p className="text-md text-left font-bold text-capital mr-3">
             {exerciseData?.name}
           </p>
-          <p className="bg-orange-400 rounded-full px-3 py-0.5 mx-2 my-1 text-capital">
+          <p
+            className={`bg-${
+              exerciseData?.bodyPart
+                ? bodyPartColorMapper[
+                    exerciseData?.bodyPart
+                      .toLocaleLowerCase()
+                      .replace(/\s/g, "") as keyof IbodyPartColorMapperTypes
+                  ]
+                : ""
+            } rounded-full px-3 py-0.5 mx-2 my-1 text-capital text-sm`}
+          >
             {exerciseData?.bodyPart}
           </p>
-          <p className="bg-green-400 rounded-full px-3 py-0.5 mx-1 my-1 text-capital">
+          <p className="bg-green-400 rounded-full px-3 py-0.5 mx-1 my-1 text-capital text-sm">
             {exerciseData?.target}
           </p>
           <div className="ml-auto flex flex-row items-center mr-3">
@@ -156,18 +172,18 @@ const ExerciseItem = () => {
               }}
             >
               {isFav ? (
-                <BsFillStarFill className="text-xl" color="#eac54f" />
+                <BsFillStarFill className="text-md" color="#eac54f" />
               ) : (
-                <BsStar className="text-xl" color="rgb(94 94 94)" />
+                <BsStar className="text-md" color="rgb(94 94 94)" />
               )}
             </p>
-            <p className="text-lg">{favCount}</p>
+            <p className="text-md">{favCount}</p>
           </div>
         </div>
-        <p className="text-gray-500 mb-6 text-capital">
+        <p className="text-gray-500 mb-6 text-capital text-sm">
           {exerciseData?.equipment}
         </p>
-        <p className="text-left">
+        <p className="text-left text-sm">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
           natus ex asperiores odio eum accusamus maxime deserunt, dolores
           tempore error repellat dolorem nam nihil a. Perspiciatis similique

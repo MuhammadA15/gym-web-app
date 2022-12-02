@@ -3,8 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { exerciseTypes } from "../../../types/exerciseType";
 import { BsFillStarFill, BsStar } from "react-icons/bs";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import {
+  bodyPartColorMapper,
+  IbodyPartColorMapperTypes,
+} from "../../../utils/utils";
 import "react-loading-skeleton/dist/skeleton.css";
 import "./styles.scss";
+import { TypeOf } from "yup";
 
 const ResultCard = ({
   exercise,
@@ -23,22 +28,33 @@ const ResultCard = ({
 
   return (
     <SkeletonTheme baseColor="#4d4f5038" highlightColor="none">
-      <div className="flex justify-center">
+      <div className="flex">
         <div
           key={index}
           onClick={() => navigate(`/exercise/${exercise?.id}`)}
           className="w-11/12 bg-light-black rounded shadow-xl mb-10 flex flex-col hover:cursor-pointer hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
         >
           {exLoading ? (
-            <Skeleton className="h-56 w-full rounded" />
+            <Skeleton className="max-h-40 rounded" />
           ) : (
-            <img
-              src={exercise?.gifUrl}
-              className="h-56 w-full rounded"
-              alt=""
-            />
+            <>
+              <img
+                src={exercise?.gifUrl}
+                className="max-h-40 rounded-t"
+                alt=""
+              />
+              <div
+                className={`border-t-2 border-${
+                  bodyPartColorMapper[
+                    exercise?.bodyPart
+                      .toLocaleLowerCase()
+                      .replace(/\s/g, "") as keyof IbodyPartColorMapperTypes
+                  ]
+                }`}
+              ></div>
+            </>
           )}
-          <div className="flex flex-row pl-2 items-center mt-4">
+          <div className="flex flex-row pl-2 items-center mt-3">
             {exLoading ? (
               <>
                 <Skeleton
@@ -53,21 +69,34 @@ const ResultCard = ({
               </>
             ) : (
               <>
-                <p className="bg-orange-400 rounded-full px-3 py-1 mx-1 my-1 text-capital">
+                <p
+                  className={`bg-${
+                    exercise?.bodyPart
+                      ? bodyPartColorMapper[
+                          exercise?.bodyPart
+                            .toLocaleLowerCase()
+                            .replace(
+                              /\s/g,
+                              ""
+                            ) as keyof IbodyPartColorMapperTypes
+                        ]
+                      : ""
+                  } rounded-full px-3 py-1 mx-1 my-1 text-capital text-xs`}
+                >
                   {exercise?.bodyPart}
                 </p>
-                <p className="bg-green-400 rounded-full px-3 py-1 mx-1 my-1 text-capital">
+                <p className="bg-green-400 rounded-full px-3 py-1 mx-1 my-1 text-capital text-xs">
                   {exercise?.target || <Skeleton count={1} />}
                 </p>
               </>
             )}
             <p className="ml-auto mr-4">
               {loading ? (
-                <Skeleton circle width={25} height={25} className="mb-3" />
+                <Skeleton circle width={22} height={22} className="mb-3" />
               ) : favorited ? (
-                <BsFillStarFill className="text-xl" color="#eac54f" />
+                <BsFillStarFill className="text-lg" color="#eac54f" />
               ) : (
-                <BsStar className="text-xl" color="rgb(94 94 94)" />
+                <BsStar className="text-lg" color="rgb(94 94 94)" />
               )}
             </p>
           </div>
@@ -82,10 +111,10 @@ const ResultCard = ({
             </>
           ) : (
             <>
-              <p className="text-capital text-left font-bold text-lg p-2 pl-4">
+              <p className="text-capital text-left font-bold text-sm p-2 pl-4">
                 {exercise?.name}
               </p>
-              <p className="text-left text-capital p-2 pl-4 mt-auto">
+              <p className="text-left text-capital p-2 pl-4 mt-auto text-gray-500 text-xs">
                 {exercise?.equipment}
               </p>
             </>

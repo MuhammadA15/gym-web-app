@@ -24,10 +24,10 @@ const DetailsMenu = ({ logout, username }: { logout: () => void, username: strin
           type="button"
           onClick={menuClick}
         >
-          <img src={emptyPhoto} className="h-10 w-10 rounded-full" alt={''}/>
+          <img src={emptyPhoto} className="h-8 w-8 rounded-full" alt={''}/>
         </button>
         <svg
-          className="ml-1 w-4 h-4 hover:cursor-pointer"
+          className="ml-1 w-3 h-3 hover:cursor-pointer"
           aria-hidden="true"
           fill="none"
           stroke="currentColor"
@@ -52,33 +52,34 @@ const DetailsMenu = ({ logout, username }: { logout: () => void, username: strin
             className="block py-1 text-md text-left text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownDefault"
           >
-            <li className="p-3 grid grid-cols-3 gap-2 items-center">
-              <img src={emptyPhoto} className="w-10 h-10 rounded-full" alt={''}/>
-              <div className="col-span-2">
+            <li className="px-3 py-2 grid grid-cols-3 gap-2 items-center">
+              <img src={emptyPhoto} className="w-8 h-8 rounded-full" alt={''}/>
+              <div className="col-span-2 text-sm">
                 Signed in as {" "}
                 <strong>{username}</strong>
               </div>
             </li>
-            <hr className="border-t-1 border-gray-300" />
+            <hr className="border-t-1 border-gray-300 mb-1" />
             <li>
               <Link
                 to="/home"
-                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                className="text-sm block py-1.5 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 Dashboard
               </Link>
             </li>
-            <li>
+            <li className="mb-1">
               <Link
                 to="/user-profile"
-                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                className="text-sm block py-1.5 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 User Profile
               </Link>
             </li>
-            <li>
+            <hr className="border-t-1 border-gray-300 mb-1" />
+            <li className="">
               <button
-                className="block text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full"
+                className="text-sm block text-left py-1.5 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white w-full"
                 onClick={logout}
               >
                 Sign out

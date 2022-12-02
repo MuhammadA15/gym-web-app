@@ -127,26 +127,26 @@ const SearchPage = () => {
   }, [page]);
 
   return (
-    <div className="grid grid-cols-5">
-      <div className="cols-span-1 bg-light-black m-4 rounded">
-        <p></p>
+    <div className="grid grid-cols-5 mt-5 mx-6 gap-2">
+      <div className="cols-span-1 bg-light-black mt-4 rounded mb-10">
+        <p>Filter Menu</p>
       </div>
-      <div className="col-span-4 mt-4">
-        <div className="text-left px-4">
+      <div className="col-span-4 mt-10 mx-6">
+        <div className="text-left">
           <input
             className="shadow appearance-none border rounded w-1/2 py-2 px-2 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Search"
           />
         </div>
-        <hr className="search-hr-border-t-1 border-g-300 mx-4 mt-6" />
-        <p className="text-left px-4 mt-1 text-gray-500">
+        <hr className="search-hr-border-t-1 border-g-300 mt-6 mr-6" />
+        <p className="text-left mt-2 text-gray-500">
           {exerciseData
             ? parseInt(exerciseData?.length.toString()).toLocaleString()
             : ""}{" "}
           results found
         </p>
         <div className="">
-          <div className="grid grid-cols-3 gap-2 mx-4 mt-4 px-4 pt-7">
+          <div className="grid grid-cols-3 gap-2 mt-2 pt-5">
             {exerciseData?.slice(range[0], range[1])?.map((exercise, index) => (
               <ResultCard
                 exercise={exercise}
@@ -209,7 +209,8 @@ const SearchPage = () => {
                     className={`
                   px-3
                   py-0.5
-                  font-bold 
+                  font-bold
+                  text-sm 
                   rounded
                   transition-all
                   duration-200

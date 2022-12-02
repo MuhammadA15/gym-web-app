@@ -5,6 +5,10 @@ import { exerciseTypes } from "../../../../types/exerciseType";
 import EntryMenu from "../EntryMenu";
 import { BsFillStarFill, BsThreeDotsVertical } from "react-icons/bs";
 import { useMultiMenuOutsideClickAlerter } from "../hooks/MultiMenuOutsideClickAlerter";
+import {
+  bodyPartColorMapper,
+  IbodyPartColorMapperTypes,
+} from "../../../../utils/utils";
 
 const FavoritesEntryCard = ({
   index,
@@ -31,7 +35,7 @@ const FavoritesEntryCard = ({
 }) => {
   const navigate = useNavigate();
   const wrapperRef = useRef(null);
-  
+
   useMultiMenuOutsideClickAlerter(
     wrapperRef,
     isOpenList,
@@ -46,14 +50,14 @@ const FavoritesEntryCard = ({
         className="border-1 rounded mb-6 flex flex-row shadow-xl"
       >
         {loading ? (
-          <Skeleton width={192} className="rounded-l border-r-1 h-full" />
+          <Skeleton width={192} className="max-h-40 rounded-l border-r-1 h-full" />
         ) : (
           <img
             src={exercise?.gifUrl}
-            className="h-fit max-h-48 rounded-l border-r-1"
+            className="h-fit max-h-40 rounded-l border-r-1"
           />
         )}
-        <div className="flex flex-col mx-4 pt-4 px-4 w-full">
+        <div className="flex flex-col mx-4 pt-2.5 px-4 w-full">
           <div className="flex flex-row items-center">
             {loading ? (
               <>
@@ -67,22 +71,35 @@ const FavoritesEntryCard = ({
             ) : (
               <>
                 <p
-                  className="font-bold text-capital text-left hover:cursor-pointer hover:underline"
+                  className="font-bold text-sm text-capital text-left hover:cursor-pointer hover:underline"
                   onClick={() => navigate(`/exercise/${exercise?.id}`)}
                 >
                   {exercise?.name}
                 </p>
-                <p className="bg-orange-400 rounded-full px-3 py-0.5 ml-3 mr-1 my-1 text-capital text-sm">
+                <p
+                  className={`bg-${
+                    exercise?.bodyPart
+                      ? bodyPartColorMapper[
+                          exercise?.bodyPart
+                            .toLocaleLowerCase()
+                            .replace(
+                              /\s/g,
+                              ""
+                            ) as keyof IbodyPartColorMapperTypes
+                        ]
+                      : ""
+                  } rounded-full px-3 py-0.5 ml-3 mr-1 my-1 text-capital text-xs`}
+                >
                   {exercise?.bodyPart}
                 </p>
-                <p className="bg-green-400 rounded-full px-3 py-0.5 mx-1 my-1 text-capital text-sm">
+                <p className="bg-green-400 rounded-full px-3 py-0.5 mx-1 my-1 text-capital text-xs">
                   {exercise?.target}
                 </p>
               </>
             )}
             {!exercise || loading ? (
               <div className="ml-auto -mr-5 py-1.5 px-1.5 mb-2">
-                <Skeleton className="" height={25} width={25} />
+                <Skeleton className="" height={22} width={22} />
               </div>
             ) : (
               <div
@@ -112,10 +129,10 @@ const FavoritesEntryCard = ({
             </>
           ) : (
             <>
-              <p className="text-gray-500 text-capital text-left mb-2">
+              <p className="text-gray-500 text-capital text-left mb-2.5 text-xs">
                 {exercise?.equipment}
               </p>
-              <p className="text-left">
+              <p className="text-left text-sm mb-1">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Ratione totam consectetur quam veritatis voluptatem dolorem vero
                 magni consequatur eius, laudantium quod suscipit perferendis.
@@ -123,13 +140,13 @@ const FavoritesEntryCard = ({
               </p>
             </>
           )}
-          <div className="mt-auto mb-2 flex flex-row items-center">
+          <div className="my-auto flex flex-row items-center">
             {!exercise || loading ? (
               <Skeleton circle width={20} height={20} />
             ) : (
               <>
                 <BsFillStarFill className="text-sm" color="#eac54f" />
-                <p className="mx-2">
+                <p className="mx-2 text-sm">
                   {!exercise ? "" : favCount?.get(exercise?.id)}
                 </p>
               </>
