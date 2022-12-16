@@ -4,6 +4,7 @@ import {
   FETCH_ROUTINES_BY_ID_ENDPOINT,
   FETCH_ROUTINES_ENDPOINT,
   FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID,
+  GET_ROUTINE_EXERCISES_COUNT_ENDPOINT,
   REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID,
 } from "../utils/constants/apiEndpoints";
 
@@ -117,6 +118,26 @@ export const removeExerciseFromRoutine = async (routineid: string, eId: string) 
     ),
     {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  )
+    .then((res) =>
+      res.json().then((data) => ({ status: res.status, body: data }))
+    )
+}
+
+/**
+ * Get exercise count of routine api call
+ * @param routineid  
+ * @returns 
+ */
+ export const getRoutineExercisesCount = async (routineid: string) => {
+  return await fetch(
+    GET_ROUTINE_EXERCISES_COUNT_ENDPOINT.replace("id", routineid),
+    {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },

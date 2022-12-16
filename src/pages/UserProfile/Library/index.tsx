@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingIcon from "../../../components/ui/LoadingIcon/loadingIcon";
 import { fetchExerciseByAuthor } from "../../../services/exerciseService";
 import { fetchUserRoutines } from "../../../services/routineService";
 import { exerciseTypes } from "../../../types/exerciseType";
 import { IRoutineType } from "../../../types/routineType";
+import RecommendationCard from "../../Home/recommendationCard";
+import RoutineCard from "./RoutineCard";
 
 const Library = () => {
   const navigate = useNavigate();
@@ -42,21 +45,40 @@ const Library = () => {
     navigate(`/routine/${id}`);
   };
 
+  const openMenu = (setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => {
+    setCardMenuOpenState(!cardMenuOpenState);
+  };
+
   return (
     <div>
-      <p className="mb-2 text-md font-bold">Your Exercises</p>
-      {exerciseData?.map((exercise) => (
-        <p className="text-sm">{exercise?.name}</p>
-      ))}
-      <p className="mt-16 mb-2 text-md font-bold">Your Routines</p>
-      {routineData?.map((routine) => (
-        <p
-          className="hover:cursor-pointer hover:underline text-sm"
-          onClick={() => navigateToRoutine(routine?.id)}
-        >
-          {routine?.routineName}
-        </p>
-      ))}
+      <div className="flex items-center mb-4 text-left">
+        <p className="text-md font-bold mr-2">Your Workout Routines</p>
+        <hr className="border-top-1 mt-1 flex-1"/>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        {routineData ? routineData?.map((routine) => (
+          <RoutineCard
+            routineData={routine}
+            navigateToRoutine={navigateToRoutine}
+            openMenu={openMenu}
+          />
+        )) :
+        <LoadingIcon className="w-8 h-8"/>
+      }
+      </div>
+      <div className="flex items-center mb-8 mt-8 text-left">
+        <p className="text-md font-bold mr-2">Your Exercises</p>
+        <hr className="border-top-1 mt-1 flex-1"/>
+      </div>
+      <div className="grid grid-cols-3 gap-3">
+        {exerciseData ? exerciseData?.map((exercise) => (
+          <div className="flex justify-center mb-4">
+            <RecommendationCard exercise={exercise}/>
+          </div>
+        )) : 
+        <LoadingIcon className="w-8 h-8"/>
+      }
+      </div>
     </div>
   );
 };

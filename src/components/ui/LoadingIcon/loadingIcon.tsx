@@ -1,8 +1,8 @@
 import React from "react";
 import "./styles.scss";
 
-const LoadingIcon = () => {
-  return <div id="html-spinner"></div>;
+const LoadingIcon = ({className}: {className?: string}) => {
+  return <div id="html-spinner" className={className}></div>;
 };
 
 export default LoadingIcon;

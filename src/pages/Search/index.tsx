@@ -127,11 +127,11 @@ const SearchPage = () => {
   }, [page]);
 
   return (
-    <div className="grid grid-cols-5 mt-5 mx-6 gap-2">
-      <div className="cols-span-1 bg-light-black mt-4 rounded mb-10">
+    <div className="grid grid-cols-12 mt-5 mx-6 gap-2">
+      <div className="col-span-3 bg-neutral-900 shadow-2xl mt-4 rounded mb-10">
         <p>Filter Menu</p>
       </div>
-      <div className="col-span-4 mt-10 mx-6">
+      <div className="col-span-9 mt-10 mx-6">
         <div className="text-left">
           <input
             className="shadow appearance-none border rounded w-1/2 py-2 px-2 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

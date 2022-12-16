@@ -11,13 +11,13 @@ export const bodyPartColorMapper = {
   legs: "blue-600",
   upperlegs: "blue-600",
   lowerlegs: "blue-800",
-  waist: "orange-500",
+  waist: "amber-500",
   back: "red-600",
-  chest: "teal-700",
-  upperarms: "green-600",
-  lowerarms: "green-800",
-  shoulders: "emerald-800",
-  cardio: "rose-600",
+  chest: "teal-500",
+  upperarms: "orange-500",
+  lowerarms: "orange-600",
+  shoulders: "indigo-600",
+  cardio: "rose-400",
 };
 
 export interface IbodyPartColorMapperTypes {

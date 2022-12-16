@@ -21,9 +21,7 @@ const HomePage = () => {
 
   const [loading, setLoading] = useState(false);
   const [recommendationsLoading, setRecommendationsLoading] = useState(false);
-  const [recommendationIds, setRecommendationIds] = useState<
-    IRecommendationExerciseIdType[]
-  >([]);
+  const [recommendationIds, setRecommendationIds] = useState<IRecommendationExerciseIdType[]>([]);
   const [recommendations, setRecommendations] = useState<exerciseTypes[]>([]);
 
   const formik = useFormik({
@@ -118,9 +116,9 @@ const HomePage = () => {
   return (
     <div className="">
       <div className="grid grid-cols-9 gap-0">
-        <div className="col-span-2 text-left border-r-1 h-full">
+        <div className="col-span-2 text-left border-r-2 border-neutral-900 h-full bg-neutral-900">
           <div className="home-side px-7 pb-7 pt-5 pl-10">
-            <div className="left-grid-heading mb-5 items-center">
+            <div className="flex mb-5 items-center">
               <p className="font-bold leading-10 text-sm">Recent workouts</p>
               <div className="ml-auto">
                 <FilledButton
@@ -147,11 +145,11 @@ const HomePage = () => {
             introduction to the tools and services myFit has to offer to help
             you on your fitness journey
           </p>
-          <p className="text-md mb-4">Recommended for you</p>
-          <div className="border-1 shadow-2xl rounded py-6 px-4 mb-10 w-100 grid grid-cols-4 gap-3">
+          <p className="text-md">Recommended for you</p>
+          <div className="py-6 mb-10 w-100 grid grid-cols-4 gap-3">
             {recommendationsLoading ? (
               <div className="col-span-4 mx-auto my-auto">
-                <LoadingIcon />
+                <LoadingIcon className="w-10 h-10"/>
               </div>
             ) : (
               recommendations?.map((exercise) => (
@@ -162,7 +160,7 @@ const HomePage = () => {
           <p className="text-sm mb-4">Start building your profile</p>
           <div className="grid grid-cols-2 gap-20">
             <div>
-              <div className="border-1 shadow-2xl rounded px-6 py-6 mb-4 w-100 h-full">
+              <div className="bg-neutral-900 shadow-2xl rounded px-6 py-6 mb-4 w-100 h-full">
                 <p className="text-sm mb-1">Add a new exercise</p>
                 <p className="text-sm text-gray-500 leading-0 mb-5">
                   An exercise can be anything from a weight lifting exercise to
@@ -215,7 +213,7 @@ const HomePage = () => {
               </div>
             </div>
             <div>
-              <div className="border-1 shadow-2xl rounded px-6 pt-6 pb-3 mb-4 w-100 h-full">
+              <div className=" bg-neutral-900 shadow-2xl rounded px-6 pt-6 pb-3 mb-4 w-100 h-full">
                 <p className="text-sm mb-1">Create a new workout</p>
                 <p className="text-sm text-gray-500 leading-0 mb-5">
                   Create a new workout routine to save to your library and

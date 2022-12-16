@@ -7,9 +7,10 @@ import {
   bodyPartColorMapper,
   IbodyPartColorMapperTypes,
 } from "../../../utils/utils";
+// @ts-ignore
+import exerciseAltImage from "../../../assets/exercise-alt-img.jpg"
 import "react-loading-skeleton/dist/skeleton.css";
 import "./styles.scss";
-import { TypeOf } from "yup";
 
 const ResultCard = ({
   exercise,
@@ -32,19 +33,19 @@ const ResultCard = ({
         <div
           key={index}
           onClick={() => navigate(`/exercise/${exercise?.id}`)}
-          className="w-11/12 bg-light-black rounded shadow-xl mb-10 flex flex-col hover:cursor-pointer hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+          className="w-11/12 bg-light-black rounded shadow-xl mb-10 flex flex-col hover:cursor-pointer hover:-translate-y-2 hover:shadow-2xl hover:bg-zinc-900 transition-all duration-300"
         >
           {exLoading ? (
             <Skeleton className="max-h-40 rounded" />
           ) : (
             <>
               <img
-                src={exercise?.gifUrl}
+                src={exercise?.gifUrl ? exercise?.gifUrl : exerciseAltImage}
                 className="max-h-40 rounded-t"
                 alt=""
               />
               <div
-                className={`border-t-2 border-${
+                className={`border-t-3 border-${
                   bodyPartColorMapper[
                     exercise?.bodyPart
                       .toLocaleLowerCase()
