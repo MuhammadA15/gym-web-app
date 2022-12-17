@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingIcon from "../../../components/ui/LoadingIcon/loadingIcon";
 import { fetchExerciseByAuthor } from "../../../services/exerciseService";
-import { fetchUserRoutines } from "../../../services/routineService";
+import { deleteRoutine, fetchUserRoutines } from "../../../services/routineService";
 import { exerciseTypes } from "../../../types/exerciseType";
 import { IRoutineType } from "../../../types/routineType";
 import RecommendationCard from "../../Home/recommendationCard";
@@ -12,7 +12,7 @@ const Library = () => {
   const navigate = useNavigate();
   const userid = localStorage.getItem("id");
   const [exerciseData, setExerciseData] = useState<exerciseTypes[] | null>([]);
-  const [routineData, setRoutineData] = useState<IRoutineType[] | null>([]);
+  const [routineData, setRoutineData] = useState<IRoutineType[]>([]);
 
   const makeFetchUserCreatedExercisesCall = async (userid: string) => {
     fetchExerciseByAuthor(userid).then((data) => {
@@ -41,11 +41,27 @@ const Library = () => {
     }
   }, [userid]);
 
+  const makeDeleteRoutineCall = async (routineId: string) => {
+    deleteRoutine(routineId).then((data) => {
+      if (data?.status === 200) {
+        alert(data?.body?.msg);
+        setRoutineData(
+          routineData.filter((routine) => {
+            return routine?.id !== Number(routineId);
+          })
+        );
+      } else {
+        console.log("error");
+      }
+    })
+  }
+
   const navigateToRoutine = (id: number) => {
     navigate(`/routine/${id}`);
   };
 
-  const openMenu = (setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => {
+  const openMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => {
+    e.stopPropagation();
     setCardMenuOpenState(!cardMenuOpenState);
   };
 
@@ -61,6 +77,7 @@ const Library = () => {
             routineData={routine}
             navigateToRoutine={navigateToRoutine}
             openMenu={openMenu}
+            makeDeleteRoutineCall={makeDeleteRoutineCall}
           />
         )) :
         <LoadingIcon className="w-8 h-8"/>
@@ -72,7 +89,7 @@ const Library = () => {
       </div>
       <div className="grid grid-cols-3 gap-3">
         {exerciseData ? exerciseData?.map((exercise) => (
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-6">
             <RecommendationCard exercise={exercise}/>
           </div>
         )) : 

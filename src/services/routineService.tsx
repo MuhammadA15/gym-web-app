@@ -1,6 +1,7 @@
 import {
   ADD_EXERCISE_TO_ROUTINE_ENDPOINT,
   CREATE_ROUTINE_ENDPOINT,
+  DELETE_ROUTINE_ENDPOINT,
   FETCH_ROUTINES_BY_ID_ENDPOINT,
   FETCH_ROUTINES_ENDPOINT,
   FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID,
@@ -83,9 +84,9 @@ export const fetchRoutineExercise = async (routineid: string, eId: string) => {
 
 /**
  * Save exercise to routine api call
- * @param routineid 
- * @param eId 
- * @returns 
+ * @param routineid
+ * @param eId
+ * @returns
  */
 export const saveExerciseToRoutine = async (routineid: number, eId: string) => {
   const data = {
@@ -106,11 +107,14 @@ export const saveExerciseToRoutine = async (routineid: number, eId: string) => {
 
 /**
  * Remove exercise from routine api call
- * @param routineid 
- * @param eId 
- * @returns 
+ * @param routineid
+ * @param eId
+ * @returns
  */
-export const removeExerciseFromRoutine = async (routineid: string, eId: string) => {
+export const removeExerciseFromRoutine = async (
+  routineid: string,
+  eId: string
+) => {
   return await fetch(
     REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID.replace("id", routineid).replace(
       "eid",
@@ -122,18 +126,17 @@ export const removeExerciseFromRoutine = async (routineid: string, eId: string) 
         "Content-Type": "application/json",
       },
     }
-  )
-    .then((res) =>
-      res.json().then((data) => ({ status: res.status, body: data }))
-    )
-}
+  ).then((res) =>
+    res.json().then((data) => ({ status: res.status, body: data }))
+  );
+};
 
 /**
  * Get exercise count of routine api call
- * @param routineid  
- * @returns 
+ * @param routineid
+ * @returns
  */
- export const getRoutineExercisesCount = async (routineid: string) => {
+export const getRoutineExercisesCount = async (routineid: string) => {
   return await fetch(
     GET_ROUTINE_EXERCISES_COUNT_ENDPOINT.replace("id", routineid),
     {
@@ -142,8 +145,23 @@ export const removeExerciseFromRoutine = async (routineid: string, eId: string) 
         "Content-Type": "application/json",
       },
     }
-  )
-    .then((res) =>
-      res.json().then((data) => ({ status: res.status, body: data }))
-    )
-}
+  ).then((res) =>
+    res.json().then((data) => ({ status: res.status, body: data }))
+  );
+};
+
+/**
+ * Delete routine api call
+ * @param routineid
+ * @returns
+ */
+export const deleteRoutine = async (routineid: string) => {
+  return await fetch(DELETE_ROUTINE_ENDPOINT.replace("id", routineid), {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((res) =>
+    res.json().then((data) => ({ status: res.status, body: data }))
+  );
+};

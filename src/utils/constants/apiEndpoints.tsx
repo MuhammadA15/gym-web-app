@@ -26,3 +26,4 @@ export const FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID = BASE_URL + '/routines/id/ex
 export const REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID = BASE_URL + '/routines/id/exercises/eid';
 export const GET_EXERCISE_RECOMMENDATIONS_ENDPOINT = BASE_URL + '/exercises/recommendations';
 export const GET_ROUTINE_EXERCISES_COUNT_ENDPOINT = BASE_URL + '/routines/id/exercises/count';
+export const DELETE_ROUTINE_ENDPOINT = BASE_URL + '/routines/id';

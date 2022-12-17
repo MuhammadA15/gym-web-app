@@ -24,7 +24,7 @@ const UserProfile = () => {
 
   return (
     <div className="grid grid-cols-9 h-screen">
-      <div className="flex flex-col col-span-3 border-1 shadow-xl rounded-md m-4 p-7 h-full items-center">
+      <div className="flex flex-col bg-neutral-900 col-span-3 shadow-2xl mb-4 rounded-md m-4 p-7 items-center">
         <img
           src={emptyPhoto}
           alt={"profile"}

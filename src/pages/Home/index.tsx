@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { AiFillEye, AiFillLock } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { AiFillLock } from "react-icons/ai";
+import { BiWorld } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import FilledButton from "../../components/ui/FilledButton/filledButton";
 import { useFormik } from "formik";
@@ -183,7 +184,7 @@ const HomePage = () => {
                   />
                   <div className="pl-4 text-sm">
                     <label htmlFor="public" className="flex items-center">
-                      <AiFillEye size={25} className="mr-2" /> Publish exercise
+                      <BiWorld size={22} className="mr-2" /> Publish exercise
                     </label>
                   </div>
                 </div>
@@ -197,7 +198,7 @@ const HomePage = () => {
                   />
                   <div className="pl-4 text-sm">
                     <label htmlFor="private" className="flex items-center">
-                      <AiFillLock size={25} className="mr-2" /> Keep exercise
+                      <AiFillLock size={22} className="mr-2" /> Keep exercise
                       private to your library
                     </label>
                   </div>

@@ -10,6 +10,7 @@ import {
   createExerciseForm_InitVals,
   createExerciseForm_ValidationSchema,
 } from "./utils/utils_exerciseForm";
+import { BiWorld } from "react-icons/bi";
 
 const CreateExercisePage = () => {
   const navigate = useNavigate();
@@ -232,7 +233,7 @@ const CreateExercisePage = () => {
               />
               <div className="pl-4 text-sm">
                 <label htmlFor="public" className="flex items-center">
-                  <AiFillEye size={25} className="mr-2" /> Publish exercise so
+                  <BiWorld size={25} className="mr-2" /> Publish exercise so
                   that anyone can view it
                 </label>
               </div>

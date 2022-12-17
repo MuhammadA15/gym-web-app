@@ -9,11 +9,13 @@ import CardMenu from "./CardMenu";
 const RoutineCard = ({
   routineData,
   navigateToRoutine,
-  openMenu
+  openMenu,
+  makeDeleteRoutineCall
 }: {
   routineData: IRoutineType;
   navigateToRoutine: (routineId: number) => void;
-  openMenu: (setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => void;
+  makeDeleteRoutineCall: (routineId: string) => void;
+  openMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => void;
 }) => {
 
   const wrapperRef = useRef(null);
@@ -44,8 +46,8 @@ const RoutineCard = ({
 
   return (
     <div
-      // onClick={() => navigateToRoutine(routineData?.id)}
-      className=" bg-neutral-900 transition-all duration-300 rounded-md px-4 pt-4 pb-4 m-2 mb-4 text-left shadow-2xl "
+      onClick={() => navigateToRoutine(routineData?.id)}
+      className="hover:cursor-pointer hover:bg-zinc-800 bg-neutral-900 transition-all duration-300 rounded-md px-4 pt-4 pb-4 m-2 mb-4 text-left shadow-2xl "
     >
       <div className="flex items-center">
         <p className="font-bold text-left mb-1.5 text-sm">
@@ -53,11 +55,11 @@ const RoutineCard = ({
         </p>
         <div
           className="relative ml-auto -mr-2 hover:bg-gray-400 hover:bg-opacity-10 hover:cursor-pointer hover:rounded py-1.5 px-1.5"
-          onClick={() => openMenu(setIsOpen, isOpen)}
+          onClick={(e) => openMenu(e, setIsOpen, isOpen)}
           ref={wrapperRef}
         >
           <BsThreeDotsVertical />
-          <CardMenu isOpen={isOpen} />
+          <CardMenu isOpen={isOpen} routineId={String(routineData.id)} makeDeleteRoutineCall={makeDeleteRoutineCall}/>
         </div>
       </div>
       <p className="text-sm mb-4 text-gray-400">
@@ -76,7 +78,7 @@ const RoutineCard = ({
         </div>
         <div className="text-center border-r-2 border-gray-500">
           <p className="text-sm mb-0.5 font-bold">
-            {exerciseCount ? exerciseCount * 3 + ":00" : "0:00"}
+            {exerciseCount ? exerciseCount * 4 + ":00" : "0:00"}
           </p>
           <p className="font-bold text-xs text-gray-400">Est. Duration</p>
         </div>
