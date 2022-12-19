@@ -28,7 +28,6 @@ const CardMenu = ({
           >
             <li>
               <div onClick={() => {}} className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                <AiOutlineEdit className="font-bold text-xl" color="" />
                 <p className="ml-2 text-sm">
                   Edit
                 </p>
@@ -39,7 +38,6 @@ const CardMenu = ({
                 className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={()=> makeDeleteRoutineCall(routineId)}
               >
-                <AiOutlineDelete className="font-bold text-xl" color="black" />
                 <p className="ml-2 text-sm">Delete</p>
               </div>
             </li>

@@ -5,9 +5,11 @@ import {
   FETCH_ROUTINES_BY_ID_ENDPOINT,
   FETCH_ROUTINES_ENDPOINT,
   FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID,
+  GET_ALL_ROUTINE_EXERCISES_ENDPOINT,
   GET_ROUTINE_EXERCISES_COUNT_ENDPOINT,
   REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID,
 } from "../utils/constants/apiEndpoints";
+import { bodyPartColorMapper } from "../utils/utils";
 
 /**
  * Create routine api call
@@ -127,6 +129,22 @@ export const removeExerciseFromRoutine = async (
       },
     }
   ).then((res) =>
+    res.json().then((data) => ({ status: res.status, body: data }))
+  );
+};
+
+/**
+ * Get all exercises of routine api call
+ * @param routineid 
+ * @returns 
+ */
+export const getAllRoutineExercises = async (routineid: string) => {
+  return await fetch(GET_ALL_ROUTINE_EXERCISES_ENDPOINT.replace("id", routineid), {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((res) =>
     res.json().then((data) => ({ status: res.status, body: data }))
   );
 };
