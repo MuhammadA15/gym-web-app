@@ -15,12 +15,12 @@ const ExerciseEntry = ({exercise, color}: {exercise: exerciseTypes, color: strin
       className={`mb-4 mt-4 text-left p-4 ${color}`}
     >
       <div className="grid grid-cols-12">
-        <div className="col-span-3 text-capital text-md">
+        <div className="col-span-2 text-capital text-md">
           <p className="text-sm hover:underline hover:cursor-pointer" onClick={() => navigate(`/exercise/${exercise?.id}`)}>{exercise?.name}</p>
           <p className="text-gray-500 text-sm">{exercise?.equipment}</p>
         </div>
-        <div className="col-span-8 pl-1">
-          <p className="text-sm text-gray-400">
+        <div className="col-span-9">
+          <p className="text-sm text-gray-400 pl-2">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis
             perspiciatis sed doloremque nam. Doloribus minus eligendi quae
             aspernatur praesentium amet cum, rerum, ipsum earum obcaecati at,
@@ -30,9 +30,15 @@ const ExerciseEntry = ({exercise, color}: {exercise: exerciseTypes, color: strin
         <div className="pl-4">
           <p
             onClick={() => setShowTags(!showTags)}
-            className="text-sm text-blue-800 hover:text-blue-900 hover:underline hover:cursor-pointer"
+            className="mb-1 text-xs text-blue-700 hover:text-blue-900 hover:underline hover:cursor-pointer"
           >
             {showTags ? "Hide tags" : "Show tags"}
+          </p>
+          <p className="mb-1 text-xs text-blue-700 hover:text-blue-900 hover:underline hover:cursor-pointer">
+            View
+          </p>
+          <p className="text-xs text-blue-700 hover:text-blue-900 hover:underline hover:cursor-pointer">
+            Remove
           </p>
         </div>
       </div>

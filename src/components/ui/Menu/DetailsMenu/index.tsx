@@ -46,7 +46,7 @@ const DetailsMenu = ({ logout, username }: { logout: () => void, username: strin
       {isOpen && (
         <div
           id="dropdown"
-          className="absolute border-1 right-10 mt-1 z-100 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+          className="absolute border-1 right-10 mt-1 z-50 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
         >
           <ul
             className="block py-1 text-md text-left text-gray-700 dark:text-gray-200"

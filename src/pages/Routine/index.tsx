@@ -80,7 +80,7 @@ const RoutinePage = () => {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-3 bg-neutral-900 border-r-2 h-screen min-h-full">
+      <div className="col-span-3 bg-neutral-900 border-r-2 border-neutral-800 h-screen min-h-full">
         <p className="text-md font-bold mt-4 mb-4">
           {routineData?.routineName}
         </p>
