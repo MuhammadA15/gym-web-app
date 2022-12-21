@@ -57,7 +57,7 @@ const Library = () => {
   }
 
   const navigateToRoutine = (id: number) => {
-    navigate(`/routine/${id}`);
+    navigate(`/routine/${id}/exerciselist`);
   };
 
   const openMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => {

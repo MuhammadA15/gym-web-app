@@ -33,7 +33,7 @@ function App(): React.ReactElement {
               <Route path='/user-profile/:tabId' element={<UserProfile />} />
               <Route path='/user-profile' element={<UserProfile />} />
               <Route path='/create-exercise' element={<CreateExercisePage />} />
-              <Route path='/routine/:routineId' element={<RoutinePage />} />
+              <Route path='/routine/:routineId/:tabId' element={<RoutinePage />} />
             </Route>
           </Route>
         </Routes>

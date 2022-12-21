@@ -9,7 +9,6 @@ import {
   GET_ROUTINE_EXERCISES_COUNT_ENDPOINT,
   REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID,
 } from "../utils/constants/apiEndpoints";
-import { bodyPartColorMapper } from "../utils/utils";
 
 /**
  * Create routine api call
