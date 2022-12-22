@@ -6,17 +6,26 @@ import {
   IbodyPartColorMapperTypes,
 } from "../../../utils/utils";
 
-const ExerciseEntry = ({exercise, color}: {exercise: exerciseTypes, color: string}) => {
+const ExerciseEntry = ({
+  exercise,
+  color,
+}: {
+  exercise: exerciseTypes;
+  color: string;
+}) => {
   const [showTags, setShowTags] = useState(false);
   const navigate = useNavigate();
 
   return (
-    <div
-      className={`mb-4 mt-4 text-left p-4 ${color}`}
-    >
+    <div className={`mb-4 mt-4 text-left p-4 ${color}`}>
       <div className="grid grid-cols-12">
         <div className="col-span-2 text-capital text-md">
-          <p className="text-sm hover:underline hover:cursor-pointer" onClick={() => navigate(`/exercise/${exercise?.id}`)}>{exercise?.name}</p>
+          <p
+            className="text-sm hover:underline hover:cursor-pointer"
+            onClick={() => navigate(`/exercise/${exercise?.id}`)}
+          >
+            {exercise?.name}
+          </p>
           <p className="text-gray-500 text-sm">{exercise?.equipment}</p>
         </div>
         <div className="col-span-9">

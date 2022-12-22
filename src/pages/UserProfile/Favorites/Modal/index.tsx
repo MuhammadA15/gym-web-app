@@ -25,7 +25,9 @@ const AddExerciseModal = ({
   useOutsideClickAlerter(wrapperRef, setModalIsOpen);
 
   const [routineData, setRoutineData] = useState<IRoutineType[] | null>([]);
-  const [exerciseInRoutineMap, setExerciseInRoutineMap] = useState<Map<String, boolean>>(new Map());
+  const [exerciseInRoutineMap, setExerciseInRoutineMap] = useState<
+    Map<String, boolean>
+  >(new Map());
   const [loading, setLoading] = useState(false);
 
   /**
@@ -158,7 +160,12 @@ const AddExerciseModal = ({
           </div>
         )}
         <div className="text-right mr-4">
-          <FilledButton text={"Close"} onClickFunc={closeModal} py={"py-1"} textSize={"text-sm"} />
+          <FilledButton
+            text={"Close"}
+            onClickFunc={closeModal}
+            py={"py-1"}
+            textSize={"text-sm"}
+          />
         </div>
       </div>
     </div>

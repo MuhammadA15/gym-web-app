@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingIcon from "../../../components/ui/LoadingIcon/loadingIcon";
 import { fetchExerciseByAuthor } from "../../../services/exerciseService";
-import { deleteRoutine, fetchUserRoutines } from "../../../services/routineService";
+import {
+  deleteRoutine,
+  fetchUserRoutines,
+} from "../../../services/routineService";
 import { exerciseTypes } from "../../../types/exerciseType";
 import { IRoutineType } from "../../../types/routineType";
 import RecommendationCard from "../../Home/recommendationCard";
@@ -53,14 +56,18 @@ const Library = () => {
       } else {
         console.log("error");
       }
-    })
-  }
+    });
+  };
 
   const navigateToRoutine = (id: number) => {
     navigate(`/routine/${id}/exerciselist`);
   };
 
-  const openMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => {
+  const openMenu = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>,
+    cardMenuOpenState: boolean
+  ) => {
     e.stopPropagation();
     setCardMenuOpenState(!cardMenuOpenState);
   };
@@ -69,32 +76,36 @@ const Library = () => {
     <div>
       <div className="flex items-center mb-4 text-left">
         <p className="text-md font-bold mr-2">Your Workout Routines</p>
-        <hr className="border-top-1 mt-1 flex-1"/>
+        <hr className="border-top-1 mt-1 flex-1" />
       </div>
       <div className="grid grid-cols-2 gap-3">
-        {routineData ? routineData?.map((routine) => (
-          <RoutineCard
-            routineData={routine}
-            navigateToRoutine={navigateToRoutine}
-            openMenu={openMenu}
-            makeDeleteRoutineCall={makeDeleteRoutineCall}
-          />
-        )) :
-        <LoadingIcon className="w-8 h-8"/>
-      }
+        {routineData ? (
+          routineData?.map((routine) => (
+            <RoutineCard
+              routineData={routine}
+              navigateToRoutine={navigateToRoutine}
+              openMenu={openMenu}
+              makeDeleteRoutineCall={makeDeleteRoutineCall}
+            />
+          ))
+        ) : (
+          <LoadingIcon className="w-8 h-8" />
+        )}
       </div>
       <div className="flex items-center mb-8 mt-8 text-left">
         <p className="text-md font-bold mr-2">Your Exercises</p>
-        <hr className="border-top-1 mt-1 flex-1"/>
+        <hr className="border-top-1 mt-1 flex-1" />
       </div>
       <div className="grid grid-cols-3 gap-3">
-        {exerciseData ? exerciseData?.map((exercise) => (
-          <div className="flex justify-center mb-6">
-            <RecommendationCard exercise={exercise}/>
-          </div>
-        )) : 
-        <LoadingIcon className="w-8 h-8"/>
-      }
+        {exerciseData ? (
+          exerciseData?.map((exercise) => (
+            <div className="flex justify-center mb-6">
+              <RecommendationCard exercise={exercise} />
+            </div>
+          ))
+        ) : (
+          <LoadingIcon className="w-8 h-8" />
+        )}
       </div>
     </div>
   );

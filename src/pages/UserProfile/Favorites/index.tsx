@@ -14,7 +14,9 @@ import "./styles.scss";
 const Favorites = () => {
   const userId = localStorage.getItem("id");
 
-  const [favExerciseIDs, setFavExerciseIDs] = useState<IFavExerciseType[] | null>([]);
+  const [favExerciseIDs, setFavExerciseIDs] = useState<
+    IFavExerciseType[] | null
+  >([]);
   const [favExercises, setFavExercises] = useState<exerciseTypes[]>([]);
   const [favCount, setFavCount] = useState<Map<number, number>>(new Map());
   const [isOpenList, setIsOpenList] = useState<Map<number, boolean>>(new Map());

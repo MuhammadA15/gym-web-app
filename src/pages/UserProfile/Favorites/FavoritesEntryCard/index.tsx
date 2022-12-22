@@ -50,7 +50,10 @@ const FavoritesEntryCard = ({
         className="bg-neutral-900 rounded mb-6 flex flex-row shadow-2xl"
       >
         {loading ? (
-          <Skeleton width={192} className="max-h-40 rounded-l border-r-1 h-full" />
+          <Skeleton
+            width={192}
+            className="max-h-40 rounded-l border-r-1 h-full"
+          />
         ) : (
           <img
             src={exercise?.gifUrl}

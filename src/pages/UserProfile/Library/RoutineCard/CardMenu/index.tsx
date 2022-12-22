@@ -9,7 +9,6 @@ const CardMenu = ({
   routineId: string;
   makeDeleteRoutineCall: (routineId: string) => void;
 }) => {
-
   // console.log(isOpen);
   const userId = localStorage.getItem("id") || "";
 
@@ -25,16 +24,17 @@ const CardMenu = ({
             aria-labelledby="dropdownDefault"
           >
             <li>
-              <div onClick={() => {}} className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                <p className="ml-2 text-sm">
-                  Edit
-                </p>
+              <div
+                onClick={() => {}}
+                className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <p className="ml-2 text-sm">Edit</p>
               </div>
             </li>
             <li>
               <div
                 className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                onClick={()=> makeDeleteRoutineCall(routineId)}
+                onClick={() => makeDeleteRoutineCall(routineId)}
               >
                 <p className="ml-2 text-sm">Delete</p>
               </div>

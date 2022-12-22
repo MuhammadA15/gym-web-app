@@ -22,7 +22,9 @@ const HomePage = () => {
 
   const [loading, setLoading] = useState(false);
   const [recommendationsLoading, setRecommendationsLoading] = useState(false);
-  const [recommendationIds, setRecommendationIds] = useState<IRecommendationExerciseIdType[]>([]);
+  const [recommendationIds, setRecommendationIds] = useState<
+    IRecommendationExerciseIdType[]
+  >([]);
   const [recommendations, setRecommendations] = useState<exerciseTypes[]>([]);
 
   const formik = useFormik({
@@ -150,7 +152,7 @@ const HomePage = () => {
           <div className="py-6 mb-10 w-100 grid grid-cols-4 gap-3">
             {recommendationsLoading ? (
               <div className="col-span-4 mx-auto my-auto">
-                <LoadingIcon className="w-10 h-10"/>
+                <LoadingIcon className="w-10 h-10" />
               </div>
             ) : (
               recommendations?.map((exercise) => (
@@ -167,7 +169,9 @@ const HomePage = () => {
                   An exercise can be anything from a weight lifting exercise to
                   a simple stretch
                 </p>
-                <label htmlFor="exercise-name" className="text-sm">Exercise Name</label>
+                <label htmlFor="exercise-name" className="text-sm">
+                  Exercise Name
+                </label>
                 <input
                   className="text-sm shadow appearance-none border rounded w-full my-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-7"
                   id="exercise-name"
@@ -241,7 +245,9 @@ const HomePage = () => {
                     )}
                   </div>
 
-                  <label htmlFor="routine-description" className="text-sm">Description</label>
+                  <label htmlFor="routine-description" className="text-sm">
+                    Description
+                  </label>
                   <textarea
                     name="routine-descripton"
                     placeholder="provide a brief description of your workout routine..."

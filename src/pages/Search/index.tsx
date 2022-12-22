@@ -131,7 +131,11 @@ const SearchPage = () => {
     setMount(true);
   }, [page]);
 
-  const openMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => {
+  const openMenu = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>,
+    cardMenuOpenState: boolean
+  ) => {
     e.stopPropagation();
     setCardMenuOpenState(!cardMenuOpenState);
   };

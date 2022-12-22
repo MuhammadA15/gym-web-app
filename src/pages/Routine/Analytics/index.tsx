@@ -88,20 +88,21 @@ const Analytics = ({ exerciseList }: { exerciseList: exerciseTypes[] }) => {
         </div>
       </div>
       <div className="p-4 bg-neutral-900 shadow-2xl grid grid-cols-12 gap-2 text-xs items-center text-left">
-          <div className="col-span-12 grid grid-cols-12">
-            <p className="text-base mb-2 col-span-3 text-red-600 font-bold">Logs</p>
-            <p className="col-span-9"></p>
-          </div>
-          <p className="col-span-1">Name</p>
-          <p className="col-span-2">Description</p>
-          <p className="col-span-1">Date</p>
-          <p className="col-span-2"></p>
-          <p className="col-span-1"># of Exercises</p>
-          <p className="col-span-2">Workout Duration</p>
-          <p className="col-span-2"></p>
-          <p className="col-span-1 text-center">Status</p>
-          <hr className="mt-1 border-t-2 border-neutral-700 col-span-12"/>
-
+        <div className="col-span-12 grid grid-cols-12">
+          <p className="text-base mb-2 col-span-3 text-red-600 font-bold">
+            Logs
+          </p>
+          <p className="col-span-9"></p>
+        </div>
+        <p className="col-span-1">Name</p>
+        <p className="col-span-2">Description</p>
+        <p className="col-span-1">Date</p>
+        <p className="col-span-2"></p>
+        <p className="col-span-1"># of Exercises</p>
+        <p className="col-span-2">Workout Duration</p>
+        <p className="col-span-2"></p>
+        <p className="col-span-1 text-center">Status</p>
+        <hr className="mt-1 border-t-2 border-neutral-700 col-span-12" />
       </div>
     </div>
   );

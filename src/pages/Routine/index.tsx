@@ -18,7 +18,9 @@ const RoutinePage = () => {
   const userid = localStorage.getItem("id");
 
   const [routineData, setRoutineData] = useState<IRoutineType | null>();
-  const [routineExerciseData, setRoutineExerciseData] = useState<IRoutineExerciseType[] | null>();
+  const [routineExerciseData, setRoutineExerciseData] = useState<
+    IRoutineExerciseType[] | null
+  >();
   const [exerciseList, setExerciseList] = useState<exerciseTypes[]>([]);
   const [currentTab, setCurrentTab] = useState(tabId);
 
@@ -94,7 +96,9 @@ const RoutinePage = () => {
                 className={`
                   py-2
                   ${
-                    currentTab === item.toLocaleLowerCase().replace(/\s/g, "") ? "menu_active" : ""
+                    currentTab === item.toLocaleLowerCase().replace(/\s/g, "")
+                      ? "menu_active"
+                      : ""
                   }
                 `}
               >
@@ -126,7 +130,7 @@ const RoutinePage = () => {
           <hr className="user-profile-border-t-1 border-g-300" />
           <div className="mt-6">
             {currentTab === "analytics" ? (
-              <Analytics exerciseList={exerciseList}/>
+              <Analytics exerciseList={exerciseList} />
             ) : currentTab === "exerciselist" ? (
               <div className="col-span-9">
                 {exerciseList?.map((exercise, key) => (

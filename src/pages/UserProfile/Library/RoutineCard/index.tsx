@@ -10,14 +10,17 @@ const RoutineCard = ({
   routineData,
   navigateToRoutine,
   openMenu,
-  makeDeleteRoutineCall
+  makeDeleteRoutineCall,
 }: {
   routineData: IRoutineType;
   navigateToRoutine: (routineId: number) => void;
   makeDeleteRoutineCall: (routineId: string) => void;
-  openMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => void;
+  openMenu: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>,
+    cardMenuOpenState: boolean
+  ) => void;
 }) => {
-
   const wrapperRef = useRef(null);
 
   const [exerciseCount, setExerciseCount] = useState<number | null>(null);
@@ -59,7 +62,11 @@ const RoutineCard = ({
           ref={wrapperRef}
         >
           <BsThreeDotsVertical />
-          <CardMenu isOpen={isOpen} routineId={String(routineData.id)} makeDeleteRoutineCall={makeDeleteRoutineCall}/>
+          <CardMenu
+            isOpen={isOpen}
+            routineId={String(routineData.id)}
+            makeDeleteRoutineCall={makeDeleteRoutineCall}
+          />
         </div>
       </div>
       <p className="text-sm mb-4 text-gray-400">

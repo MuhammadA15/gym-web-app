@@ -1,6 +1,6 @@
 import React from "react";
 import { MdPlaylistAdd } from "react-icons/md";
-import "./styles.scss"
+import "./styles.scss";
 
 const ResultCardMenu = ({
   isOpen,

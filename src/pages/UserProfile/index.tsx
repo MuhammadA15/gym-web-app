@@ -32,7 +32,12 @@ const UserProfile = () => {
         />
         <p className="text-md font-bold">{username}</p>
         <p className="text-md text-gray-500 mb-5">{email}</p>
-        <FilledButton text="Edit Profile" py={"py-1"} width={"w-3/4"} textSize={"text-sm"}/>
+        <FilledButton
+          text="Edit Profile"
+          py={"py-1"}
+          width={"w-3/4"}
+          textSize={"text-sm"}
+        />
       </div>
       <div className="col-span-6 m-4 h-full">
         <div>
