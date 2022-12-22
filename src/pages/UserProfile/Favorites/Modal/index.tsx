@@ -129,7 +129,7 @@ const AddExerciseModal = ({
 
   return (
     <div
-      className="bg-neutral-900 rounded w-72 shadow-2xl"
+      className="bg-neutral-900 rounded w-72 shadow-2xl z-50"
       ref={wrapperRef}
     >
       <div className="pb-3">

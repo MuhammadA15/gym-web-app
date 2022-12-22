@@ -9,13 +9,16 @@ import {
   fetchAllExercises,
   fetchFavorites,
 } from "../../services/exerciseService";
+import AddExerciseModal from "../UserProfile/Favorites/Modal";
 
 const SearchPage = () => {
   const entriesPerPage = 18;
   const userId = localStorage.getItem("id");
 
   const [exerciseData, setExerciseData] = useState<exerciseTypes[] | null>([]);
-  const [favExercises, setFavExercises] = useState<IFavExerciseType[] | null>([]);
+  const [favExercises, setFavExercises] = useState<IFavExerciseType[] | null>(
+    []
+  );
   const [page, setPage] = useState(1);
   const [range, setRange] = useState<number[]>([]);
   const [pageTotal, setPageTotal] = useState<number | null>(null);
@@ -23,6 +26,8 @@ const SearchPage = () => {
   const [mount, setMount] = useState(false);
   const [loading, setLoading] = useState(true);
   const [exerciseLoading, setExerciseLoading] = useState(true);
+  const [eId, setEId] = useState("");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   /**
    * Fetch all exercises
@@ -126,50 +131,81 @@ const SearchPage = () => {
     setMount(true);
   }, [page]);
 
+  const openMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>, cardMenuOpenState: boolean) => {
+    e.stopPropagation();
+    setCardMenuOpenState(!cardMenuOpenState);
+  };
+
   return (
-    <div className="grid grid-cols-12 mt-5 mx-6 gap-2">
-      <div className="col-span-3 bg-neutral-900 shadow-2xl mt-4 rounded mb-10">
-        <p>Filter Menu</p>
+    <div>
+      <div
+        className={`${
+          modalIsOpen ? "page-mask z-10" : ""
+        } transition-all duration-300`}
+      ></div>
+      <div
+        className={`${
+          !modalIsOpen ? "modal" : "box-shadow show"
+        } transition-all duration-500 relative z-50`}
+      >
+        <AddExerciseModal
+          modalIsOpen={modalIsOpen}
+          userid={userId}
+          eId={eId}
+          setModalIsOpen={setModalIsOpen}
+        />
       </div>
-      <div className="col-span-9 mt-10 mx-6">
-        <div className="text-left">
-          <input
-            className="shadow appearance-none border rounded w-1/2 py-2 px-2 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Search"
-          />
+      <div className="grid grid-cols-12 mt-5 mx-6 gap-2">
+        <div className="col-span-3 bg-neutral-900 shadow-2xl mt-4 rounded mb-10">
+          <p>Filter Menu</p>
         </div>
-        <hr className="search-hr-border-t-1 border-g-300 mt-6 mr-6" />
-        <p className="text-left mt-2 text-gray-500">
-          {exerciseData
-            ? parseInt(exerciseData?.length.toString()).toLocaleString()
-            : ""}{" "}
-          results found
-        </p>
-        <div className="">
-          <div className="grid grid-cols-3 gap-2 mt-2 pt-5">
-            {exerciseData?.slice(range[0], range[1])?.map((exercise, index) => (
-              <ResultCard
-                exercise={exercise}
-                index={index}
-                favorited={checkFavExercise(exercise?.id)}
-                loading={loading}
-                exLoading={exerciseLoading}
-              />
-            ))}
-            {(exerciseLoading || loading) &&
-              Array.from(Array(18).keys())?.map((i) => (
-                <ResultCard
-                  exercise={null}
-                  index={i}
-                  favorited={false}
-                  loading={loading}
-                  exLoading={exerciseLoading}
-                />
-              ))}
+        <div className="col-span-9 mt-10 mx-6">
+          <div className="text-left">
+            <input
+              className="shadow appearance-none border rounded w-1/2 py-2 px-2 text-lg text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Search"
+            />
           </div>
-          <div className="flex justify-center items-center pb-6 mb-4">
-            <span
-              className={`
+          <hr className="search-hr-border-t-1 border-g-300 mt-6 mr-6" />
+          <p className="text-left mt-2 text-gray-500">
+            {exerciseData
+              ? parseInt(exerciseData?.length.toString()).toLocaleString()
+              : ""}{" "}
+            results found
+          </p>
+          <div className="">
+            <div className="grid grid-cols-3 gap-2 mt-2 pt-5">
+              {exerciseData
+                ?.slice(range[0], range[1])
+                ?.map((exercise, index) => (
+                  <ResultCard
+                    exercise={exercise}
+                    index={index}
+                    favorited={checkFavExercise(exercise?.id)}
+                    loading={loading}
+                    exLoading={exerciseLoading}
+                    openMenu={openMenu}
+                    setModalIsOpen={setModalIsOpen}
+                    setEId={setEId}
+                  />
+                ))}
+              {(exerciseLoading || loading) &&
+                Array.from(Array(18).keys())?.map((i) => (
+                  <ResultCard
+                    exercise={null}
+                    index={i}
+                    favorited={false}
+                    loading={loading}
+                    exLoading={exerciseLoading}
+                    openMenu={openMenu}
+                    setModalIsOpen={setModalIsOpen}
+                    setEId={setEId}
+                  />
+                ))}
+            </div>
+            <div className="flex justify-center items-center pb-6 mb-4">
+              <span
+                className={`
                 text-sm
                 px-3
                 py-1.5
@@ -181,12 +217,12 @@ const SearchPage = () => {
                 hover:cursor-pointer
                 ${page === 1 ? "span-disabled" : ""}
               `}
-              onClick={() => setPage(1)}
-            >
-              <HiChevronDoubleLeft />
-            </span>
-            <span
-              className={`
+                onClick={() => setPage(1)}
+              >
+                <HiChevronDoubleLeft />
+              </span>
+              <span
+                className={`
                 px-3
                 py-1.5
                 transition-all
@@ -197,16 +233,16 @@ const SearchPage = () => {
                 hover:cursor-pointer
                 ${page === 1 ? "span-disabled" : ""}
               `}
-              onClick={() => setPage(page - 1)}
-            >
-              <MdOutlineNavigateBefore />
-            </span>
-            {Array.from(Array(pageTotal).keys())
-              ?.slice(pageRange[0], pageRange[1])
-              ?.map((i) => (
-                <>
-                  <span
-                    className={`
+                onClick={() => setPage(page - 1)}
+              >
+                <MdOutlineNavigateBefore />
+              </span>
+              {Array.from(Array(pageTotal).keys())
+                ?.slice(pageRange[0], pageRange[1])
+                ?.map((i) => (
+                  <>
+                    <span
+                      className={`
                   px-3
                   py-0.5
                   font-bold
@@ -220,15 +256,15 @@ const SearchPage = () => {
                     page !== i + 1 ? "hover:bg-red-500 hover:bg-opacity-25" : ""
                   }
                 `}
-                    key={i}
-                    onClick={() => setPage(i + 1)}
-                  >
-                    {i + 1}
-                  </span>
-                </>
-              ))}
-            <span
-              className={`
+                      key={i}
+                      onClick={() => setPage(i + 1)}
+                    >
+                      {i + 1}
+                    </span>
+                  </>
+                ))}
+              <span
+                className={`
                 px-3 
                 py-1.5
                 transition-all
@@ -239,12 +275,12 @@ const SearchPage = () => {
                 hover:cursor-pointer
                 ${page === pageTotal ? "span-disabled" : ""}
               `}
-              onClick={() => setPage(page + 1)}
-            >
-              <MdOutlineNavigateNext />
-            </span>
-            <span
-              className={`
+                onClick={() => setPage(page + 1)}
+              >
+                <MdOutlineNavigateNext />
+              </span>
+              <span
+                className={`
                 text-sm
                 px-3
                 py-1.5
@@ -256,10 +292,11 @@ const SearchPage = () => {
                 hover:cursor-pointer
                 ${page === pageTotal ? "span-disabled" : ""}
               `}
-              onClick={() => setPage(pageTotal ? pageTotal : page)}
-            >
-              <HiChevronDoubleRight />
-            </span>
+                onClick={() => setPage(pageTotal ? pageTotal : page)}
+              >
+                <HiChevronDoubleRight />
+              </span>
+            </div>
           </div>
         </div>
       </div>

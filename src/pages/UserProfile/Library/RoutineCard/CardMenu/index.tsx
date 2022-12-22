@@ -1,6 +1,4 @@
 import React from "react";
-import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { deleteRoutine } from "../../../../../services/routineService";
 
 const CardMenu = ({
   isOpen,
