@@ -1,8 +1,3 @@
-.left-grid-heading {
-  display: flex;
-  justify-content: space-between;
-}
-
 .border-r-1 {
   border-right: 1px solid rgb(59, 59, 59);
 }
@@ -28,4 +23,8 @@ textarea {
   z-index: 30;
   min-height: 50vh;
   max-height: 100vh;
+}
+
+.bg-side-bar {
+  background-color: rgb(10, 10, 10);
 }

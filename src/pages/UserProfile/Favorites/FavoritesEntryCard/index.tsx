@@ -47,17 +47,20 @@ const FavoritesEntryCard = ({
     <SkeletonTheme baseColor="#4d4f5038" highlightColor="none">
       <div
         key={index}
-        className="border-1 rounded mb-6 flex flex-row shadow-xl"
+        className="bg-neutral-900 rounded mb-6 flex flex-row shadow-2xl"
       >
         {loading ? (
-          <Skeleton width={192} className="max-h-40 rounded-l border-r-1 h-full" />
+          <Skeleton
+            width={192}
+            className="max-h-40 rounded-l border-r-1 h-full"
+          />
         ) : (
           <img
             src={exercise?.gifUrl}
-            className="h-fit max-h-40 rounded-l border-r-1"
+            className="h-fit max-h-44 rounded-l border-r-1"
           />
         )}
-        <div className="flex flex-col mx-4 pt-2.5 px-4 w-full">
+        <div className="flex flex-col mx-4 pt-2.5 pb-2.5 px-4 w-full">
           <div className="flex flex-row items-center">
             {loading ? (
               <>
@@ -132,7 +135,7 @@ const FavoritesEntryCard = ({
               <p className="text-gray-500 text-capital text-left mb-2.5 text-xs">
                 {exercise?.equipment}
               </p>
-              <p className="text-left text-sm mb-1">
+              <p className="text-left text-sm mb-2.5 text-gray-400">
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 Ratione totam consectetur quam veritatis voluptatem dolorem vero
                 magni consequatur eius, laudantium quod suscipit perferendis.

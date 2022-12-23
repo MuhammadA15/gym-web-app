@@ -11,13 +11,28 @@ export const bodyPartColorMapper = {
   legs: "blue-600",
   upperlegs: "blue-600",
   lowerlegs: "blue-800",
-  waist: "orange-500",
+  waist: "amber-500",
   back: "red-600",
-  chest: "teal-700",
-  upperarms: "green-600",
-  lowerarms: "green-800",
-  shoulders: "emerald-800",
-  cardio: "rose-600",
+  chest: "teal-500",
+  upperarms: "orange-500",
+  lowerarms: "orange-600",
+  shoulders: "indigo-600",
+  cardio: "rose-400",
+  neck: "purple-400",
+};
+
+export const bodyPartChartColorMapper = {
+  legs: "rgb(26, 58, 175)",
+  upperlegs: "rgb(26, 58, 175)",
+  lowerlegs: "rgb(104, 103, 199)",
+  waist: "#069706",
+  back: "rgb(231, 61, 10)",
+  chest: "rgb(16, 122, 253)",
+  upperarms: "#ffaa0d",
+  lowerarms: "rgb(251, 151, 0)",
+  shoulders: "rgb(26, 175, 134)",
+  cardio: "rgb(121, 44, 131)",
+  neck: "purple"
 };
 
 export interface IbodyPartColorMapperTypes {
@@ -31,4 +46,5 @@ export interface IbodyPartColorMapperTypes {
   lowerarms: string,
   shoulders: string,
   cardio: string,
+  neck: string,
 }

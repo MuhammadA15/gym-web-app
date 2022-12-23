@@ -14,14 +14,13 @@ const EntryMenu = ({
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   removeFavorite: (userid: string, exerciseId: string) => void;
 }) => {
-
   //console.log(exerciseId);
   const userId = localStorage.getItem("id") || "";
 
   const openModal = (exerciseId: string) => {
     setModalIsOpen(true);
     setEId(exerciseId);
-  }
+  };
 
   return (
     <>
@@ -35,11 +34,12 @@ const EntryMenu = ({
             aria-labelledby="dropdownDefault"
           >
             <li>
-              <div onClick={() => openModal(exerciseId)} className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+              <div
+                onClick={() => openModal(exerciseId)}
+                className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
                 <MdPlaylistAdd className="font-bold text-xl" color="" />
-                <p className="ml-2 text-sm">
-                  Add To Workout
-                </p>
+                <p className="ml-2 text-sm">Add To Workout</p>
               </div>
             </li>
             <li>
