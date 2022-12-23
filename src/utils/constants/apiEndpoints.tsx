@@ -28,3 +28,4 @@ export const GET_EXERCISE_RECOMMENDATIONS_ENDPOINT = BASE_URL + '/exercises/reco
 export const GET_ROUTINE_EXERCISES_COUNT_ENDPOINT = BASE_URL + '/routines/id/exercises/count';
 export const DELETE_ROUTINE_ENDPOINT = BASE_URL + '/routines/id';
 export const GET_ALL_ROUTINE_EXERCISES_ENDPOINT = BASE_URL + '/routines/id/exercises/all';
+export const DELETE_EXERCISE_ENDPOINT = BASE_URL + '/exercises/id/delete';

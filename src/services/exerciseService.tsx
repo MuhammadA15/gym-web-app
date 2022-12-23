@@ -1,6 +1,7 @@
 import {
   ADD_EXERCISE_FAVORITES_ENDPOINT,
   CREATE_EXERCISE_ENDPOINT,
+  DELETE_EXERCISE_ENDPOINT,
   FETCH_ALL_EXERCISES_ENDPOINT,
   FETCH_EXERCISE_BY_ID_ENDPOINT,
   FETCH_EXERCISE_BY_USERID_ENDPOINT,
@@ -156,20 +157,35 @@ export const removeFavorite = async (userId: string, exerciseId: string) => {
 
 /**
  * Get Exercise Recommendations api call
- * @param userId 
- * @returns 
+ * @param userId
+ * @returns
  */
 export const getRecommendations = async (userId: string) => {
-  return await fetch(
-    GET_EXERCISE_RECOMMENDATIONS_ENDPOINT,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: userId,
-    }
-  ).then((res) =>
+  return await fetch(GET_EXERCISE_RECOMMENDATIONS_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: userId,
+  }).then((res) =>
+    res.json().then((data) => ({ status: res?.status, body: data }))
+  );
+};
+
+/**
+ * Delete exercise api call
+ * @param exerciseId
+ * @param userId
+ * @returns
+ */
+export const deleteExercise = async (exerciseId: string, userId: string) => {
+  return await fetch(DELETE_EXERCISE_ENDPOINT.replace("id", exerciseId), {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: userId,
+  }).then((res) =>
     res.json().then((data) => ({ status: res?.status, body: data }))
   );
 };

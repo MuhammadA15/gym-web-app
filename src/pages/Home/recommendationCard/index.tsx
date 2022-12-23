@@ -37,13 +37,13 @@ const RecommendationCard = ({ exercise }: { exercise: exerciseTypes }) => {
     >
       <img src={exercise.gifUrl ? exercise.gifUrl : exerciseAltImage} className="rounded-t max-h-40" />
       <div
-        className={`border-t-3 border-${
-          bodyPartColorMapper[
-            exercise?.bodyPart
-              .toLocaleLowerCase()
-              .replace(/\s/g, "") as keyof IbodyPartColorMapperTypes
-          ]
-        }`}
+        // className={`border-t-3 border-${
+        //   bodyPartColorMapper[
+        //     exercise?.bodyPart
+        //       .toLocaleLowerCase()
+        //       .replace(/\s/g, "") as keyof IbodyPartColorMapperTypes
+        //   ]
+        // }`}
       ></div>
       <div className="flex flex-row pl-2 items-center mt-3">
         <p

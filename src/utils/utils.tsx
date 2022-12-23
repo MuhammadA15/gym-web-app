@@ -18,6 +18,7 @@ export const bodyPartColorMapper = {
   lowerarms: "orange-600",
   shoulders: "indigo-600",
   cardio: "rose-400",
+  neck: "purple-400",
 };
 
 export const bodyPartChartColorMapper = {
@@ -31,6 +32,7 @@ export const bodyPartChartColorMapper = {
   lowerarms: "rgb(251, 151, 0)",
   shoulders: "rgb(26, 175, 134)",
   cardio: "rgb(121, 44, 131)",
+  neck: "purple"
 };
 
 export interface IbodyPartColorMapperTypes {
@@ -44,4 +46,5 @@ export interface IbodyPartColorMapperTypes {
   lowerarms: string,
   shoulders: string,
   cardio: string,
+  neck: string,
 }

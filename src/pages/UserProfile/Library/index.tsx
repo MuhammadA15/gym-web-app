@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingIcon from "../../../components/ui/LoadingIcon/loadingIcon";
-import { fetchExerciseByAuthor } from "../../../services/exerciseService";
+import {
+  deleteExercise,
+  fetchExerciseByAuthor,
+} from "../../../services/exerciseService";
 import {
   deleteRoutine,
   fetchUserRoutines,
@@ -9,12 +12,13 @@ import {
 import { exerciseTypes } from "../../../types/exerciseType";
 import { IRoutineType } from "../../../types/routineType";
 import RecommendationCard from "../../Home/recommendationCard";
+import ExerciseCard from "./ExerciseCard";
 import RoutineCard from "./RoutineCard";
 
 const Library = () => {
   const navigate = useNavigate();
   const userid = localStorage.getItem("id");
-  const [exerciseData, setExerciseData] = useState<exerciseTypes[] | null>([]);
+  const [exerciseData, setExerciseData] = useState<exerciseTypes[]>([]);
   const [routineData, setRoutineData] = useState<IRoutineType[]>([]);
 
   const makeFetchUserCreatedExercisesCall = async (userid: string) => {
@@ -51,6 +55,21 @@ const Library = () => {
         setRoutineData(
           routineData.filter((routine) => {
             return routine?.id !== Number(routineId);
+          })
+        );
+      } else {
+        console.log("error");
+      }
+    });
+  };
+
+  const makeDeleteExerciseCall = async (exerciseId: string, userId: string) => {
+    deleteExercise(exerciseId, userId).then((data) => {
+      if (data?.status === 200) {
+        alert(data?.body?.msg);
+        setExerciseData(
+          exerciseData.filter((exercise) => {
+            return exercise?.id !== Number(exerciseId);
           })
         );
       } else {
@@ -100,7 +119,7 @@ const Library = () => {
         {exerciseData ? (
           exerciseData?.map((exercise) => (
             <div className="flex justify-center mb-6">
-              <RecommendationCard exercise={exercise} />
+              <ExerciseCard exercise={exercise} openMenu={openMenu} makeDeleteExerciseCall={makeDeleteExerciseCall}/>
             </div>
           ))
         ) : (

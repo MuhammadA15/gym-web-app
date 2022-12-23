@@ -61,13 +61,13 @@ const ResultCard = ({
                 alt=""
               />
               <div
-                className={`border-t-3 border-${
-                  bodyPartColorMapper[
-                    exercise?.bodyPart
-                      .toLocaleLowerCase()
-                      .replace(/\s/g, "") as keyof IbodyPartColorMapperTypes
-                  ]
-                }`}
+                // className={`border-t-3 border-${
+                //   bodyPartColorMapper[
+                //     exercise?.bodyPart
+                //       .toLocaleLowerCase()
+                //       .replace(/\s/g, "") as keyof IbodyPartColorMapperTypes
+                //   ]
+                // }`}
               ></div>
             </>
           )}
