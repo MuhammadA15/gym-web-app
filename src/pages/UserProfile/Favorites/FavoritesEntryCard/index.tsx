@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useNavigate } from "react-router-dom";
 import { exerciseTypes } from "../../../../types/exerciseType";
-import EntryMenu from "../EntryMenu";
+import EntryMenu from "./EntryMenu";
 import { BsFillStarFill, BsThreeDotsVertical } from "react-icons/bs";
 import { useMultiMenuOutsideClickAlerter } from "../hooks/MultiMenuOutsideClickAlerter";
 import {

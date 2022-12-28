@@ -15,6 +15,7 @@ import { IRecommendationExerciseIdType } from "../../types/recommendationExercis
 import { exerciseTypes } from "../../types/exerciseType";
 import RecommendationCard from "./recommendationCard";
 import LoadingIcon from "../../components/ui/LoadingIcon/loadingIcon";
+import AddExerciseModal from "../UserProfile/Favorites/Modal";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ const HomePage = () => {
     IRecommendationExerciseIdType[]
   >([]);
   const [recommendations, setRecommendations] = useState<exerciseTypes[]>([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [eId, setEId] = useState("");
 
   const formik = useFormik({
     initialValues: {
@@ -116,11 +119,37 @@ const HomePage = () => {
     navigate("/create-exercise");
   };
 
+  const openMenu = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>,
+    cardMenuOpenState: boolean
+  ) => {
+    e.stopPropagation();
+    setCardMenuOpenState(!cardMenuOpenState);
+  };
+
   return (
     <div className="">
+      <div
+        className={`${
+          modalIsOpen ? "page-mask z-20" : ""
+        } transition-all duration-300`}
+      ></div>
+      <div
+        className={`${
+          !modalIsOpen ? "modal" : "box-shadow show"
+        } transition-all duration-500 relative z-50`}
+      >
+        <AddExerciseModal
+          modalIsOpen={modalIsOpen}
+          userid={userId}
+          eId={eId}
+          setModalIsOpen={setModalIsOpen}
+        />
+      </div>
       <div className="grid grid-cols-9 gap-0">
         <div className="col-span-2 text-left border-r-2 border-neutral-900 h-full bg-neutral-900">
-          <div className="home-side px-7 pb-7 pt-5 pl-10">
+          <div className="home-side relative z-10 px-7 pb-7 pt-5 pl-10">
             <div className="flex mb-5 items-center">
               <p className="font-bold leading-10 text-sm">Recent workouts</p>
               <div className="ml-auto">
@@ -156,7 +185,12 @@ const HomePage = () => {
               </div>
             ) : (
               recommendations?.map((exercise) => (
-                <RecommendationCard exercise={exercise} />
+                <RecommendationCard
+                  exercise={exercise}
+                  openMenu={openMenu}
+                  setModalIsOpen={setModalIsOpen}
+                  setEId={setEId}
+                />
               ))
             )}
           </div>

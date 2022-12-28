@@ -33,7 +33,7 @@ const ResultCardMenu = ({
           >
             <li>
               <div
-                className="flex flex-row items-center py-2 px-4 hover:bg-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+                className="flex flex-row items-center py-2 px-4 hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
                 onClick={() => openModal(exerciseId)}
               >
                 <MdPlaylistAdd className="font-bold text-xl" color="" />
