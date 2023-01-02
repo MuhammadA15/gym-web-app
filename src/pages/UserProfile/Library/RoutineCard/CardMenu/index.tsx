@@ -26,14 +26,22 @@ const CardMenu = ({
             <li>
               <div
                 onClick={() => {}}
-                className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                className="flex flex-row items-center py-2 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <p className="ml-2 text-sm">Start Workout</p>
+              </div>
+            </li>
+            <li>
+              <div
+                onClick={() => {}}
+                className="flex flex-row items-center py-2 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
               >
                 <p className="ml-2 text-sm">Edit</p>
               </div>
             </li>
             <li>
               <div
-                className="flex flex-row items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                className="flex flex-row items-center py-2 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
                 onClick={() => makeDeleteRoutineCall(routineId)}
               >
                 <p className="ml-2 text-sm">Delete</p>
