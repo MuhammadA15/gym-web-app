@@ -12,6 +12,7 @@ import {
 import { exerciseTypes } from "../../../types/exerciseType";
 import { IRoutineType } from "../../../types/routineType";
 import RecommendationCard from "../../Home/recommendationCard";
+import AddExerciseModal from "../Favorites/Modal";
 import ExerciseCard from "./ExerciseCard";
 import RoutineCard from "./RoutineCard";
 
@@ -20,6 +21,8 @@ const Library = () => {
   const userid = localStorage.getItem("id");
   const [exerciseData, setExerciseData] = useState<exerciseTypes[]>([]);
   const [routineData, setRoutineData] = useState<IRoutineType[]>([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [eId, setEId] = useState("");
 
   const makeFetchUserCreatedExercisesCall = async (userid: string) => {
     fetchExerciseByAuthor(userid).then((data) => {
@@ -92,13 +95,30 @@ const Library = () => {
   };
 
   return (
-    <div>
+    <div className="mb-10">
+      <div
+        className={`${
+          modalIsOpen ? "page-mask z-10" : ""
+        } transition-all duration-300`}
+      ></div>
+      <div
+        className={`${
+          !modalIsOpen ? "modal" : "box-shadow show"
+        } transition-all duration-500 relative z-50`}
+      >
+        <AddExerciseModal
+          modalIsOpen={modalIsOpen}
+          userid={userid}
+          eId={eId}
+          setModalIsOpen={setModalIsOpen}
+        />
+      </div>
       <div className="flex items-center mb-4 text-left">
         <p className="text-md font-bold mr-2">Your Workout Routines</p>
         <hr className="border-top-1 mt-1 flex-1" />
       </div>
       <div className="grid grid-cols-2 gap-3">
-        {routineData ? (
+        {routineData.length ? (
           routineData?.map((routine) => (
             <RoutineCard
               routineData={routine}
@@ -116,10 +136,16 @@ const Library = () => {
         <hr className="border-top-1 mt-1 flex-1" />
       </div>
       <div className="grid grid-cols-3 gap-3">
-        {exerciseData ? (
+        {exerciseData.length ? (
           exerciseData?.map((exercise) => (
             <div className="flex justify-center mb-6">
-              <ExerciseCard exercise={exercise} openMenu={openMenu} makeDeleteExerciseCall={makeDeleteExerciseCall}/>
+              <ExerciseCard
+                exercise={exercise}
+                openMenu={openMenu}
+                makeDeleteExerciseCall={makeDeleteExerciseCall}
+                setModalIsOpen={setModalIsOpen}
+                setEId={setEId}
+              />
             </div>
           ))
         ) : (

@@ -1,47 +1,44 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useNavigate } from "react-router-dom";
 import { exerciseTypes } from "../../../../types/exerciseType";
 import EntryMenu from "./EntryMenu";
 import { BsFillStarFill, BsThreeDotsVertical } from "react-icons/bs";
-import { useMultiMenuOutsideClickAlerter } from "../hooks/MultiMenuOutsideClickAlerter";
 import {
   bodyPartColorMapper,
   IbodyPartColorMapperTypes,
 } from "../../../../utils/utils";
+import { useOutsideClickAlerter } from "../../../../hooks/OutsideClickAlerter";
 
 const FavoritesEntryCard = ({
   index,
   exercise,
-  isOpenList,
   favCount,
   loading,
   setEId,
-  openDetailsMenu,
-  setIsOpenList,
   removeFavorite,
   setModalIsOpen,
+  openMenu,
 }: {
   index: number;
   exercise: exerciseTypes | null;
-  isOpenList: Map<number, boolean>;
   favCount: Map<number, number> | null;
   loading: boolean;
-  openDetailsMenu: (exerciseId: number) => void;
   removeFavorite: (userid: string, exerciseId: string) => void;
-  setIsOpenList: React.Dispatch<React.SetStateAction<Map<number, boolean>>>;
   setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setEId: React.Dispatch<React.SetStateAction<string>>;
+  openMenu: (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>,
+    cardMenuOpenState: boolean
+  ) => void;
 }) => {
   const navigate = useNavigate();
   const wrapperRef = useRef(null);
 
-  useMultiMenuOutsideClickAlerter(
-    wrapperRef,
-    isOpenList,
-    Number(exercise?.id),
-    setIsOpenList
-  );
+  const [isOpen, setIsOpen] = useState(false);
+
+  useOutsideClickAlerter(wrapperRef, setIsOpen);
 
   return (
     <SkeletonTheme baseColor="#4d4f5038" highlightColor="none">
@@ -107,12 +104,12 @@ const FavoritesEntryCard = ({
             ) : (
               <div
                 className="ml-auto -mr-5 hover:bg-gray-400 hover:bg-opacity-10 hover:cursor-pointer hover:rounded py-1.5 px-1.5"
-                onClick={() => openDetailsMenu(exercise?.id)}
-                ref={isOpenList?.get(exercise?.id) ? wrapperRef : null}
+                onClick={(e) => openMenu(e, setIsOpen, isOpen)}
+                ref={wrapperRef}
               >
                 <BsThreeDotsVertical />
                 <EntryMenu
-                  isOpen={isOpenList?.get(exercise?.id)}
+                  isOpen={isOpen}
                   removeFavorite={removeFavorite}
                   exerciseId={String(exercise?.id)}
                   setModalIsOpen={setModalIsOpen}

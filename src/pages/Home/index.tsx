@@ -177,8 +177,11 @@ const HomePage = () => {
             introduction to the tools and services myFit has to offer to help
             you on your fitness journey
           </p>
-          <p className="text-md">Recommended for you</p>
-          <div className="py-6 mb-10 w-100 grid grid-cols-4 gap-3">
+          <div className="flex items-center text-left">
+            <p className="text-sm mr-2">Recommended for you</p>
+            <hr className="border-top-1 mt-1 flex-1" />
+          </div>
+          <div className="py-6 mb-10 grid grid-cols-4 gap-3">
             {recommendationsLoading ? (
               <div className="col-span-4 mx-auto my-auto">
                 <LoadingIcon className="w-10 h-10" />
@@ -194,10 +197,13 @@ const HomePage = () => {
               ))
             )}
           </div>
-          <p className="text-sm mb-4">Start building your profile</p>
-          <div className="grid grid-cols-2 gap-20">
+          <div className="flex items-center mb-4 text-left">
+            <p className="text-sm mr-2">Start building your profile</p>
+            <hr className="border-top-1 mt-1 flex-1" />
+          </div>
+          <div className="grid grid-cols-3 gap-10">
             <div>
-              <div className="bg-neutral-900 shadow-2xl rounded px-6 py-6 mb-4 w-100 h-full">
+              <div className="bg-neutral-900 shadow-2xl rounded px-6 py-6 mb-4 max-w-sm h-full">
                 <p className="text-sm mb-1">Add a new exercise</p>
                 <p className="text-sm text-gray-500 leading-0 mb-5">
                   An exercise can be anything from a weight lifting exercise to
@@ -251,8 +257,8 @@ const HomePage = () => {
                 />
               </div>
             </div>
-            <div>
-              <div className=" bg-neutral-900 shadow-2xl rounded px-6 pt-6 pb-3 mb-4 w-100 h-full">
+            <div className="col-span-1">
+              <div className=" bg-neutral-900 shadow-2xl rounded px-6 pt-6 pb-3 mb-4 max-w-sm h-full">
                 <p className="text-sm mb-1">Create a new workout</p>
                 <p className="text-sm text-gray-500 leading-0 mb-5">
                   Create a new workout routine to save to your library and
@@ -285,7 +291,7 @@ const HomePage = () => {
                   <textarea
                     name="routine-descripton"
                     placeholder="provide a brief description of your workout routine..."
-                    className="mb-5 text-sm appearance-none border rounded w-full my-1 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="mb-8 text-sm appearance-none border rounded w-full my-1 py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   ></textarea>
                   <FilledButton
                     text={"Create workout routine"}
@@ -296,6 +302,8 @@ const HomePage = () => {
                   />
                 </form>
               </div>
+            </div>
+            <div>
             </div>
           </div>
         </div>

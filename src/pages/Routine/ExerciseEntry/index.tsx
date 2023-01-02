@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { removeExerciseFromRoutine } from "../../../services/routineService";
 import { exerciseTypes } from "../../../types/exerciseType";
 import {
   bodyPartColorMapper,
@@ -9,15 +10,22 @@ import {
 const ExerciseEntry = ({
   exercise,
   color,
+  routineId,
+  makeRemoveExerciseFromRoutineCall,
 }: {
   exercise: exerciseTypes;
   color: string;
+  routineId: string;
+  makeRemoveExerciseFromRoutineCall: (
+    routineId: string,
+    exerciseId: string
+  ) => void;
 }) => {
   const [showTags, setShowTags] = useState(false);
   const navigate = useNavigate();
 
   return (
-    <div className={`mb-4 mt-4 text-left p-4 ${color}`}>
+    <div className={`mb-4 mt-4 text-left p-4 ${color} rounded-lg`}>
       <div className="grid grid-cols-12">
         <div className="col-span-2 text-capital text-md">
           <p
@@ -46,7 +54,12 @@ const ExerciseEntry = ({
           <p className="mb-1 text-xs text-blue-700 hover:text-blue-900 hover:underline hover:cursor-pointer">
             View
           </p>
-          <p className="text-xs text-blue-700 hover:text-blue-900 hover:underline hover:cursor-pointer">
+          <p
+            className="text-xs text-blue-700 hover:text-blue-900 hover:underline hover:cursor-pointer"
+            onClick={() =>
+              makeRemoveExerciseFromRoutineCall(routineId, String(exercise?.id))
+            }
+          >
             Remove
           </p>
         </div>

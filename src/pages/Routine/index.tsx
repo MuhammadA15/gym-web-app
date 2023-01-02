@@ -4,6 +4,7 @@ import { fetchExercise } from "../../services/exerciseService";
 import {
   fetchRoutine,
   getAllRoutineExercises,
+  removeExerciseFromRoutine,
 } from "../../services/routineService";
 import { exerciseTypes } from "../../types/exerciseType";
 import { IRoutineExerciseType } from "../../types/routineExerciseType";
@@ -80,6 +81,23 @@ const RoutinePage = () => {
     setCurrentTab(tabId);
   }, [tabId]);
 
+  const makeRemoveExerciseFromRoutineCall = async (
+    routineId: string,
+    exerciseId: string
+  ) => {
+    removeExerciseFromRoutine(routineId, exerciseId).then((data) => {
+      if (data?.status === 200) {
+        setExerciseList(
+          exerciseList.filter((exercise) => {
+            return String(exercise?.id) !== exerciseId;
+          })
+        );
+      } else {
+        console.log("Error removing exercise from routine");
+      }
+    });
+  };
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-3 bg-neutral-900 border-r-2 border-neutral-800 h-screen min-h-full">
@@ -138,6 +156,8 @@ const RoutinePage = () => {
                     exercise={exercise}
                     color={key % 2 === 0 ? "bg-neutral-900" : "bg-neutral-800"}
                     key={key}
+                    routineId={routineId ? routineId : ""}
+                    makeRemoveExerciseFromRoutineCall={makeRemoveExerciseFromRoutineCall}
                   />
                 ))}
               </div>

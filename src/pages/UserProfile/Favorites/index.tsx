@@ -19,7 +19,6 @@ const Favorites = () => {
   >([]);
   const [favExercises, setFavExercises] = useState<exerciseTypes[]>([]);
   const [favCount, setFavCount] = useState<Map<number, number>>(new Map());
-  const [isOpenList, setIsOpenList] = useState<Map<number, boolean>>(new Map());
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [eId, setEId] = useState("");
   const [loading, setLoading] = useState(true);
@@ -51,7 +50,6 @@ const Favorites = () => {
     fetchExercise(exerciseId).then((data) => {
       if (data?.status === 200) {
         setFavExercises((favExercisesArr) => [...favExercisesArr, data.body]);
-        setIsOpenList(new Map(isOpenList?.set(data?.body?.id, false)));
       } else {
         // setErrorMsg(data?.body?.msg);
       }
@@ -98,21 +96,6 @@ const Favorites = () => {
   }, [favExercises, mapFavCount]);
 
   /**
-   * Set open state for selected entry menu
-   * @param exerciseId
-   */
-  const openDetailsMenu = (exerciseId: number) => {
-    isOpenList.forEach((val, key) => {
-      if (key !== exerciseId) {
-        setIsOpenList(new Map(isOpenList?.set(key, false)));
-      }
-    });
-    setIsOpenList(
-      new Map(isOpenList?.set(exerciseId, !isOpenList?.get(exerciseId)))
-    );
-  };
-
-  /**
    * Remove exercise from favorites
    */
   const makeRemoveFavoriteCall = async (userid: string, exerciseId: string) => {
@@ -127,6 +110,15 @@ const Favorites = () => {
         // setErrorMsg(data?.body?.msg);
       }
     });
+  };
+
+  const openMenu = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>,
+    cardMenuOpenState: boolean
+  ) => {
+    e.stopPropagation();
+    setCardMenuOpenState(!cardMenuOpenState);
   };
 
   return (
@@ -155,11 +147,9 @@ const Favorites = () => {
             <FavoritesEntryCard
               index={index}
               exercise={exercise}
-              isOpenList={isOpenList}
               favCount={favCount}
               loading={loading}
-              openDetailsMenu={openDetailsMenu}
-              setIsOpenList={setIsOpenList}
+              openMenu={openMenu}
               removeFavorite={makeRemoveFavoriteCall}
               setModalIsOpen={setModalIsOpen}
               setEId={setEId}
@@ -170,11 +160,9 @@ const Favorites = () => {
           <FavoritesEntryCard
             index={i}
             exercise={null}
-            isOpenList={isOpenList}
             favCount={null}
             loading={loading}
-            openDetailsMenu={openDetailsMenu}
-            setIsOpenList={setIsOpenList}
+            openMenu={openMenu}
             removeFavorite={makeRemoveFavoriteCall}
             setModalIsOpen={setModalIsOpen}
             setEId={setEId}

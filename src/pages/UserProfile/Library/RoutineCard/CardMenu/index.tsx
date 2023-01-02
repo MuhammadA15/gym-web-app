@@ -28,6 +28,14 @@ const CardMenu = ({
                 onClick={() => {}}
                 className="flex flex-row items-center py-2 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
               >
+                <p className="ml-2 text-sm">Start Workout</p>
+              </div>
+            </li>
+            <li>
+              <div
+                onClick={() => {}}
+                className="flex flex-row items-center py-2 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
                 <p className="ml-2 text-sm">Edit</p>
               </div>
             </li>

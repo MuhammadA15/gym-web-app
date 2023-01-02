@@ -5,14 +5,23 @@ const CardMenu = ({
   makeDeleteExerciseCall,
   exerciseId,
   published,
+  setModalIsOpen,
+  setEId
 }: {
   isOpen: boolean;
   makeDeleteExerciseCall: (exerciseId: string, userId: string) => void;
   exerciseId: string;
   published: number;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setEId: React.Dispatch<React.SetStateAction<string>>;
 }) => {
 
   const userId = localStorage.getItem('id');
+
+  const openModal = (exerciseId: string) => {
+    setModalIsOpen(true);
+    setEId(exerciseId);
+  };
 
   return (
     <>
@@ -25,6 +34,14 @@ const CardMenu = ({
             className="block py-1 text-md text-left text-gray-700 dark:text-gray-200"
             aria-labelledby="dropdownDefault"
           >
+            <li>
+              <div
+                onClick={() => openModal(exerciseId)}
+                className="flex flex-row items-center py-2 px-4 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+              >
+                <p className="ml-2 text-sm">Add to Workout</p>
+              </div>
+            </li>
             <li>
               <div
                 onClick={() => {}}

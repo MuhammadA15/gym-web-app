@@ -29,7 +29,7 @@ const CardMenu = ({
       {isOpen && (
         <div
           id="dropdown"
-          className={`absolute border-1 right-0 mt-1 z-100 ${
+          className={`absolute rounded border-1 right-0 mt-1 z-100 ${
             isFav ? "w-52" : "w-40"
           } bg-white rounded divide-y divide-gray-100 shadow-2xl dark:bg-gray-700`}
         >

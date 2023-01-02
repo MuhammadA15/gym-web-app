@@ -16,6 +16,8 @@ const ExerciseCard = ({
   exercise,
   openMenu,
   makeDeleteExerciseCall,
+  setModalIsOpen,
+  setEId,
 }: {
   exercise: exerciseTypes;
   openMenu: (
@@ -23,7 +25,9 @@ const ExerciseCard = ({
     setCardMenuOpenState: React.Dispatch<React.SetStateAction<boolean>>,
     cardMenuOpenState: boolean
   ) => void;
-  makeDeleteExerciseCall: (exerciseId: string, userId: string) => void
+  makeDeleteExerciseCall: (exerciseId: string, userId: string) => void;
+  setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setEId: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const navigate = useNavigate();
   const [favCount, setFavCount] = useState(0);
@@ -93,6 +97,8 @@ const ExerciseCard = ({
             makeDeleteExerciseCall={makeDeleteExerciseCall}
             exerciseId={String(exercise?.id)}
             published={exercise?.publish}
+            setModalIsOpen={setModalIsOpen}
+            setEId={setEId}
             // setModalIsOpen={setModalIsOpen}
             // setEId={setEId}
           />
