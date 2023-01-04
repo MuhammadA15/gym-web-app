@@ -171,12 +171,14 @@ const HomePage = () => {
           </div>
         </div>
         <div className="col-span-7 text-left p-10">
-          <p className="text-3xl mb-2">The home for all things fitness</p>
-          <p className="text-gray-500 mb-10 text-sm">
-            Welcome to your personal dashboard, where you can find an
-            introduction to the tools and services myFit has to offer to help
-            you on your fitness journey
-          </p>
+          <p className="text-3xl mb-3">The home for all things fitness</p>
+          <div className="bg-neutral-900 shadow-xl rounded-lg mb-10">
+            <p className="text-gray-500 text-sm py-4 px-4">
+              Welcome to your personal dashboard, where you can find an
+              introduction to the tools and services myFit has to offer to help
+              you on your fitness journey.
+            </p>
+          </div>
           <div className="flex items-center text-left">
             <p className="text-sm mr-2">Recommended for you</p>
             <hr className="border-top-1 mt-1 flex-1" />
@@ -197,13 +199,13 @@ const HomePage = () => {
               ))
             )}
           </div>
-          <div className="flex items-center mb-4 text-left">
+          <div className="flex items-center mb-6 text-left">
             <p className="text-sm mr-2">Start building your profile</p>
             <hr className="border-top-1 mt-1 flex-1" />
           </div>
           <div className="grid grid-cols-3 gap-10">
             <div>
-              <div className="bg-neutral-900 shadow-2xl rounded px-6 py-6 mb-4 max-w-sm h-full">
+              <div className="bg-neutral-900 shadow-xl rounded px-6 py-6 mb-4 max-w-sm h-full">
                 <p className="text-sm mb-1">Add a new exercise</p>
                 <p className="text-sm text-gray-500 leading-0 mb-5">
                   An exercise can be anything from a weight lifting exercise to
@@ -258,7 +260,7 @@ const HomePage = () => {
               </div>
             </div>
             <div className="col-span-1">
-              <div className=" bg-neutral-900 shadow-2xl rounded px-6 pt-6 pb-3 mb-4 max-w-sm h-full">
+              <div className=" bg-neutral-900 shadow-xl rounded px-6 pt-6 pb-3 mb-4 max-w-sm h-full">
                 <p className="text-sm mb-1">Create a new workout</p>
                 <p className="text-sm text-gray-500 leading-0 mb-5">
                   Create a new workout routine to save to your library and
@@ -303,8 +305,7 @@ const HomePage = () => {
                 </form>
               </div>
             </div>
-            <div>
-            </div>
+            <div></div>
           </div>
         </div>
       </div>

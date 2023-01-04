@@ -50,7 +50,7 @@ const RoutineCard = ({
   return (
     <div
       onClick={() => navigateToRoutine(routineData?.id)}
-      className="hover:cursor-pointer hover:bg-zinc-800 bg-neutral-900 transition-all duration-300 rounded-md px-4 pt-4 pb-4 m-2 mb-4 text-left shadow-2xl "
+      className="hover:cursor-pointer hover:bg-zinc-800 bg-neutral-900 transition-all duration-300 rounded-md px-4 pt-4 pb-4 m-2 mb-4 text-left shadow-xl "
     >
       <div className="flex items-center">
         <p className="font-bold text-left mb-1.5 text-sm">
@@ -66,6 +66,7 @@ const RoutineCard = ({
             isOpen={isOpen}
             routineId={String(routineData.id)}
             makeDeleteRoutineCall={makeDeleteRoutineCall}
+            exerciseCount={exerciseCount ? exerciseCount : 0}
           />
         </div>
       </div>

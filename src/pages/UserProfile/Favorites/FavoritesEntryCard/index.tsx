@@ -44,7 +44,7 @@ const FavoritesEntryCard = ({
     <SkeletonTheme baseColor="#4d4f5038" highlightColor="none">
       <div
         key={index}
-        className="bg-neutral-900 rounded mb-6 flex flex-row shadow-2xl"
+        className="bg-neutral-900 rounded mb-6 flex flex-row shadow-xl"
       >
         {loading ? (
           <Skeleton

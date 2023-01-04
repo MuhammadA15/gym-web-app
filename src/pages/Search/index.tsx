@@ -160,7 +160,7 @@ const SearchPage = () => {
         />
       </div>
       <div className="grid grid-cols-12 mt-5 mx-6 gap-2">
-        <div className="col-span-3 bg-neutral-900 shadow-2xl mt-4 rounded mb-10">
+        <div className="col-span-3 bg-neutral-900 shadow-xl mt-4 rounded mb-10">
           <p>Filter Menu</p>
         </div>
         <div className="col-span-9 mt-10 mx-6">

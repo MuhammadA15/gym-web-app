@@ -29,3 +29,5 @@ export const GET_ROUTINE_EXERCISES_COUNT_ENDPOINT = BASE_URL + '/routines/id/exe
 export const DELETE_ROUTINE_ENDPOINT = BASE_URL + '/routines/id';
 export const GET_ALL_ROUTINE_EXERCISES_ENDPOINT = BASE_URL + '/routines/id/exercises/all';
 export const DELETE_EXERCISE_ENDPOINT = BASE_URL + '/exercises/id/delete';
+export const LOG_WORKOUT_SESSION_ENDPOINT = BASE_URL + "/routines/logWorkoutSession";
+export const GET_ROUTINE_LOGS_HISTORY_ENDPOINT = BASE_URL + "/routines/id/user/userid/logs";

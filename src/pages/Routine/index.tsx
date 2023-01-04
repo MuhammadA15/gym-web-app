@@ -11,6 +11,7 @@ import { IRoutineExerciseType } from "../../types/routineExerciseType";
 import { IRoutineType } from "../../types/routineType";
 import Analytics from "./Analytics";
 import ExerciseEntry from "./ExerciseEntry";
+import './styles.scss'
 
 const RoutinePage = () => {
   const { routineId } = useParams();
@@ -100,7 +101,7 @@ const RoutinePage = () => {
 
   return (
     <div className="grid grid-cols-12">
-      <div className="col-span-3 bg-neutral-900 border-r-2 border-neutral-800 h-screen min-h-full">
+      <div className="col-span-3 home-side bg-neutral-900 border-r-2 border-neutral-800 h-full">
         <p className="text-md font-bold mt-4 mb-4">
           {routineData?.routineName}
         </p>
@@ -148,7 +149,7 @@ const RoutinePage = () => {
           <hr className="user-profile-border-t-1 border-g-300" />
           <div className="mt-6">
             {currentTab === "analytics" ? (
-              <Analytics exerciseList={exerciseList} />
+              <Analytics exerciseList={exerciseList} routineId={routineId ? routineId : ""} userId={userid ? userid : ""}/>
             ) : currentTab === "exerciselist" ? (
               <div className="col-span-9">
                 {exerciseList?.map((exercise, key) => (

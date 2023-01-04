@@ -7,6 +7,8 @@ import {
   FETCH_ROUTINE_EXERCISE_BY_EXERCISE_ID,
   GET_ALL_ROUTINE_EXERCISES_ENDPOINT,
   GET_ROUTINE_EXERCISES_COUNT_ENDPOINT,
+  GET_ROUTINE_LOGS_HISTORY_ENDPOINT,
+  LOG_WORKOUT_SESSION_ENDPOINT,
   REMOVE_ROUTINE_EXERCISE_BY_EXERCISE_ID,
 } from "../utils/constants/apiEndpoints";
 
@@ -134,16 +136,19 @@ export const removeExerciseFromRoutine = async (
 
 /**
  * Get all exercises of routine api call
- * @param routineid 
- * @returns 
+ * @param routineid
+ * @returns
  */
 export const getAllRoutineExercises = async (routineid: string) => {
-  return await fetch(GET_ALL_ROUTINE_EXERCISES_ENDPOINT.replace("id", routineid), {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((res) =>
+  return await fetch(
+    GET_ALL_ROUTINE_EXERCISES_ENDPOINT.replace("id", routineid),
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  ).then((res) =>
     res.json().then((data) => ({ status: res.status, body: data }))
   );
 };
@@ -179,6 +184,49 @@ export const deleteRoutine = async (routineid: string) => {
       "Content-Type": "application/json",
     },
   }).then((res) =>
+    res.json().then((data) => ({ status: res.status, body: data }))
+  );
+};
+
+/**
+ * Log Workout api call
+ * @param data
+ * @returns
+ */
+export const logWorkoutSession = async (data: any) => {
+  return await fetch(LOG_WORKOUT_SESSION_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((res) =>
+    res.json().then((data) => ({ status: res.status, body: data }))
+  );
+};
+
+/**
+ * Get routine log history api call
+ * @param routineId 
+ * @param userId 
+ * @returns 
+ */
+export const getRoutineLogHistory = async (
+  routineId: string,
+  userId: string
+) => {
+  return await fetch(
+    GET_ROUTINE_LOGS_HISTORY_ENDPOINT.replace("id", routineId).replace(
+      "userid",
+      userId
+    ),
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  ).then((res) =>
     res.json().then((data) => ({ status: res.status, body: data }))
   );
 };
