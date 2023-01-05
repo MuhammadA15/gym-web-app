@@ -19,7 +19,7 @@ export const getCurrentTime = (separator = ":") => {
   let minute = date.getMinutes();
   let second = date.getSeconds();
 
-  return `${hour}${separator}${minute}${separator}${second}`;
+  return `${hour}${separator}${minute}${separator}${second < 10 ? `0${second}` : second}`
 };
 
 export const yesNoOptions = [

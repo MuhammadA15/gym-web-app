@@ -11,10 +11,12 @@ const Analytics = ({
   exerciseList,
   routineId,
   userId,
+  routineName,
 }: {
   exerciseList: exerciseTypes[];
   routineId: string;
   userId: string;
+  routineName: string;
 }) => {
   const [data, setData] = useState<Map<string, number>>(new Map());
   const [helperData, setHelperData] = useState<Map<string, number>>(new Map());
@@ -126,25 +128,25 @@ const Analytics = ({
           </p>
           <p className="col-span-9"></p>
         </div>
-        <p className="col-span-1 pl-2">Name</p>
-        <p className="col-span-2">Description</p>
+        <p className="col-span-2 pl-2">Routine Name</p>
         <p className="col-span-1">Date</p>
         <p className="col-span-2"></p>
-        <p className="col-span-1"># of Exercises</p>
+        <p className="col-span-2">Exercises Completed</p>
         <p className="col-span-2">Workout Duration</p>
-        <p className="col-span-2"></p>
+        <p className="col-span-1"></p>
+        <p className="col-span-1">Progress</p>
         <p className="col-span-1 text-center">Status</p>
         <hr className="mt-1 border-t-2 border-neutral-700 col-span-12" />
         {routineLogs &&
           routineLogs?.map((log) => (
             <>
-              <p className="col-span-1 pl-4 py-1">{log?.routineId}</p>
-              <p className="col-span-2">Description</p>
+              <p className="col-span-2 pl-2 py-1">{routineName}</p>
               <p className="col-span-2">{log?.date}</p>
               <p className="col-span-1"></p>
-              <p className="col-span-1 pl-2">{log?.completedExercises}</p>
+              <p className="col-span-2 pl-2">{log?.completedExercises}</p>
               <p className="col-span-2 pl-2">{log?.duration}</p>
-              <p className="col-span-2"></p>
+              <p className="col-span-1"></p>
+              <p className="col-span-1 pl-1">{exerciseList ? `${((log?.completedExercises / exerciseList.length) * 100).toFixed(2)}%` : "N/A"}</p>
               <p className="col-span-1 text-center">{log?.status === true ? "Completed" : "Incomplete"}</p>
               <hr className="border-t-2 border-neutral-700 col-span-12" />
             </>
